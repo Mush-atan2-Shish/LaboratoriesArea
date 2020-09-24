@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ru.ssau.tk.ssau.Laba2</groupId>
-    <artifactId>Ssau-Laba2</artifactId>
+    <groupId>ru.ssau.tk.mushandshish.LaboratoriesAreaLaba2</groupId>
+    <artifactId>mushandshish-LaboratoriesAreaLaba2</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -13,6 +13,13 @@
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.0.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
-
+    
 </project>
