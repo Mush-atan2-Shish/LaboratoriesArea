@@ -2,7 +2,7 @@ package ru.ssau.tk.Ssau.Laba2.functions;
 
 public class UnitFunction extends ConstantFunction {
 
-    public UnitFunction(double constant) {
+    public UnitFunction() {
         super(1);
     }
 }

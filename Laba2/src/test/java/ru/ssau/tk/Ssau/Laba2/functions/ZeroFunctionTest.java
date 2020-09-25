@@ -6,12 +6,14 @@ import static org.testng.Assert.*;
 
 public class ZeroFunctionTest {
 
-    ZeroFunction zeroFun = new ZeroFunction(10);
+    private final ZeroFunction zeroFun = new ZeroFunction();
 
     @Test
     public void testUnitApply() {
         assertEquals(zeroFun.apply(10), 0);
         assertEquals(zeroFun.apply(-100), 0);
+        assertNotEquals(zeroFun.apply(-1), 1);
+        assertNotEquals(zeroFun.apply(1), 1);
     }
 
     @Test
