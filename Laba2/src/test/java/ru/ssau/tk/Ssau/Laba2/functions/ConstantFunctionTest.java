@@ -6,7 +6,7 @@ import static org.testng.Assert.*;
 
 public class ConstantFunctionTest {
 
-    private final ConstantFunction constFun = new ConstantFunction(5);
+    ConstantFunction constFun = new ConstantFunction(5);
 
     @Test
     public void testGetConstant() {
@@ -19,7 +19,5 @@ public class ConstantFunctionTest {
         assertEquals(constFun.apply(-100), 5);
         assertEquals(constFun.apply(0), 5);
         assertEquals(constFun.apply(1), 5);
-        assertNotEquals(constFun.apply(-2), 0);
-        assertNotEquals(constFun.apply(10), 1);
     }
 }
