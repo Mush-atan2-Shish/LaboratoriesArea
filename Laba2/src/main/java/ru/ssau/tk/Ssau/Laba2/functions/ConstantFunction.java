@@ -1,6 +1,6 @@
 package ru.ssau.tk.Ssau.Laba2.functions;
 
-public class ConstantFunction implements MathFunction{
+public class ConstantFunction implements MathFunction {
 
     private final double constant;
 
@@ -16,5 +16,4 @@ public class ConstantFunction implements MathFunction{
     public double apply(double x) {
         return constant;
     }
-
 }

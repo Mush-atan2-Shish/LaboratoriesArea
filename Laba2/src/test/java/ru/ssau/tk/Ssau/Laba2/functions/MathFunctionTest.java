@@ -9,7 +9,7 @@ public class MathFunctionTest {
     @Test
     public void testApply() {
         MathFunction hypTan = new HyperbolicTan();
-        MathFunction inverseCos = new InverseCos();
+        MathFunction inverseCos = new InverseCosFunction();
         MathFunction sqrFun = new SqrFunction();
 
         MathFunction firstComposite = hypTan.andThen(inverseCos).andThen(sqrFun);

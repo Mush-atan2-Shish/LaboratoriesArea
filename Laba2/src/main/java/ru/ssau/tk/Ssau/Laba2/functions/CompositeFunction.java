@@ -1,6 +1,7 @@
 package ru.ssau.tk.Ssau.Laba2.functions;
 
-public class CompositeFunction implements MathFunction{
+public class CompositeFunction implements MathFunction {
+
     private final MathFunction firstFunction;
     private final MathFunction secondFunction;
 
