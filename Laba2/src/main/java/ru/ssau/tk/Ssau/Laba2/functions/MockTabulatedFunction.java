@@ -1,10 +1,11 @@
 package ru.ssau.tk.Ssau.Laba2.functions;
 
 public class MockTabulatedFunction extends AbstractTabulatedFunction {
-    protected  double x0 = 1.1;
-    protected  double x1 = 2.2;
-    protected  double y0 = 3.3;
-    protected  double y1 = 4.4;
+
+    private static final double x0 = 1.1;
+    private static final double x1 = 2.2;
+    private static final double y0 = 3.3;
+    private static final double y1 = 4.4;
 
     @Override
     protected int floorIndexOfX(double x) {
