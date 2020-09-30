@@ -23,6 +23,9 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
         for (int i = 1; i < count - 1; i++) {
             xValues[i] = i * (xTo - xFrom) / count;
         }
+        for (int i = 0; i < count; i++) {
+            yValues[i] = source.apply(xValues[i]);
+        }
     }
 
     @Override
