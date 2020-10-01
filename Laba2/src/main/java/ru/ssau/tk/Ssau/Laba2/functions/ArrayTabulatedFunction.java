@@ -46,16 +46,12 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     protected double extrapolateLeft(double x) {
-        return yValues[0];
+        return yValues[0] + (yValues[1] - yValues[0]) * (x - xValues[0]) / (xValues[1] - xValues[0]);
     }
 
     @Override
     protected double extrapolateRight(double x) {
-        if (count > 0) {
-            return yValues[count - 1];
-        } else {
-            return yValues[0];
-        }
+        return yValues[count - 2] + (yValues[count - 1] - yValues[count - 2]) * (x - xValues[count - 1]) / (xValues[count - 2] - xValues[count - 1]);
     }
 
     @Override
@@ -105,10 +101,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     public double rightBound() {
-        if (count > 0) {
-            return xValues[count - 1];
-        } else {
-            return xValues[0];
-        }
+        return xValues[count - 1];
     }
 }

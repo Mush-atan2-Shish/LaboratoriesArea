@@ -2,8 +2,6 @@ package ru.ssau.tk.Ssau.Laba2.functions;
 
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     private Node head;
-    private Node last;
-
 
     protected static class Node {
         Node next;
@@ -16,19 +14,18 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         Node newNode = new Node();
         if (head == null) {
             head = newNode;
-            last = newNode;
+            newNode.x = x;
+            newNode.y = y;
             newNode.prev = newNode;
             newNode.next = newNode;
         } else {
-            while (last.next != null) {
-                last = last.next;
-            }
-            last = head.prev;
+            Node last = head.prev;
             head.prev = newNode;
             last.next = newNode;
             newNode.prev = last;
             newNode.next = head;
-            last = newNode;
+            newNode.x = x;
+            newNode.y = y;
         }
         count += 1;
     }
@@ -40,7 +37,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     public LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
-        this.count=count;
+        this.count = count;
         double[] xValues = new double[count];
         xValues[0] = xFrom;
         final double step = (xTo - xFrom) / (count - 1);
@@ -52,10 +49,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     private Node getNode(int index) {
-
         Node first;
         if (index > (count / 2)) {
-            first = last;
+            first = head.prev;
             for (int i = count - 1; i > 0; i--) {
                 if (i == index) {
                     return first;
@@ -63,7 +59,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
                     first = first.prev;
                 }
             }
-
         } else {
             first = head;
             for (int i = 0; i < count; i++) {
@@ -75,9 +70,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
             }
         }
         return null;
-
     }
-
 
     public int getCount() {
         return count;
@@ -102,7 +95,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     protected double extrapolateLeft(double x) {
-        if (head.x == last.x) {
+        if (head.x == head.prev.x) {
+            //noinspection SuspiciousNameCombination
             return head.y;
         }
         return interpolate(x, head.x, head.next.x, head.y, head.next.y);
@@ -110,15 +104,16 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     protected double extrapolateRight(double x) {
-        if (head.x == last.x) {
+        if (head.x == head.prev.x) {
+            //noinspection SuspiciousNameCombination
             return head.y;
         }
-        return interpolate(x, last.prev.x, last.x, last.prev.y, last.y);
+        return interpolate(x, head.prev.prev.x, head.prev.x, head.prev.prev.y, head.prev.y);
     }
 
     @Override
     protected double interpolate(double x, int floorIndex) {
-        if (head.x == last.x) {
+        if (getCount() == 1) {
             return head.y;
         }
         Node left = getNode(floorIndex);
@@ -148,7 +143,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         for (int i = 0; i < count; i++) {
             if (first.x == x) {
                 return i;
-            }else {
+            } else {
                 first = first.next;
             }
         }
@@ -162,7 +157,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         for (int i = 0; i < count; i++) {
             if (buff.y == y) {
                 return i;
-            }else {
+            } else {
                 buff = buff.next;
             }
         }
@@ -176,6 +171,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     public double rightBound() {
-        return last.x;
+        return head.prev.x;
     }
 }
