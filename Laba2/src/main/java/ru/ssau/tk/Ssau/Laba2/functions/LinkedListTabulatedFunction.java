@@ -48,6 +48,10 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         }
     }
 
+    public int getCount() {
+        return count;
+    }
+
     private Node getNode(int index) {
         Node first;
         if (index > (count / 2)) {
@@ -55,38 +59,30 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
             for (int i = count - 1; i > 0; i--) {
                 if (i == index) {
                     return first;
-                } else {
-                    first = first.prev;
                 }
+                first = first.prev;
             }
-        } else {
-            first = head;
-            for (int i = 0; i < count; i++) {
-                if (i == index) {
-                    return first;
-                } else {
-                    first = first.next;
-                }
+        }
+        first = head;
+        for (int i = 0; i < count; i++) {
+            if (i == index) {
+                return first;
             }
+            first = first.next;
         }
         return null;
     }
 
-    public int getCount() {
-        return count;
-    }
-
     @Override
     protected int floorIndexOfX(double x) {
-        Node buff;
-        if (x < head.x) {
-            return 0;
-        }
-        buff = head;
+        Node indexNode = head;
         for (int i = 0; i < count; i++) {
-            if (buff.x < x) {
-                buff = buff.next;
+            if (indexNode.x < x) {
+                indexNode = indexNode.next;
             } else {
+                if (i == 0) {
+                    return 0;
+                }
                 return i - 1;
             }
         }
@@ -143,9 +139,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         for (int i = 0; i < count; i++) {
             if (first.x == x) {
                 return i;
-            } else {
-                first = first.next;
             }
+            first = first.next;
         }
         return -1;
     }
@@ -157,9 +152,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         for (int i = 0; i < count; i++) {
             if (buff.y == y) {
                 return i;
-            } else {
-                buff = buff.next;
             }
+            buff = buff.next;
         }
         return -1;
     }

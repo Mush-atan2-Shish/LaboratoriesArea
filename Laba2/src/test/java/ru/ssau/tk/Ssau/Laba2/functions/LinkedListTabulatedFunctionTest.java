@@ -8,6 +8,17 @@ public class LinkedListTabulatedFunctionTest {
 
     double[] xValues = new double[]{1.1, 1.2, 1.3, 1.4, 1.5};
     double[] yValues = new double[]{2.1, 2.2, 2.3, 2.4, 2.5};
+    private final MathFunction source = new SqrFunction();
+    private final LinkedListTabulatedFunction testingListFunction = new LinkedListTabulatedFunction(source, 1, 16, 5);
+
+    @Test
+    public void testGetCount() {
+
+        assertEquals(testingListFunction.getCount(),10);
+        assertNotEquals(testingListFunction.getCount(),7);
+        assertNotEquals(testingListFunction.getCount(),5);
+
+    }
 
     @Test
     public void testFloorIndexOfX() {
@@ -25,8 +36,8 @@ public class LinkedListTabulatedFunctionTest {
 
         LinkedListTabulatedFunction testingExtrapolateLeft = new LinkedListTabulatedFunction(xValues, yValues);
         final double delta = 0.0001;
-        assertEquals(testingExtrapolateLeft.extrapolateLeft(1.0), 2.1, delta);
-        assertEquals(testingExtrapolateLeft.extrapolateLeft(-1.2), 2.1, delta);
+        assertEquals(testingExtrapolateLeft.extrapolateLeft(1.0), 2.0, delta);
+        assertEquals(testingExtrapolateLeft.extrapolateLeft(-1.2), -0.2, delta);
         assertNotEquals(testingExtrapolateLeft.extrapolateLeft(1.05), 2.5);
 
     }
@@ -36,8 +47,8 @@ public class LinkedListTabulatedFunctionTest {
 
         LinkedListTabulatedFunction testingExtrapolateRight = new LinkedListTabulatedFunction(xValues, yValues);
         final double delta = 0.0001;
-        assertEquals(testingExtrapolateRight.extrapolateRight(1.56), 2.1, delta);
-        assertEquals(testingExtrapolateRight.extrapolateRight(2.56), 2.1, delta);
+        assertEquals(testingExtrapolateRight.extrapolateRight(1.56), 2.56, delta);
+        assertEquals(testingExtrapolateRight.extrapolateRight(2.56), 3.56, delta);
         assertNotEquals(testingExtrapolateRight.extrapolateRight(1.56), 2.5);
 
     }
@@ -46,9 +57,9 @@ public class LinkedListTabulatedFunctionTest {
     public void testInterpolate() {
 
         LinkedListTabulatedFunction testingInterpolate = new LinkedListTabulatedFunction(xValues, yValues);
-        final double delta = 0.00001;
+        final double delta = 0.0001;
         assertEquals(testingInterpolate.interpolate(1.22, 1), 2.22, delta);
-        assertEquals(testingInterpolate.interpolate(1.15, 1), 2.15, delta);
+        assertEquals(testingInterpolate.interpolate(1.247, 1), 2.247, delta);
         assertNotEquals(testingInterpolate.interpolate(1.247, 1), 4.237, delta);
 
     }
@@ -107,16 +118,20 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(testingIndexOfY.indexOfY(2.5), 4, delta);
         assertEquals(testingIndexOfY.indexOfY(2.4), 3, delta);
         assertNotEquals(testingIndexOfY.indexOfY(2.1), 4, delta);
-
+        assertEquals(testingListFunction.indexOfY(4),1);
     }
 
     @Test
     public void testLeftBound() {
 
         LinkedListTabulatedFunction testingLeftBound = new LinkedListTabulatedFunction(xValues, yValues);
-        assertEquals(testingLeftBound.leftBound(), 1.1, 0.0001);
-        assertNotEquals(testingLeftBound.leftBound(), 1.2, 0.0001);
-        assertNotEquals(testingLeftBound.leftBound(), 1.5, 0.0001);
+        final double delta = 0.0001;
+        assertEquals(testingLeftBound.leftBound(), 1.1, delta);
+        assertNotEquals(testingLeftBound.leftBound(), 1.2, delta);
+        assertNotEquals(testingLeftBound.leftBound(), 1.5, delta);
+        assertEquals(testingListFunction.leftBound(),1,delta);
+        assertNotEquals(testingListFunction.leftBound(),2,delta);
+        assertNotEquals(testingListFunction.leftBound(),5,delta);
 
     }
 
@@ -124,9 +139,13 @@ public class LinkedListTabulatedFunctionTest {
     public void testRightBound() {
 
         LinkedListTabulatedFunction testingRightBound = new LinkedListTabulatedFunction(xValues, yValues);
-        assertEquals(testingRightBound.rightBound(), 1.5, 0.0001);
-        assertNotEquals(testingRightBound.rightBound(), 1.4, 0.0001);
-        assertNotEquals(testingRightBound.rightBound(), 1.3, 0.0001);
+        final double delta = 0.0001;
+        assertEquals(testingRightBound.rightBound(), 1.5, delta);
+        assertNotEquals(testingRightBound.rightBound(), 1.4, delta);
+        assertNotEquals(testingRightBound.rightBound(), 1.3, delta);
+        assertEquals(testingListFunction.rightBound(),16, delta);
+        assertNotEquals(testingListFunction.rightBound(),19, delta);
+        assertNotEquals(testingListFunction.rightBound(),27, delta);
 
     }
 }

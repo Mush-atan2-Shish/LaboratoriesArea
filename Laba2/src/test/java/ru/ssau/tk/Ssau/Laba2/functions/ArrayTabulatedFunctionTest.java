@@ -9,6 +9,16 @@ public class ArrayTabulatedFunctionTest {
     double[] yValues = new double[]{2.1, 2.2, 2.3, 2.4, 2.5};
 
     @Test
+    public void testApply() {
+        ArrayTabulatedFunction testingApply = new ArrayTabulatedFunction(xValues, yValues);
+        final double delta = 0.0001;
+        assertEquals(testingApply.apply(1.0), 2.0, delta);
+        assertEquals(testingApply.apply(1.56), 2.56, delta);
+        assertEquals(testingApply.apply(1.22), 2.22, delta);
+        assertNotEquals(testingApply.apply(1.22), 1.23, delta);
+    }
+
+    @Test
     public void testFloorIndexOfX() {
 
         ArrayTabulatedFunction testingFloorIndexOfX = new ArrayTabulatedFunction(xValues, yValues);
@@ -24,8 +34,8 @@ public class ArrayTabulatedFunctionTest {
 
         ArrayTabulatedFunction testingExtrapolateLeft = new ArrayTabulatedFunction(xValues, yValues);
         final double delta = 0.0001;
-        assertEquals(testingExtrapolateLeft.extrapolateLeft(1.0), 2.1, delta);
-        assertEquals(testingExtrapolateLeft.extrapolateLeft(-1.2), 2.1, delta);
+        assertEquals(testingExtrapolateLeft.extrapolateLeft(1.0), 2.0, delta);
+        assertEquals(testingExtrapolateLeft.extrapolateLeft(-1.2), -0.2, delta);
         assertNotEquals(testingExtrapolateLeft.extrapolateLeft(1.05), 2.5);
 
     }
@@ -35,8 +45,8 @@ public class ArrayTabulatedFunctionTest {
 
         ArrayTabulatedFunction testingExtrapolateRight = new ArrayTabulatedFunction(xValues, yValues);
         final double delta = 0.0001;
-        assertEquals(testingExtrapolateRight.extrapolateRight(1.56), 2.5, delta);
-        assertEquals(testingExtrapolateRight.extrapolateRight(2.56), 2.5, delta);
+        assertEquals(testingExtrapolateRight.extrapolateRight(1.56), 2.56, delta);
+        assertEquals(testingExtrapolateRight.extrapolateRight(2.56), 3.56, delta);
         assertNotEquals(testingExtrapolateRight.extrapolateRight(1.56), 2.1);
 
     }

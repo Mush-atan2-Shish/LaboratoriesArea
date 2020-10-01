@@ -36,12 +36,11 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
             }
         }
         int i = 0;
-        int j = 0;
-        while (x > xValues[i]) {
-            j = i;
+        do {
             i++;
         }
-        return j;
+        while (x > xValues[i]);
+        return i - 1;
     }
 
     @Override
@@ -51,7 +50,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     protected double extrapolateRight(double x) {
-        return yValues[count - 2] + (yValues[count - 1] - yValues[count - 2]) * (x - xValues[count - 1]) / (xValues[count - 2] - xValues[count - 1]);
+        return yValues[count - 2] + (yValues[count - 1] - yValues[count - 2]) * (x - xValues[count - 2]) / (xValues[count - 1] - xValues[count - 2]);
     }
 
     @Override
