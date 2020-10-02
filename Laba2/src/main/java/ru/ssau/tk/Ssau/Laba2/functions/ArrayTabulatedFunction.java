@@ -28,6 +28,10 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
         }
     }
 
+    public int getCount() {
+        return count;
+    }
+
     @Override
     protected int floorIndexOfX(double x) {
         for (int i = 0; i < count; i++) {
