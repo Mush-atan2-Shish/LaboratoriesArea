@@ -37,12 +37,11 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     public LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
-        this.count = count;
         double[] xValues = new double[count];
         xValues[0] = xFrom;
         final double step = (xTo - xFrom) / (count - 1);
         this.addNode(xValues[0], source.apply(xValues[0]));
-        for (int i = 1; i <= (count - 1); i++) {
+        for (int i = 1; i < count; i++) {
             xValues[i] = xValues[i - 1] + step;
             this.addNode(xValues[i], source.apply(xValues[i]));
         }
