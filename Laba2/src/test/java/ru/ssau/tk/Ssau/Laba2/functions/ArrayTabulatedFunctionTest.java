@@ -11,6 +11,11 @@ public class ArrayTabulatedFunctionTest {
     private final ArrayTabulatedFunction testingArrayFunction = new ArrayTabulatedFunction(source, 1, 16, 6);
 
     @Test
+    public void testInsert() {
+
+    }
+
+    @Test
     public void testGetCount() {
 
         assertEquals(testingArrayFunction.getCount(), 6);

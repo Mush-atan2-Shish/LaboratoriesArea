@@ -10,7 +10,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         double y;
     }
 
-    private void addNode(double x, double y) {
+    public void addNode(double x, double y) {
         Node newNode = new Node();
         if (head == null) {
             head = newNode;

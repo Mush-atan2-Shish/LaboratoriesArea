@@ -22,6 +22,18 @@ public class LinkedListTabulatedFunctionTest {
     }
 
     @Test
+    public void testAddNode() {
+
+        testingListFunction.addNode(7, 14);
+        final double delta = 0.0001;
+        assertEquals(testingListFunction.leftBound(), 1, delta);
+        assertEquals(testingListFunction.rightBound(), 7, delta);
+        assertNotEquals(testingListFunction.getX(0), 8, delta);
+        assertEquals(testingListFunction.extrapolateRight(8), 40.8889, delta);
+
+    }
+
+    @Test
     public void testApply() {
         LinkedListTabulatedFunction testingApply = new LinkedListTabulatedFunction(xValues, yValues);
 

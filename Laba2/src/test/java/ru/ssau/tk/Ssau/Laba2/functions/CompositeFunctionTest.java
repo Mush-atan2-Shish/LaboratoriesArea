@@ -5,6 +5,11 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class CompositeFunctionTest {
+    private final double[] xValuesList = new double[]{1, 2, 3, 4, 5};
+    private final double[] yValuesList = new double[]{6, 7, 8, 9, 10};
+
+    private final double[] xValuesArray = new double[]{11, 12, 13, 14, 15};
+    private final double[] yValuesArray = new double[]{16, 17, 18, 19, 20};
 
     @Test
     public void testApply() {
@@ -37,5 +42,16 @@ public class CompositeFunctionTest {
         assertEquals(identitySqrFunction.apply(2), 4, delta);
         assertEquals(identitySqrFunction.apply(-3), 9, delta);
         assertEquals(identitySqrFunction.apply(0), 0, delta);
+
+        MathFunction listFunction = new LinkedListTabulatedFunction(xValuesList, yValuesList);
+        MathFunction arrayFunction = new LinkedListTabulatedFunction(xValuesArray, yValuesArray);
+        MathFunction arrayListSqrFunction = arrayFunction.andThen(listFunction).andThen(sqrFunction);
+        MathFunction listArrayHyperbolicTangentFunction = listFunction.andThen(arrayFunction).andThen(hyperbolicTangent);
+        assertEquals(arrayListSqrFunction.apply(1.2), 125.44, delta);
+        assertEquals(listArrayHyperbolicTangentFunction.apply(2.4), 1, delta);
+        assertEquals(arrayListSqrFunction.apply(3.6), 184.96, delta);
+        assertEquals(listArrayHyperbolicTangentFunction.apply(7.8), 1, delta);
+        assertNotEquals(arrayListSqrFunction.apply(5.7), 174, delta);
+        assertNotEquals(listArrayHyperbolicTangentFunction.apply(9.7), 76.8, delta);
     }
 }
