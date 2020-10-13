@@ -2,7 +2,7 @@ package ru.ssau.tk.Ssau.Laba2.functions;
 
 import java.util.Arrays;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
 
     protected int count;
     protected double[] xValues;
@@ -109,32 +109,61 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public void insert(double x, double y) {
-        ArrayTabulatedFunction listFunction = new ArrayTabulatedFunction(xValues, yValues);
-        for (int i = 0; i < xValues.length; i++) {
-            if (x == xValues[i]) {
-                listFunction.setY(i, y);
-                return;
-            }
-            {
-                double[] xNewValues = new double[xValues.length + 1];
-                double[] yNewValues = new double[yValues.length + 1];
-                System.arraycopy(xValues, 0, xNewValues, 0, xValues.length);
-                System.arraycopy(yValues, 0, yNewValues, 0, yValues.length);
-                if (x >= rightBound()) {
-                    xNewValues[xValues.length] = x;
-                    yNewValues[indexOfY(extrapolateRight(x))] = y;
-                }
-                if (x <= leftBound()) {
-                    xNewValues[0] = x;
-                    yNewValues[indexOfY(extrapolateLeft(x))] = y;
-                    return;
-                }
-                if ((x < rightBound()) && (x > leftBound())) {
-                    yNewValues[indexOfY(interpolate(x, leftBound(), rightBound(), getY(0), getY(yValues.length)))] = y;
-                    xNewValues[indexOfY(interpolate(x, leftBound(), rightBound(), getY(0), getY(yValues.length)))] = x;
-                    return;
-                }
-            }
+        int indexOfX = indexOfX(x);
+        if (indexOfX != -1) {
+            setY(indexOfX, y);
         }
+        indexOfX = floorIndexOfX(x);
+        double[] newXValues = new double[count + 1];
+        double[] newYValues = new double[count + 1];
+        if (indexOfX == 0) {
+            newXValues[0] = x;
+            newYValues[0] = y;
+            System.arraycopy(xValues, 0, newXValues, 1, count);
+            System.arraycopy(yValues, 0, newYValues, 1, count);
+        }
+        if (indexOfX == count) {
+            System.arraycopy(xValues, 0, newXValues, 0, count);
+            System.arraycopy(yValues, 0, newYValues, 0, count);
+            newXValues[count] = x;
+            newYValues[count] = y;
+        }
+        if ((indexOfX != 0) && (indexOfX != count)) {
+            System.arraycopy(xValues, 0, newXValues, 0, indexOfX + 1);
+            System.arraycopy(yValues, 0, newYValues, 0, indexOfX + 1);
+            newXValues[indexOfX + 1] = x;
+            newYValues[indexOfX + 1] = y;
+            System.arraycopy(xValues, indexOfX, newXValues, indexOfX + 1, count - indexOfX);
+            System.arraycopy(xValues, indexOfX, newXValues, indexOfX + 1, count - indexOfX);
+        }
+        this.xValues = newXValues;
+        this.yValues = newYValues;
+        count++;
+    }
+
+    @Override
+    public void remove(int index) {
+        double[] xTempValues = new double[count];
+        double[] yTempValues = new double[count];
+
+        if (index == 0) {
+            System.arraycopy(xValues, 1, xTempValues, 0, count - 1);
+            System.arraycopy(yValues, 1, yTempValues, 0, count - 1);
+        }
+
+        if (index == count) {
+            System.arraycopy(xValues, 0, xTempValues, 0, count - 1);
+            System.arraycopy(yValues, 0, yTempValues, 0, count - 1);
+
+        } else {
+            System.arraycopy(xValues, 0, xTempValues, 0, index);
+            System.arraycopy(yValues, 0, yTempValues, 0, index);
+            System.arraycopy(xValues, index + 1, xTempValues, index, count - index - 1);
+            System.arraycopy(yValues, index + 1, yTempValues, index, count - index - 1);
+        }
+
+        this.xValues = xTempValues;
+        this.yValues = yTempValues;
+        count--;
     }
 }

@@ -11,7 +11,17 @@ public class ArrayTabulatedFunctionTest {
     private final ArrayTabulatedFunction testingArrayFunction = new ArrayTabulatedFunction(source, 1, 16, 6);
 
     @Test
-    public void testInsert() {
+    public void testRemove() {
+
+        ArrayTabulatedFunction testingRemove = new ArrayTabulatedFunction(xValues, yValues);
+        testingRemove.remove(2);
+        testingRemove.remove(1);
+        testingRemove.remove(0);
+        final double delta = 0.0001;
+        assertEquals(testingRemove.getX(0), 1.4, delta);
+        assertEquals(testingRemove.getX(1), 1.5, delta);
+        assertEquals(testingRemove.getX(2), 0, delta);
+        assertNotEquals(testingRemove.getX(1), 8, delta);
 
     }
 

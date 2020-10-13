@@ -1,7 +1,50 @@
 package ru.ssau.tk.Ssau.Laba2.functions;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
     private Node head;
+
+    @Override
+    public void insert(double x, double y) {
+        if (count == 0) {
+            addNode(x, y);
+        } else if (indexOfX(x) != -1) {
+            setY(indexOfX(x), y);
+        } else {
+            int index = floorIndexOfX(x);
+            Node newNode = new Node();
+            newNode.x = x;
+            newNode.y = y;
+
+            if (index == 0) {
+                newNode.next = head;
+                newNode.prev = head.prev;
+                head.prev.next = newNode;
+                head = newNode;
+            } else {
+                if (index == count) {
+                    newNode.next = head;
+                    newNode.prev = head.prev;
+                    head.prev.next = newNode;
+                    head.prev = newNode;
+                } else {
+                    Node previous = getNode(index);
+                    newNode.next = previous.next;
+                    newNode.prev = previous;
+                    previous.next = newNode;
+                    newNode.next.prev = newNode;
+                }
+            }
+            count++;
+        }
+    }
+
+    @Override
+    public void remove(int index) {
+        Node deletedNode = getNode(index);
+        deletedNode.prev.next = deletedNode.next;
+        deletedNode.next.prev = deletedNode.prev;
+        count--;
+    }
 
     protected static class Node {
         Node next;

@@ -11,6 +11,31 @@ public class LinkedListTabulatedFunctionTest {
     private final MathFunction source = new SqrFunction();
     private final LinkedListTabulatedFunction testingListFunction = new LinkedListTabulatedFunction(source, 1, 16, 6);
 
+    @Test
+    public void testInsert() {
+        double[] xNewValues = new double[]{};
+        double[] yNewValues = new double[]{};
+        LinkedListTabulatedFunction testingInsert = new LinkedListTabulatedFunction(xNewValues, yNewValues);
+
+        testingInsert.insert(1, 10);
+        testingInsert.insert(0, 0);
+        testingInsert.insert(0, 0);
+        testingInsert.insert(3, 30);
+        testingInsert.insert(2, 20);
+
+        final double delta = 0.0001;
+        assertEquals(testingInsert.getX(1), 1, delta);
+        assertEquals(testingInsert.getY(1), 10, delta);
+
+        assertEquals(testingInsert.getX(0), 0, delta);
+        assertEquals(testingInsert.getY(0), 0, delta);
+
+        assertEquals(testingInsert.getX(3), 3, delta);
+        assertEquals(testingInsert.getY(3), 30, delta);
+
+        assertEquals(testingInsert.getX(2), 2, delta);
+        assertEquals(testingInsert.getY(2), 20, delta);
+    }
 
     @Test
     public void testGetCount() {
@@ -19,6 +44,14 @@ public class LinkedListTabulatedFunctionTest {
         assertNotEquals(testingListFunction.getCount(), 7);
         assertNotEquals(testingListFunction.getCount(), 5);
 
+    }
+
+    @Test
+    public void testRemove() {
+        testingListFunction.remove(3);
+        assertEquals(testingListFunction.getX(3), 13);
+        testingListFunction.remove(1);
+        assertEquals(testingListFunction.getX(1), 7);
     }
 
     @Test
