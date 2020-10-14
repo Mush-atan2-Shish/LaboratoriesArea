@@ -18,12 +18,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         this.count = count;
         xValues = new double[count];
         yValues = new double[count];
-        xValues[0] = xFrom;
-        xValues[count - 1] = xTo;
-        for (int i = 1; i < count - 1; i++) {
-            xValues[i] = xFrom + i * (xTo - xFrom) / (count - 1);
-        }
         for (int i = 0; i < count; i++) {
+            xValues[i] = xFrom + i * (xTo - xFrom) / (count - 1);
             yValues[i] = source.apply(xValues[i]);
         }
     }
@@ -34,32 +30,38 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected int floorIndexOfX(double x) {
-        for (int i = 0; i < count; i++) {
-            if (x == xValues[i]) {
+        if (x < xValues[0])
+            return 0;
+        for (int i = 0; i + 1 < count; i++) {
+            if (xValues[i + 1] > x) {
                 return i;
             }
         }
-        int i = 0;
-        do {
-            i++;
-        }
-        while (x > xValues[i]);
-        return i - 1;
+        return count;
     }
 
     @Override
     protected double extrapolateLeft(double x) {
-        return yValues[0] + (yValues[1] - yValues[0]) * (x - xValues[0]) / (xValues[1] - xValues[0]);
+        if (count == 1) {
+            return x;
+        }
+        return interpolate(x, xValues[0], xValues[1], yValues[0], yValues[1]);
     }
 
     @Override
     protected double extrapolateRight(double x) {
-        return yValues[count - 2] + (yValues[count - 1] - yValues[count - 2]) * (x - xValues[count - 2]) / (xValues[count - 1] - xValues[count - 2]);
+        if (count == 1) {
+            return x;
+        }
+        return interpolate(x, xValues[count - 2], xValues[count - 1], yValues[count - 2], yValues[count - 1]);
     }
 
     @Override
     protected double interpolate(double x, int floorIndex) {
-        return yValues[floorIndex] + (yValues[floorIndex + 1] - yValues[floorIndex]) * (x - xValues[floorIndex]) / (xValues[floorIndex + 1] - xValues[floorIndex]);
+        if (count == 1) {
+            return x;
+        }
+        return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1], yValues[floorIndex], yValues[floorIndex + 1]);
     }
 
     @Override
@@ -134,7 +136,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
             newXValues[indexOfX + 1] = x;
             newYValues[indexOfX + 1] = y;
             System.arraycopy(xValues, indexOfX, newXValues, indexOfX + 1, count - indexOfX);
-            System.arraycopy(xValues, indexOfX, newXValues, indexOfX + 1, count - indexOfX);
+            System.arraycopy(yValues, indexOfX, newYValues, indexOfX + 1, count - indexOfX);
         }
         this.xValues = newXValues;
         this.yValues = newYValues;

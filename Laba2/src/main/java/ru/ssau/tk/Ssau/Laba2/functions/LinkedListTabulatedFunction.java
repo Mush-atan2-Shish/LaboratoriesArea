@@ -3,6 +3,23 @@ package ru.ssau.tk.Ssau.Laba2.functions;
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
     private Node head;
 
+    public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
+        for (int i = 0; i < xValues.length; i++) {
+            this.addNode(xValues[i], yValues[i]);
+        }
+    }
+
+    public LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
+        double[] xValues = new double[count];
+        xValues[0] = xFrom;
+        final double step = (xTo - xFrom) / (count - 1);
+        this.addNode(xValues[0], source.apply(xValues[0]));
+        for (int i = 1; i < count; i++) {
+            xValues[i] = xValues[i - 1] + step;
+            this.addNode(xValues[i], source.apply(xValues[i]));
+        }
+    }
+
     @Override
     public void insert(double x, double y) {
         if (count == 0) {
@@ -14,7 +31,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             Node newNode = new Node();
             newNode.x = x;
             newNode.y = y;
-
             if (index == 0) {
                 newNode.next = head;
                 newNode.prev = head.prev;
@@ -46,13 +62,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         count--;
     }
 
-    protected static class Node {
-        Node next;
-        Node prev;
-        double x;
-        double y;
-    }
-
     public void addNode(double x, double y) {
         Node newNode = new Node();
         if (head == null) {
@@ -71,23 +80,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             newNode.y = y;
         }
         count += 1;
-    }
-
-    public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
-        for (int i = 0; i < xValues.length; i++) {
-            this.addNode(xValues[i], yValues[i]);
-        }
-    }
-
-    public LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
-        double[] xValues = new double[count];
-        xValues[0] = xFrom;
-        final double step = (xTo - xFrom) / (count - 1);
-        this.addNode(xValues[0], source.apply(xValues[0]));
-        for (int i = 1; i < count; i++) {
-            xValues[i] = xValues[i - 1] + step;
-            this.addNode(xValues[i], source.apply(xValues[i]));
-        }
     }
 
     public double apply(double x) {
@@ -237,5 +229,12 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     @Override
     public double rightBound() {
         return head.prev.x;
+    }
+
+    protected static class Node {
+        public Node next;
+        public Node prev;
+        public double x;
+        public double y;
     }
 }
