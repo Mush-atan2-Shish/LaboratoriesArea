@@ -30,8 +30,9 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected int floorIndexOfX(double x) {
-        if (x < xValues[0])
+        if (x < xValues[0]) {
             return 0;
+        }
         for (int i = 0; i + 1 < count; i++) {
             if (xValues[i + 1] > x) {
                 return i;
@@ -111,36 +112,36 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public void insert(double x, double y) {
-        int indexOfX = indexOfX(x);
-        if (indexOfX != -1) {
-            setY(indexOfX, y);
+        for (int i = 0; i < count; i++) {
+            if (xValues[i] == x) {
+                yValues[i] = y;
+                return;
+            }
         }
-        indexOfX = floorIndexOfX(x);
-        double[] newXValues = new double[count + 1];
-        double[] newYValues = new double[count + 1];
-        if (indexOfX == 0) {
-            newXValues[0] = x;
-            newYValues[0] = y;
-            System.arraycopy(xValues, 0, newXValues, 1, count);
-            System.arraycopy(yValues, 0, newYValues, 1, count);
+        {
+            double[] xNewValues = new double[count + 1];
+            double[] yNewValues = new double[count + 1];
+            if (floorIndexOfX(x) == 0) {
+                xNewValues[0] = x;
+                yNewValues[0] = y;
+                System.arraycopy(xValues, 0, xNewValues, 1, count);
+                System.arraycopy(yValues, 0, yNewValues, 1, count);
+            } else {
+                int i = 0;
+                while ((i <= count - 1) && (x > xValues[i])) {
+                    i++;
+                }
+                System.arraycopy(xValues, 0, xNewValues, 0, i);
+                System.arraycopy(yValues, 0, yNewValues, 0, i);
+                xNewValues[i] = x;
+                yNewValues[i] = y;
+                System.arraycopy(xValues, i, xNewValues, i + 1, count - i);
+                System.arraycopy(yValues, i, yNewValues, i + 1, count - i);
+            }
+            this.xValues = xNewValues;
+            this.yValues = yNewValues;
+            count++;
         }
-        if (indexOfX == count) {
-            System.arraycopy(xValues, 0, newXValues, 0, count);
-            System.arraycopy(yValues, 0, newYValues, 0, count);
-            newXValues[count] = x;
-            newYValues[count] = y;
-        }
-        if ((indexOfX != 0) && (indexOfX != count)) {
-            System.arraycopy(xValues, 0, newXValues, 0, indexOfX + 1);
-            System.arraycopy(yValues, 0, newYValues, 0, indexOfX + 1);
-            newXValues[indexOfX + 1] = x;
-            newYValues[indexOfX + 1] = y;
-            System.arraycopy(xValues, indexOfX, newXValues, indexOfX + 1, count - indexOfX);
-            System.arraycopy(yValues, indexOfX, newYValues, indexOfX + 1, count - indexOfX);
-        }
-        this.xValues = newXValues;
-        this.yValues = newYValues;
-        count++;
     }
 
     @Override
@@ -151,12 +152,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         if (index == 0) {
             System.arraycopy(xValues, 1, xTempValues, 0, count - 1);
             System.arraycopy(yValues, 1, yTempValues, 0, count - 1);
-        }
-
-        if (index == count) {
-            System.arraycopy(xValues, 0, xTempValues, 0, count - 1);
-            System.arraycopy(yValues, 0, yTempValues, 0, count - 1);
-
         } else {
             System.arraycopy(xValues, 0, xTempValues, 0, index);
             System.arraycopy(yValues, 0, yTempValues, 0, index);

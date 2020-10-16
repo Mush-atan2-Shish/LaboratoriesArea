@@ -20,24 +20,27 @@ public class LinkedListTabulatedFunctionTest {
 
     @Test
     public void testInsert() {
+        LinkedListTabulatedFunction testingInsert = new LinkedListTabulatedFunction(xValues, yValues);
+        testingInsert.insert(1.25, 2.0);
+        assertEquals(testingInsert.getX(2), 1.25);
+        assertEquals(testingInsert.getY(2), 2.0);
+        testingInsert.insert(1.07, 2.54);
+        assertEquals(testingInsert.getX(0), 1.07);
+        assertEquals(testingInsert.getY(0), 2.54);
+        testingInsert.insert(1.67, 2.14);
+        assertEquals(testingInsert.getX(7), 1.67);
+        assertEquals(testingInsert.getY(7), 2.14);
 
-        getListThroughListFunction().insert(1, 2);
-        getListThroughListFunction().insert(1.4, 1.2);
-        getListThroughArrayFunction().insert(1.7, 2.8);
-        getListThroughArrayFunction().insert(1.5, 2.5);
-
-        final double delta = 0.0001;
-        assertEquals(getListThroughListFunction().getX(1), 4, delta);
-        assertEquals(getListThroughListFunction().getY(1), 16, delta);
-
-        assertEquals(getListThroughListFunction().getX(0), 1, delta);
-        assertEquals(getListThroughListFunction().getY(0), 1, delta);
-
-        assertEquals(getListThroughArrayFunction().getX(3), 1.4, delta);
-        assertEquals(getListThroughArrayFunction().getY(3), 2.4, delta);
-
-        assertEquals(getListThroughArrayFunction().getX(2), 1.3, delta);
-        assertEquals(getListThroughArrayFunction().getY(2), 2.3, delta);
+        LinkedListTabulatedFunction testingInsertList = new LinkedListTabulatedFunction(source, 1, 16, 6);
+        testingInsertList.insert(4.25, 2.0);
+        assertEquals(testingInsertList.getX(2), 4.25);
+        assertEquals(testingInsertList.getY(2), 2.0);
+        testingInsertList.insert(1.07, 2.54);
+        assertEquals(testingInsertList.getX(0), 1.07);
+        assertEquals(testingInsertList.getY(0), 2.54);
+        testingInsertList.insert(17.67, 20.14);
+        assertEquals(testingInsertList.getX(8), 17.67);
+        assertEquals(testingInsertList.getY(83), 20.14);
 
     }
 
@@ -177,17 +180,20 @@ public class LinkedListTabulatedFunctionTest {
     @Test
     public void testSetY() {
 
-        getListThroughArrayFunction().setY(1, 2.23);
+        LinkedListTabulatedFunction testingSetY = new LinkedListTabulatedFunction(xValues, yValues);
         final double delta = 0.0001;
-        assertEquals(getListThroughArrayFunction().getY(1), 2.2, delta);
-        getListThroughArrayFunction().setY(2, 2.45);
-        assertEquals(getListThroughArrayFunction().getY(2), 2.3, delta);
-        assertNotEquals(getListThroughArrayFunction().getY(2), 1.45, delta);
-        getListThroughListFunction().setY(2, 78);
-        assertEquals(getListThroughListFunction().getY(2), 49, delta);
-        assertNotEquals(getListThroughListFunction().getY(2), 78, delta);
-        getListThroughListFunction().setY(4, 11);
-        assertEquals(getListThroughListFunction().getY(4), 169, delta);
+        testingSetY.setY(1, 2.23);
+        assertEquals(testingSetY.getY(1), 2.23, delta);
+        testingSetY.setY(2, 2.45);
+        assertEquals(testingSetY.getY(2), 2.45, delta);
+        assertNotEquals(testingSetY.getY(2), 1.45, delta);
+
+        LinkedListTabulatedFunction testingSetYList = new LinkedListTabulatedFunction(source, 1, 16, 6);
+        testingSetYList.setY(2, 78);
+        assertEquals(testingSetYList.getY(2), 78, delta);
+        assertNotEquals(testingSetYList.getY(2), 49, delta);
+        testingSetYList.setY(4, 11);
+        assertEquals(testingSetYList.getY(4), 11, delta);
 
     }
 

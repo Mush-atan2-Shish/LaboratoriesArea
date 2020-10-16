@@ -24,35 +24,35 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     public void insert(double x, double y) {
         if (count == 0) {
             addNode(x, y);
-        } else if (indexOfX(x) != -1) {
-            setY(indexOfX(x), y);
+            return;
         } else {
-            int index = floorIndexOfX(x);
             Node newNode = new Node();
             newNode.x = x;
             newNode.y = y;
-            if (index == 0) {
-                newNode.next = head;
-                newNode.prev = head.prev;
-                head.prev.next = newNode;
-                head = newNode;
-            } else {
-                if (index == count) {
-                    newNode.next = head;
-                    newNode.prev = head.prev;
-                    head.prev.next = newNode;
-                    head.prev = newNode;
+            for (int i = 0; i <= count - 1; i++) {
+                if (getX(i) == x) {
+                    setY(i, newNode.y);
                 } else {
-                    Node previous = getNode(index);
-                    newNode.next = previous.next;
-                    newNode.prev = previous;
-                    previous.next = newNode;
-                    newNode.next.prev = newNode;
+                    if (floorIndexOfX(newNode.x) != 0) {
+                        Node previous = new Node();
+                        previous.x = getX(floorIndexOfX(newNode.x));
+                        previous.y = getY(floorIndexOfX(newNode.x));
+                        previous.next = newNode;
+                        newNode.next = previous.next;
+                        newNode.prev = previous;
+                        addNode(newNode.x, newNode.y);
+                    } else {
+                        newNode.next = head;
+                        newNode.prev = head.prev;
+                        head = newNode;
+                        addNode(newNode.x, newNode.y);
+                    }
                 }
             }
-            count++;
         }
+        count++;
     }
+
 
     @Override
     public void remove(int index) {

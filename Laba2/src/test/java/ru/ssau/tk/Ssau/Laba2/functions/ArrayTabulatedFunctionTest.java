@@ -20,28 +20,47 @@ public class ArrayTabulatedFunctionTest {
     @Test
     public void testRemove() {
 
-        getArrayThroughArrayFunction().remove(2);
-        getArrayThroughArrayFunction().remove(1);
-        getArrayThroughArrayFunction().remove(0);
+        ArrayTabulatedFunction testingRemoveArray = new ArrayTabulatedFunction(xValues, yValues);
+        testingRemoveArray.remove(2);
+        testingRemoveArray.remove(1);
+        testingRemoveArray.remove(0);
         final double delta = 0.0001;
-        assertEquals(getArrayThroughArrayFunction().getX(0), 1.1, delta);
-        assertEquals(getArrayThroughArrayFunction().getX(1), 1.2, delta);
-        assertEquals(getArrayThroughArrayFunction().getX(2), 1.3, delta);
-        assertNotEquals(getArrayThroughArrayFunction().getX(1), 8, delta);
+        assertEquals(testingRemoveArray.getX(0), 1.4, delta);
+        assertEquals(testingRemoveArray.getX(1), 1.5, delta);
+        assertNotEquals(testingRemoveArray.getX(1), 8, delta);
 
+        ArrayTabulatedFunction testingRemoveList = new ArrayTabulatedFunction(source, 1, 16, 6);
+        testingRemoveList.remove(0);
+        testingRemoveList.remove(0);
+        testingRemoveList.remove(0);
+        assertEquals(testingRemoveList.getX(0), 10, delta);
+        assertEquals(testingRemoveList.getX(1), 13, delta);
     }
 
     @Test
     public void testInsert() {
 
-        getArrayThroughArrayFunction().insert(1.14, 2.0);
-        assertEquals(getArrayThroughArrayFunction().getX(0), 1.1);
-        assertEquals(getArrayThroughArrayFunction().getX(1), 1.2);
-        assertEquals(getArrayThroughArrayFunction().getX(2), 1.3);
-        getArrayThroughLinkedFunction().insert(1.6, 2.7);
-        assertEquals(getArrayThroughLinkedFunction().getX(2), 7.0);
-        assertEquals(getArrayThroughLinkedFunction().getX(0), 1.0);
-        assertEquals(getArrayThroughLinkedFunction().getX(1), 4.0);
+        ArrayTabulatedFunction testingInsert = new ArrayTabulatedFunction(xValues, yValues);
+        testingInsert.insert(1.25, 2.0);
+        assertEquals(testingInsert.getX(2), 1.25);
+        assertEquals(testingInsert.getY(2), 2.0);
+        testingInsert.insert(1.07, 2.54);
+        assertEquals(testingInsert.getX(0), 1.07);
+        assertEquals(testingInsert.getY(0), 2.54);
+        testingInsert.insert(1.67, 2.14);
+        assertEquals(testingInsert.getX(7), 1.67);
+        assertEquals(testingInsert.getY(7), 2.14);
+
+        ArrayTabulatedFunction testingInsertList = new ArrayTabulatedFunction(source, 1, 16, 6);
+        testingInsertList.insert(4.25, 2.0);
+        assertEquals(testingInsertList.getX(2), 4.25);
+        assertEquals(testingInsertList.getY(2), 2.0);
+        testingInsertList.insert(1.07, 2.54);
+        assertEquals(testingInsertList.getX(0), 1.07);
+        assertEquals(testingInsertList.getY(0), 2.54);
+        testingInsertList.insert(17.67, 20.14);
+        assertEquals(testingInsertList.getX(8), 17.67);
+        assertEquals(testingInsertList.getY(8), 20.14);
 
     }
 
@@ -149,17 +168,20 @@ public class ArrayTabulatedFunctionTest {
     @Test
     public void testSetY() {
 
-        getArrayThroughArrayFunction().setY(1, 2.23);
+        ArrayTabulatedFunction testingSetY = new ArrayTabulatedFunction(xValues, yValues);
         final double delta = 0.0001;
-        assertEquals(getArrayThroughArrayFunction().getY(1), 2.2, delta);
-        getArrayThroughArrayFunction().setY(2, 2.45);
-        assertEquals(getArrayThroughArrayFunction().getY(2), 2.3, delta);
-        assertNotEquals(getArrayThroughArrayFunction().getY(2), 1.45, delta);
-        getArrayThroughLinkedFunction().setY(2, 78);
-        assertEquals(getArrayThroughLinkedFunction().getY(2), 49, delta);
-        assertNotEquals(getArrayThroughLinkedFunction().getY(2), 78, delta);
-        getArrayThroughLinkedFunction().setY(4, 11);
-        assertEquals(getArrayThroughLinkedFunction().getY(4), 169, delta);
+        testingSetY.setY(1, 2.23);
+        assertEquals(testingSetY.getY(1), 2.23, delta);
+        testingSetY.setY(2, 2.45);
+        assertEquals(testingSetY.getY(2), 2.45, delta);
+        assertNotEquals(testingSetY.getY(2), 1.45, delta);
+
+        ArrayTabulatedFunction testingSetYList = new ArrayTabulatedFunction(source, 1, 16, 6);
+        testingSetYList.setY(2, 78);
+        assertEquals(testingSetYList.getY(2), 78, delta);
+        assertNotEquals(testingSetYList.getY(2), 49, delta);
+        testingSetYList.setY(4, 11);
+        assertEquals(testingSetYList.getY(4), 11, delta);
 
     }
 
