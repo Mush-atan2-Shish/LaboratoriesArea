@@ -15,13 +15,13 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     public ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
-        this.count = count;
         xValues = new double[count];
         yValues = new double[count];
         for (int i = 0; i < count; i++) {
             xValues[i] = xFrom + i * (xTo - xFrom) / (count - 1);
             yValues[i] = source.apply(xValues[i]);
         }
+        this.count = count;
     }
 
     public int getCount() {
@@ -30,15 +30,12 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected int floorIndexOfX(double x) {
-        if (x < xValues[0]) {
-            return 0;
-        }
-        for (int i = 0; i + 1 < count; i++) {
-            if (xValues[i + 1] > x) {
-                return i;
+        for (int i = 0; i <= count - 1; i++) {
+            if (x < xValues[i]) {
+                return i - 1;
             }
         }
-        return count;
+        return count - 1;
     }
 
     @Override
@@ -113,8 +110,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     @Override
     public void insert(double x, double y) {
         for (int i = 0; i < count; i++) {
-            if (xValues[i] == x) {
-                yValues[i] = y;
+            if (x == xValues[i]) {
+                setY(i,y);
                 return;
             }
         }
@@ -127,16 +124,12 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
                 System.arraycopy(xValues, 0, xNewValues, 1, count);
                 System.arraycopy(yValues, 0, yNewValues, 1, count);
             } else {
-                int i = 0;
-                while ((i <= count - 1) && (x > xValues[i])) {
-                    i++;
-                }
-                System.arraycopy(xValues, 0, xNewValues, 0, i);
-                System.arraycopy(yValues, 0, yNewValues, 0, i);
-                xNewValues[i] = x;
-                yNewValues[i] = y;
-                System.arraycopy(xValues, i, xNewValues, i + 1, count - i);
-                System.arraycopy(yValues, i, yNewValues, i + 1, count - i);
+                System.arraycopy(xValues, 0, xNewValues, 0, floorIndexOfX(x) + 1);
+                System.arraycopy(yValues, 0, yNewValues, 0, floorIndexOfX(x) + 1);
+                xNewValues[floorIndexOfX(x) + 1] = x;
+                yNewValues[floorIndexOfX(x) + 1] = y;
+                System.arraycopy(xValues, floorIndexOfX(x) + 1, xNewValues, floorIndexOfX(x) + 2, count - floorIndexOfX(x) - 1);
+                System.arraycopy(yValues, floorIndexOfX(x) + 1, yNewValues, floorIndexOfX(x) + 2, count - floorIndexOfX(x) - 1);
             }
             this.xValues = xNewValues;
             this.yValues = yNewValues;
@@ -146,19 +139,12 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public void remove(int index) {
-        double[] xTempValues = new double[count];
-        double[] yTempValues = new double[count];
-
-        if (index == 0) {
-            System.arraycopy(xValues, 1, xTempValues, 0, count - 1);
-            System.arraycopy(yValues, 1, yTempValues, 0, count - 1);
-        } else {
-            System.arraycopy(xValues, 0, xTempValues, 0, index);
-            System.arraycopy(yValues, 0, yTempValues, 0, index);
-            System.arraycopy(xValues, index + 1, xTempValues, index, count - index - 1);
-            System.arraycopy(yValues, index + 1, yTempValues, index, count - index - 1);
-        }
-
+        double[] xTempValues = new double[count + 1];
+        double[] yTempValues = new double[count + 1];
+        System.arraycopy(xValues, 0, xTempValues, 0, index);
+        System.arraycopy(yValues, 0, yTempValues, 0, index);
+        System.arraycopy(xValues, index + 1, xTempValues, index, count - index - 1);
+        System.arraycopy(yValues, index + 1, yTempValues, index, count - index - 1);
         this.xValues = xTempValues;
         this.yValues = yTempValues;
         count--;

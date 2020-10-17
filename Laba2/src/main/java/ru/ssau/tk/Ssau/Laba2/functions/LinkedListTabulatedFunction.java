@@ -22,42 +22,39 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public void insert(double x, double y) {
-        if (count == 0) {
-            addNode(x, y);
-            return;
+        if (indexOfX(x) != -1) {
+            setY(indexOfX(x), y);
         } else {
             Node newNode = new Node();
-            newNode.x = x;
-            newNode.y = y;
-            if (indexOfX(x) != -1) {
-                setY(indexOfX(x), newNode.y);
-            } else {
-                if ((floorIndexOfX(newNode.x) != 0) && (floorIndexOfX(newNode.x) < count - 1)) {
-                    Node previous = getNode(floorIndexOfX(x));
-                    previous.next = newNode;
-                    newNode.next = previous.next;
-                    newNode.prev = previous;
+            if (floorIndexOfX(x) == 0 || floorIndexOfX(x) == count) {
+                newNode.next = head;
+                newNode.prev = head.prev;
+                newNode.x = x;
+                newNode.y = y;
+                if (floorIndexOfX(x) == 0) {
+                    head = newNode;
                 } else {
-                    if (floorIndexOfX(newNode.x) == count) {
-                        newNode.next = head;
-                        head.prev = newNode;
-                        newNode.prev = head.prev.prev;
-                    }
-                    if (floorIndexOfX(newNode.x) == 0) {
-                        newNode.next = head;
-                        newNode.prev = head.prev;
-                        head = newNode;
-                    }
+                    head.prev = newNode;
                 }
+            } else {
+                Node previous = getNode(floorIndexOfX(x));
+                newNode.next = previous.next;
+                newNode.prev = previous;
+                newNode.x = x;
+                newNode.y = y;
+                previous.next = newNode;
             }
+            count++;
         }
-        count++;
     }
-
 
     @Override
     public void remove(int index) {
         Node deletedNode = getNode(index);
+        if (index == 0) {
+            head = deletedNode.next;
+            head.prev = deletedNode.prev;
+        }
         deletedNode.prev.next = deletedNode.next;
         deletedNode.next.prev = deletedNode.prev;
         count--;
@@ -198,8 +195,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public int indexOfX(double x) {
-        Node first;
-        first = head;
+        Node first = head;
         for (int i = 0; i < count; i++) {
             if (first.x == x) {
                 return i;
