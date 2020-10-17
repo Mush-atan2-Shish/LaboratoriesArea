@@ -22,6 +22,7 @@ public class LinkedListTabulatedFunctionTest {
     public void testInsert() {
         LinkedListTabulatedFunction testingInsert = new LinkedListTabulatedFunction(xValues, yValues);
         testingInsert.insert(1.25, 2.0);
+        assertEquals(testingInsert.getCount(), 6);
         assertEquals(testingInsert.getX(2), 1.25);
         assertEquals(testingInsert.getY(2), 2.0);
         testingInsert.insert(1.07, 2.54);
@@ -40,7 +41,7 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(testingInsertList.getY(0), 2.54);
         testingInsertList.insert(17.67, 20.14);
         assertEquals(testingInsertList.getX(8), 17.67);
-        assertEquals(testingInsertList.getY(83), 20.14);
+        assertEquals(testingInsertList.getY(8), 20.14);
 
     }
 

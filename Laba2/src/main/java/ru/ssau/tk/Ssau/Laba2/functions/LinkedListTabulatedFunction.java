@@ -29,23 +29,24 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             Node newNode = new Node();
             newNode.x = x;
             newNode.y = y;
-            for (int i = 0; i <= count - 1; i++) {
-                if (getX(i) == x) {
-                    setY(i, newNode.y);
+            if (indexOfX(x) != -1) {
+                setY(indexOfX(x), newNode.y);
+            } else {
+                if ((floorIndexOfX(newNode.x) != 0) && (floorIndexOfX(newNode.x) < count - 1)) {
+                    Node previous = getNode(floorIndexOfX(x));
+                    previous.next = newNode;
+                    newNode.next = previous.next;
+                    newNode.prev = previous;
                 } else {
-                    if (floorIndexOfX(newNode.x) != 0) {
-                        Node previous = new Node();
-                        previous.x = getX(floorIndexOfX(newNode.x));
-                        previous.y = getY(floorIndexOfX(newNode.x));
-                        previous.next = newNode;
-                        newNode.next = previous.next;
-                        newNode.prev = previous;
-                        addNode(newNode.x, newNode.y);
-                    } else {
+                    if (floorIndexOfX(newNode.x) == count) {
+                        newNode.next = head;
+                        head.prev = newNode;
+                        newNode.prev = head.prev.prev;
+                    }
+                    if (floorIndexOfX(newNode.x) == 0) {
                         newNode.next = head;
                         newNode.prev = head.prev;
                         head = newNode;
-                        addNode(newNode.x, newNode.y);
                     }
                 }
             }
