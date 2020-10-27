@@ -31,35 +31,35 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public void insert(double x, double y) {
-            if (count == 0) {
-                addNode(x, y);
+        if (count == 0) {
+            addNode(x, y);
+        } else {
+            if (indexOfX(x) != -1) {
+                setY(indexOfX(x), y);
             } else {
-                        if (indexOfX(x) != -1) {
-                            setY(indexOfX(x), y);
-                        } else {
-                            Node newNode = new Node();
-                            if (floorIndexOfX(x) == 0 || floorIndexOfX(x) == count) {
-                                newNode.next = head;
-                                newNode.prev = head.prev;
-                                newNode.x = x;
-                                newNode.y = y;
-                                if (floorIndexOfX(x) == 0) {
-                                    head = newNode;
-                                } else {
-                                    head.prev = newNode;
-                                }
-                            } else {
-                                Node previous = getNode(floorIndexOfX(x));
-                                newNode.next = previous.next;
-                                newNode.prev = previous;
-                                newNode.x = x;
-                                newNode.y = y;
-                                previous.next = newNode;
-                            }
-                            count++;
-                        }
+                Node newNode = new Node();
+                if (floorIndexOfX(x) == 0 || floorIndexOfX(x) == count) {
+                    newNode.next = head;
+                    newNode.prev = head.prev;
+                    newNode.x = x;
+                    newNode.y = y;
+                    if (floorIndexOfX(x) == 0) {
+                        head = newNode;
+                    } else {
+                        head.prev = newNode;
                     }
+                } else {
+                    Node previous = getNode(floorIndexOfX(x));
+                    newNode.next = previous.next;
+                    newNode.prev = previous;
+                    newNode.x = x;
+                    newNode.y = y;
+                    previous.next = newNode;
                 }
+                count++;
+            }
+        }
+    }
 
     @Override
     public void remove(int index) {

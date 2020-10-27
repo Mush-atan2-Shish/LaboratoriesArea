@@ -73,7 +73,7 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(testingInsert.getY(7), 2.14);
 */
 
-        testingInsert.insert(1.1,2.7);                      //проверка совпадающего х
+        testingInsert.insert(1.1, 2.7);                      //проверка совпадающего х
         assertEquals(testingInsert.getX(0), 1.1);
         assertEquals(testingInsert.getY(0), 2.7);
         assertEquals(testingInsert.getX(1), 1.2);
@@ -86,11 +86,11 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(testingInsert.getY(4), 2.4);
         assertEquals(testingInsert.getX(5), 1.5);
         assertEquals(testingInsert.getY(5), 2.5);
-        assertEquals(testingInsert.getCount(),6);
+        assertEquals(testingInsert.getCount(), 6);
 
         LinkedListTabulatedFunction testingInsertList = new LinkedListTabulatedFunction(source, 1, 16, 6);
-        testingInsertList.insert(7,85);                     //проверка совпадающего х
-        assertEquals(testingInsertList.getCount(),6);
+        testingInsertList.insert(7, 85);                     //проверка совпадающего х
+        assertEquals(testingInsertList.getCount(), 6);
         assertEquals(testingInsertList.getX(0), 1);
         assertEquals(testingInsertList.getY(0), 1);
         assertEquals(testingInsertList.getX(1), 4);
@@ -105,7 +105,7 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(testingInsertList.getY(5), 256);
 
         testingInsertList.insert(4.25, 2.0);                       //х внутри исходного массива/листа
-        assertEquals(testingInsertList.getCount(),7);
+        assertEquals(testingInsertList.getCount(), 7);
         assertEquals(testingInsertList.getX(0), 1);
         assertEquals(testingInsertList.getY(0), 1);
         assertEquals(testingInsertList.getX(1), 4);
