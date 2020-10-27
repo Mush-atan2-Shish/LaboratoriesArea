@@ -35,7 +35,7 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(testingInsert.getY(4), 2.4);
         assertEquals(testingInsert.getX(5), 1.5);
         assertEquals(testingInsert.getY(5), 2.5);
-
+/*
         testingInsert.insert(1.07, 2.54);                   //х меньше всех исходных
         assertEquals(testingInsert.getCount(), 7);
         assertEquals(testingInsert.getX(0), 1.07);
@@ -71,100 +71,96 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(testingInsert.getY(6), 2.5);
         assertEquals(testingInsert.getX(7), 1.67);
         assertEquals(testingInsert.getY(7), 2.14);
+*/
 
-//
-//        testingInsert.insert(1.1,2.7);                      //проверка совпадающего х
-//        assertEquals(testingInsert.getX(0), 1.07);
-//        assertEquals(testingInsert.getY(0), 2.54);
-//        assertEquals(testingInsert.getX(1), 1.1);
-//        assertEquals(testingInsert.getY(1),2.7);
-//        assertEquals(testingInsert.getX(2), 1.2);
-//        assertEquals(testingInsert.getY(2), 2.2);
-//        assertEquals(testingInsert.getX(3), 1.25);
-//        assertEquals(testingInsert.getY(3), 2.0);
-//        assertEquals(testingInsert.getX(4), 1.3);
-//        assertEquals(testingInsert.getY(4), 2.3);
-//        assertEquals(testingInsert.getX(5), 1.4);
-//        assertEquals(testingInsert.getY(5), 2.4);
-//        assertEquals(testingInsert.getX(6), 1.5);
-//        assertEquals(testingInsert.getY(6), 2.5);
-//        assertEquals(testingInsert.getX(7), 1.67);
-//        assertEquals(testingInsert.getY(7), 2.14);
-//        assertEquals(testingInsert.getCount(),8);
-//
-//        LinkedListTabulatedFunction testingInsertList = new LinkedListTabulatedFunction(source, 1, 16, 6);
-//        testingInsertList.insert(7,85);                     //проверка совпадающего х
-//        assertEquals(testingInsertList.getCount(),6);
-//        assertEquals(testingInsertList.getX(0), 1);
-//        assertEquals(testingInsertList.getY(0), 1);
-//        assertEquals(testingInsertList.getX(1), 4);
-//        assertEquals(testingInsertList.getY(1), 16);
-//        assertEquals(testingInsertList.getX(2), 7);
-//        assertEquals(testingInsertList.getY(2), 85);
-//        assertEquals(testingInsertList.getX(3), 10);
-//        assertEquals(testingInsertList.getY(3), 100);
-//        assertEquals(testingInsertList.getX(4), 13);
-//        assertEquals(testingInsertList.getY(4), 169);
-//        assertEquals(testingInsertList.getX(5), 16);
-//        assertEquals(testingInsertList.getY(5), 256);
-//
-//        testingInsertList.insert(4.25, 2.0);                       //х внутри исходного массива/листа
-//        assertEquals(testingInsertList.getCount(),7);
-//        assertEquals(testingInsertList.getX(0), 1);
-//        assertEquals(testingInsertList.getY(0), 1);
-//        assertEquals(testingInsertList.getX(1), 4);
-//        assertEquals(testingInsertList.getY(1), 16);
-//        assertEquals(testingInsertList.getX(2), 4.25);
-//        assertEquals(testingInsertList.getY(2), 2.0);
-//        assertEquals(testingInsertList.getX(3), 7);
-//        assertEquals(testingInsertList.getY(3), 85);
-//        assertEquals(testingInsertList.getX(4), 10);
-//        assertEquals(testingInsertList.getY(4), 100);
-//        assertEquals(testingInsertList.getX(5), 13);
-//        assertEquals(testingInsertList.getY(5), 169);
-//        assertEquals(testingInsertList.getX(6), 16);
-//        assertEquals(testingInsertList.getY(6), 256);
-//
-//        testingInsertList.insert(0.07, 2.54);                         //х меньше всех исходных
-//        assertEquals(testingInsertList.getCount(),8);
-//        assertEquals(testingInsertList.getX(0), 0.07);
-//        assertEquals(testingInsertList.getY(0), 2.54);
-//        assertEquals(testingInsertList.getX(1), 1);
-//        assertEquals(testingInsertList.getY(1), 1);
-//        assertEquals(testingInsertList.getX(2), 4);
-//        assertEquals(testingInsertList.getY(2), 16);
-//        assertEquals(testingInsertList.getX(3), 4.25);
-//        assertEquals(testingInsertList.getY(3), 2.0);
-//        assertEquals(testingInsertList.getX(4), 7);
-//        assertEquals(testingInsertList.getY(4), 85);
-//        assertEquals(testingInsertList.getX(5), 10);
-//        assertEquals(testingInsertList.getY(5), 100);
-//        assertEquals(testingInsertList.getX(6), 13);
-//        assertEquals(testingInsertList.getY(6), 169);
-//        assertEquals(testingInsertList.getX(7), 16);
-//        assertEquals(testingInsertList.getY(7), 256);
-//
-//        testingInsertList.insert(17.67, 20.14);                       //х больше всех исходных
-//        assertEquals(testingInsertList.getCount(),9);
-//        assertEquals(testingInsertList.getX(0), 0.07);
-//        assertEquals(testingInsertList.getY(0), 2.54);
-//        assertEquals(testingInsertList.getX(1), 1);
-//        assertEquals(testingInsertList.getY(1), 1);
-//        assertEquals(testingInsertList.getX(2), 4);
-//        assertEquals(testingInsertList.getY(2), 16);
-//        assertEquals(testingInsertList.getX(3), 4.25);
-//        assertEquals(testingInsertList.getY(3), 2.0);
-//        assertEquals(testingInsertList.getX(4), 7);
-//        assertEquals(testingInsertList.getY(4), 85);
-//        assertEquals(testingInsertList.getX(5), 10);
-//        assertEquals(testingInsertList.getY(5), 100);
-//        assertEquals(testingInsertList.getX(6), 13);
-//        assertEquals(testingInsertList.getY(6), 169);
-//        assertEquals(testingInsertList.getX(7), 16);
-//        assertEquals(testingInsertList.getY(7), 256);
-//        assertEquals(testingInsertList.getX(8), 17.67);
-//        assertEquals(testingInsertList.getY(8), 20.14);
+        testingInsert.insert(1.1,2.7);                      //проверка совпадающего х
+        assertEquals(testingInsert.getX(0), 1.1);
+        assertEquals(testingInsert.getY(0), 2.7);
+        assertEquals(testingInsert.getX(1), 1.2);
+        assertEquals(testingInsert.getY(1), 2.2);
+        assertEquals(testingInsert.getX(2), 1.25);
+        assertEquals(testingInsert.getY(2), 2.0);
+        assertEquals(testingInsert.getX(3), 1.3);
+        assertEquals(testingInsert.getY(3), 2.3);
+        assertEquals(testingInsert.getX(4), 1.4);
+        assertEquals(testingInsert.getY(4), 2.4);
+        assertEquals(testingInsert.getX(5), 1.5);
+        assertEquals(testingInsert.getY(5), 2.5);
+        assertEquals(testingInsert.getCount(),6);
 
+        LinkedListTabulatedFunction testingInsertList = new LinkedListTabulatedFunction(source, 1, 16, 6);
+        testingInsertList.insert(7,85);                     //проверка совпадающего х
+        assertEquals(testingInsertList.getCount(),6);
+        assertEquals(testingInsertList.getX(0), 1);
+        assertEquals(testingInsertList.getY(0), 1);
+        assertEquals(testingInsertList.getX(1), 4);
+        assertEquals(testingInsertList.getY(1), 16);
+        assertEquals(testingInsertList.getX(2), 7);
+        assertEquals(testingInsertList.getY(2), 85);
+        assertEquals(testingInsertList.getX(3), 10);
+        assertEquals(testingInsertList.getY(3), 100);
+        assertEquals(testingInsertList.getX(4), 13);
+        assertEquals(testingInsertList.getY(4), 169);
+        assertEquals(testingInsertList.getX(5), 16);
+        assertEquals(testingInsertList.getY(5), 256);
+
+        testingInsertList.insert(4.25, 2.0);                       //х внутри исходного массива/листа
+        assertEquals(testingInsertList.getCount(),7);
+        assertEquals(testingInsertList.getX(0), 1);
+        assertEquals(testingInsertList.getY(0), 1);
+        assertEquals(testingInsertList.getX(1), 4);
+        assertEquals(testingInsertList.getY(1), 16);
+        assertEquals(testingInsertList.getX(2), 4.25);
+        assertEquals(testingInsertList.getY(2), 2.0);
+        assertEquals(testingInsertList.getX(3), 7);
+        assertEquals(testingInsertList.getY(3), 85);
+        assertEquals(testingInsertList.getX(4), 10);
+        assertEquals(testingInsertList.getY(4), 100);
+        assertEquals(testingInsertList.getX(5), 13);
+        assertEquals(testingInsertList.getY(5), 169);
+        assertEquals(testingInsertList.getX(6), 16);
+        assertEquals(testingInsertList.getY(6), 256);
+/*
+        testingInsertList.insert(0.07, 2.54);                         //х меньше всех исходных
+        assertEquals(testingInsertList.getCount(),8);
+        assertEquals(testingInsertList.getX(0), 0.07);
+        assertEquals(testingInsertList.getY(0), 2.54);
+        assertEquals(testingInsertList.getX(1), 1);
+        assertEquals(testingInsertList.getY(1), 1);
+        assertEquals(testingInsertList.getX(2), 4);
+        assertEquals(testingInsertList.getY(2), 16);
+        assertEquals(testingInsertList.getX(3), 4.25);
+        assertEquals(testingInsertList.getY(3), 2.0);
+        assertEquals(testingInsertList.getX(4), 7);
+        assertEquals(testingInsertList.getY(4), 85);
+        assertEquals(testingInsertList.getX(5), 10);
+        assertEquals(testingInsertList.getY(5), 100);
+        assertEquals(testingInsertList.getX(6), 13);
+        assertEquals(testingInsertList.getY(6), 169);
+        assertEquals(testingInsertList.getX(7), 16);
+        assertEquals(testingInsertList.getY(7), 256);
+
+        testingInsertList.insert(17.67, 20.14);                       //х больше всех исходных
+        assertEquals(testingInsertList.getCount(),9);
+        assertEquals(testingInsertList.getX(0), 0.07);
+        assertEquals(testingInsertList.getY(0), 2.54);
+        assertEquals(testingInsertList.getX(1), 1);
+        assertEquals(testingInsertList.getY(1), 1);
+        assertEquals(testingInsertList.getX(2), 4);
+        assertEquals(testingInsertList.getY(2), 16);
+        assertEquals(testingInsertList.getX(3), 4.25);
+        assertEquals(testingInsertList.getY(3), 2.0);
+        assertEquals(testingInsertList.getX(4), 7);
+        assertEquals(testingInsertList.getY(4), 85);
+        assertEquals(testingInsertList.getX(5), 10);
+        assertEquals(testingInsertList.getY(5), 100);
+        assertEquals(testingInsertList.getX(6), 13);
+        assertEquals(testingInsertList.getY(6), 169);
+        assertEquals(testingInsertList.getX(7), 16);
+        assertEquals(testingInsertList.getY(7), 256);
+        assertEquals(testingInsertList.getX(8), 17.67);
+        assertEquals(testingInsertList.getY(8), 20.14);
+*/
 
     }
 
@@ -277,6 +273,12 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(getListThroughListFunction().floorNodeOfX(16).x, 16, 0.0001);
         assertEquals(getListThroughListFunction().floorNodeOfX(13).x, 13, 0.0001);
         assertNotEquals(getListThroughListFunction().floorNodeOfX(13).x, 10, 0.0001);
+        assertThrows(IllegalArgumentException.class, () -> getListThroughArrayFunction().floorIndexOfX(-1));
+        assertThrows(IllegalArgumentException.class, () -> getListThroughArrayFunction().floorIndexOfX(1));
+        assertThrows(IllegalArgumentException.class, () -> getListThroughArrayFunction().floorIndexOfX(-3));
+        assertThrows(IllegalArgumentException.class, () -> getListThroughListFunction().floorIndexOfX(-1));
+        assertThrows(IllegalArgumentException.class, () -> getListThroughListFunction().floorIndexOfX(-10));
+        assertThrows(IllegalArgumentException.class, () -> getListThroughListFunction().floorIndexOfX(-4));
 
     }
 
@@ -290,6 +292,12 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(getListThroughListFunction().floorIndexOfX(7.39), 2);
         assertEquals(getListThroughListFunction().floorIndexOfX(13.78), 4);
         assertNotEquals(getListThroughListFunction().floorIndexOfX(13.78), 3);
+        assertThrows(IllegalArgumentException.class, () -> getListThroughArrayFunction().floorIndexOfX(-1));
+        assertThrows(IllegalArgumentException.class, () -> getListThroughArrayFunction().floorIndexOfX(1));
+        assertThrows(IllegalArgumentException.class, () -> getListThroughArrayFunction().floorIndexOfX(-3));
+        assertThrows(IllegalArgumentException.class, () -> getListThroughListFunction().floorIndexOfX(-1));
+        assertThrows(IllegalArgumentException.class, () -> getListThroughListFunction().floorIndexOfX(-10));
+        assertThrows(IllegalArgumentException.class, () -> getListThroughListFunction().floorIndexOfX(-4));
 
     }
 
@@ -342,6 +350,13 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(getListThroughListFunction().getX(1), 4, delta);
         assertEquals(getListThroughListFunction().getX(3), 10, delta);
         assertNotEquals(getListThroughListFunction().getX(3), 16, delta);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getX(-12));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getX(1004));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getX(185));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getX(-76));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getX(1070));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getX(189));
+
 
     }
 
@@ -355,6 +370,13 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(getListThroughListFunction().getY(1), 16, delta);
         assertEquals(getListThroughListFunction().getY(3), 100, delta);
         assertNotEquals(getListThroughListFunction().getY(3), 121, delta);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(-12));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(1004));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(185));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(-76));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(1070));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(189));
+
 
     }
 
@@ -375,6 +397,12 @@ public class LinkedListTabulatedFunctionTest {
         assertNotEquals(testingSetYList.getY(2), 49, delta);
         testingSetYList.setY(4, 11);
         assertEquals(testingSetYList.getY(4), 11, delta);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(-12));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(1004));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(185));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(-76));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(1070));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(189));
 
     }
 

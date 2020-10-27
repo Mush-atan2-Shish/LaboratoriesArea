@@ -102,7 +102,7 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(testingInsert.getY(4), 2.4);
         assertEquals(testingInsert.getX(5), 1.5);
         assertEquals(testingInsert.getY(5), 2.5);
-
+/*
         testingInsert.insert(1.07, 2.54);                   //х меньше всех исходных
         assertEquals(testingInsert.getCount(),7);
         assertEquals(testingInsert.getX(0), 1.07);
@@ -138,25 +138,21 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(testingInsert.getX(7), 1.67);
         assertEquals(testingInsert.getY(7), 2.14);
         assertEquals(testingInsert.getCount(),8);
-
+*/
         testingInsert.insert(1.1,2.7);                      //проверка совпадающего х
-        assertEquals(testingInsert.getX(0), 1.07);
-        assertEquals(testingInsert.getY(0), 2.54);
-        assertEquals(testingInsert.getX(1), 1.1);
-        assertEquals(testingInsert.getY(1),2.7);
-        assertEquals(testingInsert.getX(2), 1.2);
-        assertEquals(testingInsert.getY(2), 2.2);
-        assertEquals(testingInsert.getX(3), 1.25);
-        assertEquals(testingInsert.getY(3), 2.0);
-        assertEquals(testingInsert.getX(4), 1.3);
-        assertEquals(testingInsert.getY(4), 2.3);
-        assertEquals(testingInsert.getX(5), 1.4);
-        assertEquals(testingInsert.getY(5), 2.4);
-        assertEquals(testingInsert.getX(6), 1.5);
-        assertEquals(testingInsert.getY(6), 2.5);
-        assertEquals(testingInsert.getX(7), 1.67);
-        assertEquals(testingInsert.getY(7), 2.14);
-        assertEquals(testingInsert.getCount(),8);
+        assertEquals(testingInsert.getX(0), 1.1);
+        assertEquals(testingInsert.getY(0), 2.7);
+        assertEquals(testingInsert.getX(1), 1.2);
+        assertEquals(testingInsert.getY(1), 2.2);
+        assertEquals(testingInsert.getX(2), 1.25);
+        assertEquals(testingInsert.getY(2), 2.0);
+        assertEquals(testingInsert.getX(3), 1.3);
+        assertEquals(testingInsert.getY(3), 2.3);
+        assertEquals(testingInsert.getX(4), 1.4);
+        assertEquals(testingInsert.getY(4), 2.4);
+        assertEquals(testingInsert.getX(5), 1.5);
+        assertEquals(testingInsert.getY(5), 2.5);
+        assertEquals(testingInsert.getCount(),6);
 
         ArrayTabulatedFunction testingInsertList = new ArrayTabulatedFunction(source, 1, 16, 6);
         testingInsertList.insert(7,85);                     //проверка совпадающего х
@@ -190,7 +186,7 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(testingInsertList.getY(5), 169);
         assertEquals(testingInsertList.getX(6), 16);
         assertEquals(testingInsertList.getY(6), 256);
-
+/*
         testingInsertList.insert(0.07, 2.54);                         //х меньше всех исходных
         assertEquals(testingInsertList.getCount(),8);
         assertEquals(testingInsertList.getX(0), 0.07);
@@ -230,7 +226,7 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(testingInsertList.getY(7), 256);
         assertEquals(testingInsertList.getX(8), 17.67);
         assertEquals(testingInsertList.getY(8), 20.14);
-
+*/
     }
 
     @Test
@@ -266,7 +262,12 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(getArrayThroughLinkedFunction().floorIndexOfX(7.39), 2);
         assertEquals(getArrayThroughLinkedFunction().floorIndexOfX(13.78), 4);
         assertNotEquals(getArrayThroughLinkedFunction().floorIndexOfX(13.78), 3);
-
+        assertThrows(IllegalArgumentException.class, () -> getArrayThroughArrayFunction().floorIndexOfX(-1));
+        assertThrows(IllegalArgumentException.class, () -> getArrayThroughArrayFunction().floorIndexOfX(1));
+        assertThrows(IllegalArgumentException.class, () -> getArrayThroughArrayFunction().floorIndexOfX(-3));
+        assertThrows(IllegalArgumentException.class, () -> getArrayThroughLinkedFunction().floorIndexOfX(-1));
+        assertThrows(IllegalArgumentException.class, () -> getArrayThroughLinkedFunction().floorIndexOfX(-10));
+        assertThrows(IllegalArgumentException.class, () -> getArrayThroughLinkedFunction().floorIndexOfX(-4));
     }
 
     @Test
@@ -318,6 +319,12 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(getArrayThroughLinkedFunction().getX(1), 4, delta);
         assertEquals(getArrayThroughLinkedFunction().getX(3), 10, delta);
         assertNotEquals(getArrayThroughLinkedFunction().getX(3), 16, delta);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughArrayFunction().getX(-7));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughArrayFunction().getX(1000));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughArrayFunction().getX(18));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughLinkedFunction().getX(-7));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughLinkedFunction().getX(1000));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughLinkedFunction().getX(18));
 
     }
 
@@ -331,6 +338,12 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(getArrayThroughLinkedFunction().getY(1), 16, delta);
         assertEquals(getArrayThroughLinkedFunction().getY(3), 100, delta);
         assertNotEquals(getArrayThroughLinkedFunction().getY(3), 121, delta);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughArrayFunction().getY(-7));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughArrayFunction().getY(1000));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughArrayFunction().getY(18));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughLinkedFunction().getY(-7));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughLinkedFunction().getY(1000));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughLinkedFunction().getY(18));
 
     }
 
@@ -351,6 +364,13 @@ public class ArrayTabulatedFunctionTest {
         assertNotEquals(testingSetYList.getY(2), 49, delta);
         testingSetYList.setY(4, 11);
         assertEquals(testingSetYList.getY(4), 11, delta);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughArrayFunction().getY(-12));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughArrayFunction().getY(1004));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughArrayFunction().getY(185));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughLinkedFunction().getY(-76));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughLinkedFunction().getY(1070));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getArrayThroughLinkedFunction().getY(189));
+
 
     }
 
