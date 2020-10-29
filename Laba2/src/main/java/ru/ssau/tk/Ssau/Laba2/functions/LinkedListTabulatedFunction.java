@@ -1,5 +1,7 @@
 package ru.ssau.tk.Ssau.Laba2.functions;
 
+import exceptions.InterpolationException;
+
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
     private Node head;
 
@@ -7,6 +9,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         if (xValues.length < 2) {
             throw new IllegalArgumentException("Length less than 2 points");
         }
+        checkLengthIsTheSame(xValues, yValues);
+        checkSorted(xValues);
         for (int i = 0; i < xValues.length; i++) {
             this.addNode(xValues[i], yValues[i]);
         }
@@ -104,7 +108,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             return getY(indexOfX(x));
         }
         return interpolate(x, indexOfX(floorNodeOfX(x).x));
-
     }
 
     public int getCount() {
@@ -181,6 +184,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     protected double interpolate(double x, int floorIndex) {
         Node left = getNode(floorIndex);
         Node right = left.next;
+        if (x < head.x || x > head.prev.x) {
+            throw new InterpolationException("X is out of bounds of interpolation");
+        }
         return interpolate(x, left.x, right.x, left.y, right.y);
     }
 

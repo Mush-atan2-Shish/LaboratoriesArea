@@ -1,5 +1,6 @@
 package ru.ssau.tk.Ssau.Laba2.functions;
 
+import exceptions.InterpolationException;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
@@ -306,8 +307,12 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(getArrayThroughLinkedFunction().interpolate(11, 3), 123, delta);
         assertEquals(getArrayThroughLinkedFunction().interpolate(12, 3), 146, delta);
         assertNotEquals(getArrayThroughLinkedFunction().interpolate(11, 3), 121, delta);
-
+        assertThrows(InterpolationException.class, () -> getArrayThroughArrayFunction().interpolate(1.8, 3));
+        assertThrows(InterpolationException.class, () -> getArrayThroughArrayFunction().interpolate(1, 0));
+        assertThrows(InterpolationException.class, () -> getArrayThroughLinkedFunction().interpolate(17, 4));
+        assertThrows(InterpolationException.class, () -> getArrayThroughLinkedFunction().interpolate(-1, 0));
     }
+
 
     @Test
     public void testGetX() {

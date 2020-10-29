@@ -1,5 +1,6 @@
 package ru.ssau.tk.Ssau.Laba2.functions;
 
+import exceptions.InterpolationException;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
@@ -337,6 +338,10 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(getListThroughListFunction().interpolate(11, 3), 123, delta);
         assertEquals(getListThroughListFunction().interpolate(12, 3), 146, delta);
         assertNotEquals(getListThroughListFunction().interpolate(11, 3), 121, delta);
+        assertThrows(InterpolationException.class, () -> getListThroughArrayFunction().interpolate(1.8, 3));
+        assertThrows(InterpolationException.class, () -> getListThroughArrayFunction().interpolate(1, 0));
+        assertThrows(InterpolationException.class, () -> getListThroughListFunction().interpolate(17, 4));
+        assertThrows(InterpolationException.class, () -> getListThroughListFunction().interpolate(-1, 0));
 
     }
 

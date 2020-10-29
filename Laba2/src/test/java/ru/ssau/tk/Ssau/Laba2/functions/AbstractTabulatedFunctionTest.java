@@ -1,5 +1,7 @@
 package ru.ssau.tk.Ssau.Laba2.functions;
 
+import exceptions.ArrayIsNotSortedException;
+import exceptions.DifferentLengthOfArraysException;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
@@ -25,5 +27,22 @@ public class AbstractTabulatedFunctionTest {
         assertEquals(mockedApply.apply(1.0), 3.3, delta);
         assertEquals(mockedApply.apply(3.0), 4.4, delta);
         assertNotEquals(mockedApply.apply(2.4), 5.2);
+    }
+
+    @Test
+    public void testCheckLengthIsTheSame() {
+        assertThrows(DifferentLengthOfArraysException.class, () -> {
+            double[] valuesX = new double[]{1, 3};
+            double[] valuesY = new double[]{2};
+            AbstractTabulatedFunction.checkLengthIsTheSame(valuesX, valuesY);
+        });
+    }
+
+    @Test
+    public void testCheckSorted() {
+        assertThrows(ArrayIsNotSortedException.class, () -> {
+            double[] valuesX = new double[]{5, 3, 7.2, 8.3};
+            AbstractTabulatedFunction.checkSorted(valuesX);
+        });
     }
 }

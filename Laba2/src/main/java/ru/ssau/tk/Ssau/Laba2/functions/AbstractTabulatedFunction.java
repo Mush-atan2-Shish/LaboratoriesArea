@@ -1,5 +1,8 @@
 package ru.ssau.tk.Ssau.Laba2.functions;
 
+import exceptions.ArrayIsNotSortedException;
+import exceptions.DifferentLengthOfArraysException;
+
 public abstract class AbstractTabulatedFunction implements TabulatedFunction {
 
     protected int count;
@@ -32,6 +35,19 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
             return getY(indexOfX(x));
         }
         return interpolate(x, floorIndexOfX(x));
+    }
 
+    protected static void checkLengthIsTheSame(double[] xValues, double[] yValues) {
+        if (xValues.length != yValues.length) {
+            throw new DifferentLengthOfArraysException("xValues and yValues have different lengths");
+        }
+    }
+
+    protected static void checkSorted(double[] xValues) {
+        for (int i = 0; i < xValues.length - 1; i++) {
+            if (xValues[i + 1] < xValues[i]) {
+                throw new ArrayIsNotSortedException("xValues is not sort");
+            }
+        }
     }
 }
