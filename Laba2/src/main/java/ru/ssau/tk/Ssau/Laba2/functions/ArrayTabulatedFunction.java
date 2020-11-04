@@ -2,6 +2,7 @@ package ru.ssau.tk.Ssau.Laba2.functions;
 
 import exceptions.InterpolationException;
 
+import java.util.Iterator;
 import java.util.Arrays;
 
 public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
@@ -167,5 +168,10 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         if (index < 0 || index > count - 1) {
             throw new ArrayIndexOutOfBoundsException("Index out of bounds of array");
         }
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        throw new UnsupportedOperationException();
     }
 }

@@ -2,6 +2,8 @@ package ru.ssau.tk.Ssau.Laba2.functions;
 
 import exceptions.InterpolationException;
 
+import java.util.Iterator;
+
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
     private Node head;
 
@@ -247,6 +249,11 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         if (index < 0 || index > count - 1) {
             throw new ArrayIndexOutOfBoundsException("Index out of bounds of array");
         }
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        throw new UnsupportedOperationException();
     }
 
     protected static class Node {
