@@ -3,6 +3,8 @@ package ru.ssau.tk.Ssau.Laba2.functions;
 import exceptions.InterpolationException;
 import org.testng.annotations.Test;
 
+import java.util.Iterator;
+
 import static org.testng.Assert.*;
 
 public class LinkedListTabulatedFunctionTest {
@@ -461,5 +463,49 @@ public class LinkedListTabulatedFunctionTest {
         assertNotEquals(getListThroughListFunction().rightBound(), 19, delta);
         assertNotEquals(getListThroughListFunction().rightBound(), 27, delta);
 
+    }
+
+    @Test
+    public void testIteratorWhile() {
+        LinkedListTabulatedFunction testArrayList = getListThroughArrayFunction();
+        Iterator<Point> myIterator = testArrayList.iterator();
+        int k = 0;
+        while (myIterator.hasNext()) {
+            Point myPoint = myIterator.next();
+            assertEquals(testArrayList.getX(k), myPoint.x, 0.0001);
+            assertEquals(testArrayList.getY(k++), myPoint.y, 0.0001);
+        }
+        assertEquals(testArrayList.getCount(), k);
+
+        LinkedListTabulatedFunction testFunctionList = getListThroughListFunction();
+        Iterator<Point> myIteratorToo = testFunctionList.iterator();
+        int s = 0;
+        while (myIteratorToo.hasNext()) {
+            Point myPoint = myIteratorToo.next();
+            assertEquals(myPoint.x, testFunctionList.getX(s), 0.0001);
+            assertEquals(myPoint.y, testFunctionList.getY(s++), 0.0001);
+        }
+        assertEquals(testFunctionList.getCount(), s);
+    }
+
+    @Test
+    public void testIteratorForEach() {
+        LinkedListTabulatedFunction testArrayList = getListThroughArrayFunction();
+        Iterator<Point> myIterator = testArrayList.iterator();
+        int k = 0;
+        for (Point myPoint : testArrayList) {
+            myPoint = myIterator.next();
+            assertEquals(testArrayList.getX(k), myPoint.x);
+            assertEquals(testArrayList.getY(k++), myPoint.y);
+        }
+        assertEquals(testArrayList.getCount(), k);
+
+        LinkedListTabulatedFunction testFunctionList = getListThroughListFunction();
+        int s = 0;
+        for (Point myPoint : testFunctionList) {
+            assertEquals(testFunctionList.getX(s), myPoint.x);
+            assertEquals(testFunctionList.getY(s++), myPoint.y);
+        }
+        assertEquals(testFunctionList.getCount(), s);
     }
 }

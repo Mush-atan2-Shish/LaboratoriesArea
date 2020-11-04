@@ -3,6 +3,7 @@ package ru.ssau.tk.Ssau.Laba2.functions;
 import exceptions.InterpolationException;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
     private Node head;
@@ -135,7 +136,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             }
             first = first.next;
         }
-        return null;
+        throw new UnsupportedOperationException("");
     }
 
     protected Node floorNodeOfX(double x) {
@@ -251,15 +252,36 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
     }
 
-    @Override
-    public Iterator<Point> iterator() {
-        throw new UnsupportedOperationException();
-    }
-
     protected static class Node {
         public Node next;
         public Node prev;
         public double x;
         public double y;
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        return new Iterator<Point>() {
+            Node node = head;
+
+            @Override
+            public boolean hasNext() {
+                return node != null;
+            }
+
+            @Override
+            public Point next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                Point point = new Point(node.x, node.y);
+                if (node == head.prev) {
+                    node = null;
+                } else {
+                    node = node.next;
+                }
+                return point;
+            }
+        };
     }
 }
