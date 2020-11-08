@@ -1,9 +1,12 @@
 package ru.ssau.tk.Ssau.Laba2.functions;
 
+import exceptions.ArrayIsNotSortedException;
+import exceptions.DifferentLengthOfArraysException;
 import exceptions.InterpolationException;
 import org.testng.annotations.Test;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.testng.Assert.*;
 
@@ -19,6 +22,15 @@ public class LinkedListTabulatedFunctionTest {
 
     private LinkedListTabulatedFunction getListThroughArrayFunction() {
         return new LinkedListTabulatedFunction(xValues, yValues);
+    }
+
+    @Test
+    public void testConstructorExceptions() {
+        final double[] brokenValues = {1, -1, 0};
+        final double[] singleElementArray = {1};
+        assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(singleElementArray, yValues));
+        assertThrows(DifferentLengthOfArraysException.class, () -> new LinkedListTabulatedFunction(brokenValues, yValues));
+        assertThrows(ArrayIsNotSortedException.class, () -> new LinkedListTabulatedFunction(brokenValues, brokenValues));
     }
 
     @Test
@@ -357,12 +369,12 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(getListThroughListFunction().getX(1), 4, delta);
         assertEquals(getListThroughListFunction().getX(3), 10, delta);
         assertNotEquals(getListThroughListFunction().getX(3), 16, delta);
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getX(-12));
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getX(1004));
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getX(185));
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getX(-76));
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getX(1070));
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getX(189));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughListFunction().getX(-12));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughListFunction().getX(1004));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughListFunction().getX(185));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getX(-76));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getX(1070));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getX(189));
 
 
     }
@@ -377,12 +389,12 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(getListThroughListFunction().getY(1), 16, delta);
         assertEquals(getListThroughListFunction().getY(3), 100, delta);
         assertNotEquals(getListThroughListFunction().getY(3), 121, delta);
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(-12));
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(1004));
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(185));
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(-76));
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(1070));
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(189));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(-12));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(1004));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(185));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(-76));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(1070));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(189));
 
 
     }
@@ -404,12 +416,12 @@ public class LinkedListTabulatedFunctionTest {
         assertNotEquals(testingSetYList.getY(2), 49, delta);
         testingSetYList.setY(4, 11);
         assertEquals(testingSetYList.getY(4), 11, delta);
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(-12));
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(1004));
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(185));
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(-76));
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(1070));
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(189));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(-12));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(1004));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughListFunction().getY(185));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(-76));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(1070));
+        assertThrows(IndexOutOfBoundsException.class, () -> getListThroughArrayFunction().getY(189));
 
     }
 
@@ -475,6 +487,10 @@ public class LinkedListTabulatedFunctionTest {
             assertEquals(testArrayList.getX(k), myPoint.x, 0.0001);
             assertEquals(testArrayList.getY(k++), myPoint.y, 0.0001);
         }
+        Iterator<Point> finalMyFirstIterator = myIterator;
+        assertThrows(NoSuchElementException.class, () -> {
+            finalMyFirstIterator.next();
+        });
         assertEquals(testArrayList.getCount(), k);
 
         LinkedListTabulatedFunction testFunctionList = getListThroughListFunction();
@@ -485,6 +501,10 @@ public class LinkedListTabulatedFunctionTest {
             assertEquals(myPoint.x, testFunctionList.getX(s), 0.0001);
             assertEquals(myPoint.y, testFunctionList.getY(s++), 0.0001);
         }
+        Iterator<Point> finalMySecondIterator = myIterator;
+        assertThrows(NoSuchElementException.class, () -> {
+            finalMySecondIterator.next();
+        });
         assertEquals(testFunctionList.getCount(), s);
     }
 

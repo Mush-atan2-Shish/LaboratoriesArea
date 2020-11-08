@@ -1,9 +1,12 @@
 package ru.ssau.tk.Ssau.Laba2.functions;
 
+import exceptions.ArrayIsNotSortedException;
+import exceptions.DifferentLengthOfArraysException;
 import exceptions.InterpolationException;
 import org.testng.annotations.Test;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.testng.Assert.*;
 
@@ -18,6 +21,15 @@ public class ArrayTabulatedFunctionTest {
 
     private ArrayTabulatedFunction getArrayThroughLinkedFunction() {
         return new ArrayTabulatedFunction(source, 1, 16, 6);
+    }
+
+    @Test
+    public void testConstructorExceptions() {
+        final double[] brokenValues = {1, -1, 0};
+        final double[] singleElementArray = {1};
+        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(singleElementArray, yValues));
+        assertThrows(DifferentLengthOfArraysException.class, () -> new ArrayTabulatedFunction(brokenValues, yValues));
+        assertThrows(ArrayIsNotSortedException.class, () -> new ArrayTabulatedFunction(brokenValues, brokenValues));
     }
 
     @Test
@@ -444,6 +456,10 @@ public class ArrayTabulatedFunctionTest {
             assertEquals(testDefinedThroughArrays.getY(i++), myPoint.y, 0.0001);
         }
         assertEquals(testDefinedThroughArrays.getCount(), i);
+        Iterator<Point> finalMyFirstIterator = myIterator;
+        assertThrows(NoSuchElementException.class, () -> {
+            finalMyFirstIterator.next();
+        });
 
         ArrayTabulatedFunction testDefinedThroughMathFunction = getArrayThroughLinkedFunction();
         myIterator = testDefinedThroughMathFunction.iterator();
@@ -453,7 +469,12 @@ public class ArrayTabulatedFunctionTest {
             assertEquals(testDefinedThroughMathFunction.getX(i), myPoint.x, 0.0001);
             assertEquals(testDefinedThroughMathFunction.getY(i++), myPoint.y, 0.0001);
         }
+        Iterator<Point> finalMySecondIterator = myIterator;
+        assertThrows(NoSuchElementException.class, () -> {
+            finalMySecondIterator.next();
+        });
         assertEquals(testDefinedThroughMathFunction.getCount(), i);
+
     }
 
     @Test

@@ -248,7 +248,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     private void checkIndex(int index) {
         if (index < 0 || index > count - 1) {
-            throw new ArrayIndexOutOfBoundsException("Index out of bounds of array");
+            throw new IndexOutOfBoundsException("Index out of bounds");
         }
     }
 
