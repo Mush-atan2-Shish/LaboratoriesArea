@@ -1,6 +1,6 @@
 package ru.ssau.tk.Ssau.Laba2.functions;
 
-import exceptions.InterpolationException;
+import ru.ssau.tk.Ssau.Laba2.exceptions.InterpolationException;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -45,12 +45,12 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
                 setY(indexOfX(x), y);
             } else {
                 Node newNode = new Node();
-                if (floorIndexOfX(x) == 0 || floorIndexOfX(x) == count) {
+                if (x < leftBound() || x > rightBound()) {
                     newNode.next = head;
                     newNode.prev = head.prev;
                     newNode.x = x;
                     newNode.y = y;
-                    if (floorIndexOfX(x) == 0) {
+                    if (x < leftBound()) {
                         head = newNode;
                     } else {
                         head.prev = newNode;
@@ -70,14 +70,18 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public void remove(int index) {
-        Node deletedNode = getNode(index);
-        if (index == 0) {
-            head = deletedNode.next;
-            head.prev = deletedNode.prev;
+        if (count > 2) {
+            Node deletedNode = getNode(index);
+            if (index == 0) {
+                head = deletedNode.next;
+                head.prev = deletedNode.prev;
+            }
+            deletedNode.prev.next = deletedNode.next;
+            deletedNode.next.prev = deletedNode.prev;
+            count--;
+        } else {
+            throw new IllegalArgumentException("Length less than 2 points");
         }
-        deletedNode.prev.next = deletedNode.next;
-        deletedNode.next.prev = deletedNode.prev;
-        count--;
     }
 
     public void addNode(double x, double y) {
@@ -156,7 +160,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     protected int floorIndexOfX(double x) {
-        if (x < head.x) {
+        if (x < leftBound()) {
             throw new IllegalArgumentException("X is less than the left border");
         }
         Node indexNode = head;

@@ -1,6 +1,6 @@
 package ru.ssau.tk.Ssau.Laba2.functions;
 
-import exceptions.InterpolationException;
+import ru.ssau.tk.Ssau.Laba2.exceptions.InterpolationException;
 
 import java.util.Iterator;
 import java.util.Arrays;
@@ -130,7 +130,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         {
             double[] xNewValues = new double[count + 1];
             double[] yNewValues = new double[count + 1];
-            if (floorIndexOfX(x) == 0) {
+            if (x < leftBound()) {
                 xNewValues[0] = x;
                 yNewValues[0] = y;
                 System.arraycopy(xValues, 0, xNewValues, 1, count);
@@ -151,15 +151,19 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public void remove(int index) {
-        double[] xTempValues = new double[count + 1];
-        double[] yTempValues = new double[count + 1];
-        System.arraycopy(xValues, 0, xTempValues, 0, index);
-        System.arraycopy(yValues, 0, yTempValues, 0, index);
-        System.arraycopy(xValues, index + 1, xTempValues, index, count - index - 1);
-        System.arraycopy(yValues, index + 1, yTempValues, index, count - index - 1);
-        this.xValues = xTempValues;
-        this.yValues = yTempValues;
-        count--;
+        if (count > 2) {
+            double[] xTempValues = new double[count + 1];
+            double[] yTempValues = new double[count + 1];
+            System.arraycopy(xValues, 0, xTempValues, 0, index);
+            System.arraycopy(yValues, 0, yTempValues, 0, index);
+            System.arraycopy(xValues, index + 1, xTempValues, index, count - index - 1);
+            System.arraycopy(yValues, index + 1, yTempValues, index, count - index - 1);
+            this.xValues = xTempValues;
+            this.yValues = yTempValues;
+            count--;
+        } else {
+            throw new IllegalArgumentException("Length less than 2 points");
+        }
     }
 
     @Override

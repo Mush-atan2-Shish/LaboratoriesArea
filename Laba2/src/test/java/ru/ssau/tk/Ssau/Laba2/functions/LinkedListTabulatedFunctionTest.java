@@ -1,8 +1,8 @@
 package ru.ssau.tk.Ssau.Laba2.functions;
 
-import exceptions.ArrayIsNotSortedException;
-import exceptions.DifferentLengthOfArraysException;
-import exceptions.InterpolationException;
+import ru.ssau.tk.Ssau.Laba2.exceptions.ArrayIsNotSortedException;
+import ru.ssau.tk.Ssau.Laba2.exceptions.DifferentLengthOfArraysException;
+import ru.ssau.tk.Ssau.Laba2.exceptions.InterpolationException;
 import org.testng.annotations.Test;
 
 import java.util.Iterator;
@@ -27,10 +27,13 @@ public class LinkedListTabulatedFunctionTest {
     @Test
     public void testConstructorExceptions() {
         final double[] brokenValues = {1, -1, 0};
+        final double[] brokenValuesToo = {1, 1, 3};
         final double[] singleElementArray = {1};
         assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(singleElementArray, yValues));
         assertThrows(DifferentLengthOfArraysException.class, () -> new LinkedListTabulatedFunction(brokenValues, yValues));
         assertThrows(ArrayIsNotSortedException.class, () -> new LinkedListTabulatedFunction(brokenValues, brokenValues));
+        assertThrows(ArrayIsNotSortedException.class, () -> new LinkedListTabulatedFunction(brokenValuesToo, brokenValuesToo));
+        assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(source, 21, 16, 10));
     }
 
     @Test
@@ -50,7 +53,7 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(testingInsert.getY(4), 2.4);
         assertEquals(testingInsert.getX(5), 1.5);
         assertEquals(testingInsert.getY(5), 2.5);
-/*
+
         testingInsert.insert(1.07, 2.54);                   //х меньше всех исходных
         assertEquals(testingInsert.getCount(), 7);
         assertEquals(testingInsert.getX(0), 1.07);
@@ -86,22 +89,26 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(testingInsert.getY(6), 2.5);
         assertEquals(testingInsert.getX(7), 1.67);
         assertEquals(testingInsert.getY(7), 2.14);
-*/
+
 
         testingInsert.insert(1.1, 2.7);                      //проверка совпадающего х
-        assertEquals(testingInsert.getX(0), 1.1);
-        assertEquals(testingInsert.getY(0), 2.7);
-        assertEquals(testingInsert.getX(1), 1.2);
-        assertEquals(testingInsert.getY(1), 2.2);
-        assertEquals(testingInsert.getX(2), 1.25);
-        assertEquals(testingInsert.getY(2), 2.0);
-        assertEquals(testingInsert.getX(3), 1.3);
-        assertEquals(testingInsert.getY(3), 2.3);
-        assertEquals(testingInsert.getX(4), 1.4);
-        assertEquals(testingInsert.getY(4), 2.4);
-        assertEquals(testingInsert.getX(5), 1.5);
-        assertEquals(testingInsert.getY(5), 2.5);
-        assertEquals(testingInsert.getCount(), 6);
+        assertEquals(testingInsert.getCount(), 8);
+        assertEquals(testingInsert.getX(0), 1.07);
+        assertEquals(testingInsert.getY(0), 2.54);
+        assertEquals(testingInsert.getX(1), 1.1);
+        assertEquals(testingInsert.getY(1), 2.7);
+        assertEquals(testingInsert.getX(2), 1.2);
+        assertEquals(testingInsert.getY(2), 2.2);
+        assertEquals(testingInsert.getX(3), 1.25);
+        assertEquals(testingInsert.getY(3), 2.0);
+        assertEquals(testingInsert.getX(4), 1.3);
+        assertEquals(testingInsert.getY(4), 2.3);
+        assertEquals(testingInsert.getX(5), 1.4);
+        assertEquals(testingInsert.getY(5), 2.4);
+        assertEquals(testingInsert.getX(6), 1.5);
+        assertEquals(testingInsert.getY(6), 2.5);
+        assertEquals(testingInsert.getX(7), 1.67);
+        assertEquals(testingInsert.getY(7), 2.14);
 
         LinkedListTabulatedFunction testingInsertList = new LinkedListTabulatedFunction(source, 1, 16, 6);
         testingInsertList.insert(7, 85);                     //проверка совпадающего х
@@ -135,9 +142,9 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(testingInsertList.getY(5), 169);
         assertEquals(testingInsertList.getX(6), 16);
         assertEquals(testingInsertList.getY(6), 256);
-/*
+
         testingInsertList.insert(0.07, 2.54);                         //х меньше всех исходных
-        assertEquals(testingInsertList.getCount(),8);
+        assertEquals(testingInsertList.getCount(), 8);
         assertEquals(testingInsertList.getX(0), 0.07);
         assertEquals(testingInsertList.getY(0), 2.54);
         assertEquals(testingInsertList.getX(1), 1);
@@ -156,7 +163,7 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(testingInsertList.getY(7), 256);
 
         testingInsertList.insert(17.67, 20.14);                       //х больше всех исходных
-        assertEquals(testingInsertList.getCount(),9);
+        assertEquals(testingInsertList.getCount(), 9);
         assertEquals(testingInsertList.getX(0), 0.07);
         assertEquals(testingInsertList.getY(0), 2.54);
         assertEquals(testingInsertList.getX(1), 1);
@@ -175,7 +182,7 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(testingInsertList.getY(7), 256);
         assertEquals(testingInsertList.getX(8), 17.67);
         assertEquals(testingInsertList.getY(8), 20.14);
-*/
+
 
     }
 
@@ -252,6 +259,13 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(testingRemoveList.getY(1), 49);
         assertEquals(testingRemoveList.getX(2), 13);
         assertEquals(testingRemoveList.getY(2), 169);
+
+        final double[] brokenValuesToo = {1, 3};
+        final double[] twoElementArray = {1, 5};
+        assertThrows(IllegalArgumentException.class, () -> {
+            LinkedListTabulatedFunction checkFunction = new LinkedListTabulatedFunction(twoElementArray, brokenValuesToo);
+            checkFunction.remove(0);
+        });
 
     }
 

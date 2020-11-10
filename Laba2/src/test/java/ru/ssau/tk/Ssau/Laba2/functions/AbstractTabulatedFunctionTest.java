@@ -1,7 +1,7 @@
 package ru.ssau.tk.Ssau.Laba2.functions;
 
-import exceptions.ArrayIsNotSortedException;
-import exceptions.DifferentLengthOfArraysException;
+import ru.ssau.tk.Ssau.Laba2.exceptions.ArrayIsNotSortedException;
+import ru.ssau.tk.Ssau.Laba2.exceptions.DifferentLengthOfArraysException;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;

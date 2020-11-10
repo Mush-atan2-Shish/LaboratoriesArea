@@ -1,7 +1,7 @@
 package ru.ssau.tk.Ssau.Laba2.functions;
 
-import exceptions.ArrayIsNotSortedException;
-import exceptions.DifferentLengthOfArraysException;
+import ru.ssau.tk.Ssau.Laba2.exceptions.ArrayIsNotSortedException;
+import ru.ssau.tk.Ssau.Laba2.exceptions.DifferentLengthOfArraysException;
 
 public abstract class AbstractTabulatedFunction implements TabulatedFunction {
 
@@ -45,7 +45,7 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
 
     protected static void checkSorted(double[] xValues) {
         for (int i = 0; i < xValues.length - 1; i++) {
-            if (xValues[i + 1] < xValues[i]) {
+            if ((xValues[i + 1] < xValues[i]) || (xValues[i + 1] == xValues[i])) {
                 throw new ArrayIsNotSortedException("xValues is not sort");
             }
         }
