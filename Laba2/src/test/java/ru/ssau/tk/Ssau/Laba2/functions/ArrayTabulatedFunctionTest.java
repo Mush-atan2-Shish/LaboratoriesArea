@@ -33,6 +33,7 @@ public class ArrayTabulatedFunctionTest {
         assertThrows(ArrayIsNotSortedException.class, () -> new ArrayTabulatedFunction(brokenValues, brokenValues));
         assertThrows(ArrayIsNotSortedException.class, () -> new ArrayTabulatedFunction(brokenValuesToo, brokenValuesToo));
         assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(source, 21, 16, 10));
+        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(source, 1, 6, 1));
     }
 
     @Test

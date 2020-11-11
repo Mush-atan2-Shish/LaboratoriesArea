@@ -34,6 +34,7 @@ public class LinkedListTabulatedFunctionTest {
         assertThrows(ArrayIsNotSortedException.class, () -> new LinkedListTabulatedFunction(brokenValues, brokenValues));
         assertThrows(ArrayIsNotSortedException.class, () -> new LinkedListTabulatedFunction(brokenValuesToo, brokenValuesToo));
         assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(source, 21, 16, 10));
+        assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(source, 1, 7, 1));
     }
 
     @Test
