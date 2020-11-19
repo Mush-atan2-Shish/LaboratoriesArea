@@ -2,7 +2,7 @@ package ru.ssau.tk.Ssau.Laba2.operations;
 
 import ru.ssau.tk.Ssau.Laba2.functions.MathFunction;
 
-abstract class SteppingDifferentialOperator implements DifferentialOperator<MathFunction> {
+public abstract class SteppingDifferentialOperator implements DifferentialOperator<MathFunction> {
 
     protected double step;
 

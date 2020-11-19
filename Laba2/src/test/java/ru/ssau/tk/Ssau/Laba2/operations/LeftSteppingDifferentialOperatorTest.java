@@ -9,8 +9,10 @@ public class LeftSteppingDifferentialOperatorTest {
 
     @Test
     public void testDerive() {
-        SteppingDifferentialOperator differentialOperator = new LeftSteppingDifferentialOperator(0.0002);
-        assertEquals(differentialOperator.derive(new SqrFunction()).apply(1), 2, 0.001);
-        assertEquals(differentialOperator.derive(new SqrFunction()).apply(2), 4, 0.001);
+        SteppingDifferentialOperator differentialOperator = new LeftSteppingDifferentialOperator(0.1);
+        assertEquals(differentialOperator.derive(new SqrFunction()).apply(1), 1.89989, 0.01);
+        assertEquals(differentialOperator.derive(new SqrFunction()).apply(1), 1.898799, 0.01);
+        assertEquals(differentialOperator.derive(new SqrFunction()).apply(2), 3.89989, 0.01);
+        assertEquals(differentialOperator.derive(new SqrFunction()).apply(2), 3.898799, 0.01);
     }
 }
