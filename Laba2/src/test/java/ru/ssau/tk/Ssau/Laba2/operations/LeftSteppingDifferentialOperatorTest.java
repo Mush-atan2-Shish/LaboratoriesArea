@@ -10,9 +10,10 @@ public class LeftSteppingDifferentialOperatorTest {
     @Test
     public void testDerive() {
         SteppingDifferentialOperator differentialOperator = new LeftSteppingDifferentialOperator(0.1);
-        assertEquals(differentialOperator.derive(new SqrFunction()).apply(1), 1.89989, 0.01);
-        assertEquals(differentialOperator.derive(new SqrFunction()).apply(1), 1.898799, 0.01);
-        assertEquals(differentialOperator.derive(new SqrFunction()).apply(2), 3.89989, 0.01);
-        assertEquals(differentialOperator.derive(new SqrFunction()).apply(2), 3.898799, 0.01);
+        SqrFunction check = new SqrFunction();
+        assertEquals(differentialOperator.derive(new SqrFunction()).apply(1), 1.9, 0.01);  //g(x)=(f(x)-f(x-h))/h
+        assertEquals(differentialOperator.derive(new SqrFunction()).apply(0.9), 1.7, 0.01);
+        double[] xValue = {0.9, 1};
+        assertEquals((check.apply(xValue[1]) - check.apply(xValue[0])) / (xValue[1] - xValue[0]), 1.9, 0.01);  //y'=(y(k+1)-y(k))/(x(k+1)-x(k))
     }
 }

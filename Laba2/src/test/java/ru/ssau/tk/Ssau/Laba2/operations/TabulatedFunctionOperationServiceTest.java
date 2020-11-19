@@ -18,12 +18,12 @@ public class TabulatedFunctionOperationServiceTest {
     private final double[] valuesY = new double[]{-6, -4, -2, 0, 2, 4, 6};
     private final double[] valuesYForList = new double[]{10, 20, 30, 40, 50, 60, 70};
 
-    TabulatedFunctionOperationService serviceArray = new TabulatedFunctionOperationService(new ArrayTabulatedFunctionFactory());
-    TabulatedFunctionOperationService serviceList = new TabulatedFunctionOperationService(new LinkedListTabulatedFunctionFactory());
-    LinkedListTabulatedFunctionFactory listFactory = new LinkedListTabulatedFunctionFactory();
-    ArrayTabulatedFunctionFactory arrayFactory = new ArrayTabulatedFunctionFactory();
-    TabulatedFunction testArrayFunction = getTestArray();
-    TabulatedFunction testListFunction = getTestList();
+    public TabulatedFunctionOperationService serviceArray = new TabulatedFunctionOperationService(new ArrayTabulatedFunctionFactory());
+    public TabulatedFunctionOperationService serviceList = new TabulatedFunctionOperationService(new LinkedListTabulatedFunctionFactory());
+    public LinkedListTabulatedFunctionFactory listFactory = new LinkedListTabulatedFunctionFactory();
+    public ArrayTabulatedFunctionFactory arrayFactory = new ArrayTabulatedFunctionFactory();
+    public TabulatedFunction testArrayFunction = getTestArray();
+    public TabulatedFunction testListFunction = getTestList();
 
     public TabulatedFunction getTestArray() {
         return new ArrayTabulatedFunction(valuesX, valuesY);
@@ -95,7 +95,9 @@ public class TabulatedFunctionOperationServiceTest {
             assertEquals(point.x, valuesX[i]);
             assertEquals(point.y, valuesY[i] + valuesYForList[i++]);
         }
-        assertTrue(serviceArray.getFactory() instanceof ArrayTabulatedFunctionFactory);
+        assertTrue(serviceArray.sum(testArrayFunction, testArrayFunction) instanceof ArrayTabulatedFunction);
+        assertTrue(serviceArray.sum(testListFunction, testListFunction) instanceof ArrayTabulatedFunction);
+        assertTrue(serviceArray.sum(testArrayFunction, testListFunction) instanceof ArrayTabulatedFunction);
 
         final double[] errorListX = new double[]{0, 1, 2};
         final double[] errorListY = new double[]{0, 1, 2};
@@ -122,7 +124,9 @@ public class TabulatedFunctionOperationServiceTest {
             assertEquals(point.x, valuesX[j]);
             assertEquals(point.y, valuesY[j] + valuesYForList[j++]);
         }
-        assertTrue(serviceList.getFactory() instanceof LinkedListTabulatedFunctionFactory);
+        assertTrue(serviceList.sum(testArrayFunction, testArrayFunction) instanceof LinkedListTabulatedFunction);
+        assertTrue(serviceList.sum(testListFunction, testListFunction) instanceof LinkedListTabulatedFunction);
+        assertTrue(serviceList.sum(testArrayFunction, testListFunction) instanceof LinkedListTabulatedFunction);
     }
 
     @Test
@@ -142,7 +146,9 @@ public class TabulatedFunctionOperationServiceTest {
             assertEquals(point.x, valuesX[i]);
             assertEquals(point.y, valuesY[i] - valuesYForList[i++]);
         }
-        assertTrue(serviceArray.getFactory() instanceof ArrayTabulatedFunctionFactory);
+        assertTrue(serviceArray.subtract(testArrayFunction, testArrayFunction) instanceof ArrayTabulatedFunction);
+        assertTrue(serviceArray.subtract(testListFunction, testListFunction) instanceof ArrayTabulatedFunction);
+        assertTrue(serviceArray.subtract(testArrayFunction, testListFunction) instanceof ArrayTabulatedFunction);
 
         int j = 0;
         for (Point point : serviceList.subtract(testArrayFunction, testArrayFunction)) {
@@ -159,7 +165,9 @@ public class TabulatedFunctionOperationServiceTest {
             assertEquals(point.x, valuesX[j]);
             assertEquals(point.y, valuesY[j] - valuesYForList[j++]);
         }
-        assertTrue(serviceList.getFactory() instanceof LinkedListTabulatedFunctionFactory);
+        assertTrue(serviceList.subtract(testArrayFunction, testArrayFunction) instanceof LinkedListTabulatedFunction);
+        assertTrue(serviceList.subtract(testListFunction, testListFunction) instanceof LinkedListTabulatedFunction);
+        assertTrue(serviceList.subtract(testArrayFunction, testListFunction) instanceof LinkedListTabulatedFunction);
     }
 
     @Test
@@ -184,7 +192,9 @@ public class TabulatedFunctionOperationServiceTest {
             assertEquals(point.x, xValues1[i]);
             assertEquals(point.y, yValues1[i] * yValues2[i++]);
         }
-        assertTrue(serviceArray.getFactory() instanceof ArrayTabulatedFunctionFactory);
+        assertTrue(serviceArray.multiply(arrayFactory.create(xValues1, yValues1), arrayFactory.create(xValues1, yValues1)) instanceof ArrayTabulatedFunction);
+        assertTrue(serviceArray.multiply(listFactory.create(xValues2, yValues2), listFactory.create(xValues2, yValues2)) instanceof ArrayTabulatedFunction);
+        assertTrue(serviceArray.multiply(arrayFactory.create(xValues1, yValues1), listFactory.create(xValues2, yValues2)) instanceof ArrayTabulatedFunction);
 
         int j = 0;
         for (Point point : serviceList.multiply(arrayFactory.create(xValues1, yValues1), arrayFactory.create(xValues1, yValues1))) {
@@ -201,7 +211,9 @@ public class TabulatedFunctionOperationServiceTest {
             assertEquals(point.x, xValues1[j]);
             assertEquals(point.y, yValues1[j] * yValues2[j++]);
         }
-        assertTrue(serviceList.getFactory() instanceof LinkedListTabulatedFunctionFactory);
+        assertTrue(serviceList.multiply(arrayFactory.create(xValues1, yValues1), arrayFactory.create(xValues1, yValues1)) instanceof LinkedListTabulatedFunction);
+        assertTrue(serviceList.multiply(listFactory.create(xValues2, yValues2), listFactory.create(xValues2, yValues2)) instanceof LinkedListTabulatedFunction);
+        assertTrue(serviceList.multiply(arrayFactory.create(xValues1, yValues1), listFactory.create(xValues2, yValues2)) instanceof LinkedListTabulatedFunction);
     }
 
     @Test
@@ -226,7 +238,9 @@ public class TabulatedFunctionOperationServiceTest {
             assertEquals(point.x, xValues1[i]);
             assertEquals(point.y, yValues1[i] / yValues2[i++]);
         }
-        assertTrue(serviceArray.getFactory() instanceof ArrayTabulatedFunctionFactory);
+        assertTrue(serviceArray.divide(arrayFactory.create(xValues1, yValues1), arrayFactory.create(xValues1, yValues1)) instanceof ArrayTabulatedFunction);
+        assertTrue(serviceArray.divide(listFactory.create(xValues2, yValues2), listFactory.create(xValues2, yValues2)) instanceof ArrayTabulatedFunction);
+        assertTrue(serviceArray.divide(arrayFactory.create(xValues1, yValues1), listFactory.create(xValues2, yValues2)) instanceof ArrayTabulatedFunction);
 
         int j = 0;
         for (Point point : serviceList.divide(arrayFactory.create(xValues1, yValues1), arrayFactory.create(xValues1, yValues1))) {
@@ -243,6 +257,8 @@ public class TabulatedFunctionOperationServiceTest {
             assertEquals(point.x, xValues1[j]);
             assertEquals(point.y, yValues1[j] / yValues2[j++]);
         }
-        assertTrue(serviceList.getFactory() instanceof LinkedListTabulatedFunctionFactory);
+        assertTrue(serviceList.divide(arrayFactory.create(xValues1, yValues1), arrayFactory.create(xValues1, yValues1)) instanceof LinkedListTabulatedFunction);
+        assertTrue(serviceList.divide(listFactory.create(xValues2, yValues2), listFactory.create(xValues2, yValues2)) instanceof LinkedListTabulatedFunction);
+        assertTrue(serviceList.divide(arrayFactory.create(xValues1, yValues1), listFactory.create(xValues2, yValues2)) instanceof LinkedListTabulatedFunction);
     }
 }
