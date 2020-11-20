@@ -2,12 +2,14 @@ package ru.ssau.tk.Ssau.Laba2.functions;
 
 import ru.ssau.tk.Ssau.Laba2.exceptions.InterpolationException;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable, Serializable {
 
+    private static final long serialVersionUID = 925973407340487180L;
     protected int count;
     protected double[] xValues;
     protected double[] yValues;
