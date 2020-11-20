@@ -28,8 +28,6 @@ public class ArrayTabulatedFunctionSerialization {
             TabulatedFunction deserializedArray = FunctionsIO.deserialize(in);
             TabulatedFunction deserializedFirstDerivative = FunctionsIO.deserialize(in);
             TabulatedFunction deserializedSecondDerivative = FunctionsIO.deserialize(in);
-            in.close();
-
             System.out.println(deserializedArray.toString());
             System.out.println(deserializedFirstDerivative.toString());
             System.out.println(deserializedSecondDerivative.toString());
