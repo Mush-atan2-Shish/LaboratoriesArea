@@ -2,10 +2,13 @@ package ru.ssau.tk.Ssau.Laba2.functions;
 
 import ru.ssau.tk.Ssau.Laba2.exceptions.InterpolationException;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable, Serializable {
+
+    private static final long serialVersionUID = 4099715325863317331L;
     private Node head;
 
     public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
