@@ -11,7 +11,7 @@ import java.text.ParseException;
 import java.util.Locale;
 
 public final class FunctionsIO {
-    FunctionsIO() {
+    private FunctionsIO() {
         throw new UnsupportedOperationException("Unavailable operation");
     }
 
@@ -51,5 +51,17 @@ public final class FunctionsIO {
             out.writeDouble(point.y);
         }
         out.flush();
+    }
+
+    public static TabulatedFunction readTabulatedFunction(BufferedInputStream inputStream, TabulatedFunctionFactory factory) throws IOException {
+        DataInputStream in = new DataInputStream(inputStream);
+        int count = in.readInt();
+        double[] xValues = new double[count];
+        double[] yValues = new double[count];
+        for (int i = 0; i < count; i++) {
+            xValues[i] = in.readDouble();
+            yValues[i] = in.readDouble();
+        }
+        return factory.create(xValues, yValues);
     }
 }
