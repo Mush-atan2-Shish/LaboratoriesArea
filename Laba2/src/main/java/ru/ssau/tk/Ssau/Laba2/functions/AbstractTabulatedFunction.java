@@ -3,8 +3,11 @@ package ru.ssau.tk.Ssau.Laba2.functions;
 import ru.ssau.tk.Ssau.Laba2.exceptions.ArrayIsNotSortedException;
 import ru.ssau.tk.Ssau.Laba2.exceptions.DifferentLengthOfArraysException;
 
-public abstract class AbstractTabulatedFunction implements TabulatedFunction {
+import java.io.Serializable;
 
+public abstract class AbstractTabulatedFunction implements TabulatedFunction, Serializable {
+
+    private static final long serialVersionUID = 6774919160548622675L;
     protected int count;
 
     @Override

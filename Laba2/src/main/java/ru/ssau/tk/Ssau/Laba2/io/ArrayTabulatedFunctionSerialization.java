@@ -8,7 +8,6 @@ import ru.ssau.tk.Ssau.Laba2.operations.TabulatedDifferentialOperator;
 import java.io.*;
 
 public class ArrayTabulatedFunctionSerialization {
-
     public static void main(String[] args) {
         File fileArray = new File("output/serialized array functions.bin");
         double[] xValue = new double[]{1, 2, 3, 4, 5};

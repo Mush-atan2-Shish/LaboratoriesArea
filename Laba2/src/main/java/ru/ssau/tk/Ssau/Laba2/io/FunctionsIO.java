@@ -4,7 +4,6 @@ import ru.ssau.tk.Ssau.Laba2.functions.Point;
 import ru.ssau.tk.Ssau.Laba2.functions.TabulatedFunction;
 import ru.ssau.tk.Ssau.Laba2.functions.factory.TabulatedFunctionFactory;
 
-import javax.swing.text.NumberFormatter;
 import java.io.*;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -18,7 +17,6 @@ public final class FunctionsIO {
     public static void writeTabulatedFunction(BufferedWriter writer, TabulatedFunction function) {
         PrintWriter printWriter = new PrintWriter(writer);
         printWriter.println(function.getCount());
-        int i = 0;
         for (Point a : function) {
             printWriter.printf("%f %f\n", a.x, a.y);
         }
