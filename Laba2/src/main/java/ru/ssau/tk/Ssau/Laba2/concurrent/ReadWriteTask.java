@@ -3,11 +3,12 @@ package ru.ssau.tk.Ssau.Laba2.concurrent;
 import ru.ssau.tk.Ssau.Laba2.functions.TabulatedFunction;
 
 public class ReadWriteTask implements Runnable {
+
+    private final TabulatedFunction function;
+
     public ReadWriteTask(TabulatedFunction function) {
         this.function = function;
     }
-
-    private final TabulatedFunction function;
 
     @Override
     public void run() {
