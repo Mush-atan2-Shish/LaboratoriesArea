@@ -1,5 +1,9 @@
 package ru.ssau.tk.Ssau.Laba2.ui;
 
+import ru.ssau.tk.Ssau.Laba2.functions.TabulatedFunction;
+import ru.ssau.tk.Ssau.Laba2.functions.factory.ArrayTabulatedFunctionFactory;
+import ru.ssau.tk.Ssau.Laba2.functions.factory.TabulatedFunctionFactory;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -10,6 +14,8 @@ public class SecondWindow extends JFrame {
     private JTable table;
     private JButton btnCreateTabulatedFunction;
     private DefaultTableModel tableModel;
+    private double[] xValues;
+    private double[] yValues;
 
     SecondWindow(Integer countSecond) {
         super("TabulatedFunction");
@@ -31,6 +37,13 @@ public class SecondWindow extends JFrame {
         btnCreateTabulatedFunction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                for (int i = 0; i < table.getRowCount(); i++) {
+                    xValues[i] = Double.parseDouble((String) table.getValueAt(i, 1));
+                    yValues[i] = Double.parseDouble((String) table.getValueAt(i, 2));
+                }
+                TabulatedFunctionFactory arrayFactory = new ArrayTabulatedFunctionFactory();
+                TabulatedFunction newArrayTabulatedFunction = arrayFactory.create(xValues, yValues);
+                dispose();
             }
         });
         setLocationByPlatform(true);
