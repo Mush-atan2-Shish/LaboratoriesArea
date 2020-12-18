@@ -1,6 +1,7 @@
 package ru.ssau.tk.Ssau.Laba2.ui;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class FirstWindow extends JFrame {
@@ -8,7 +9,7 @@ public class FirstWindow extends JFrame {
     public FirstWindow() {
         super("First Window");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(600, 600);
+        setSize(600, 100);
         setLocationRelativeTo(null);
         setLayout(new FlowLayout());
 
@@ -26,7 +27,7 @@ public class FirstWindow extends JFrame {
             int count = 0;
             try {
                 count = Integer.parseInt(txtField1.getText());
-                SecondWindow secondWindow = new SecondWindow();
+                SecondWindow secondWindow = new SecondWindow(count -> ); //aaaaaaaaaaaaaaaaaaa
                 secondWindow.setVisible(true);
             } catch (NumberFormatException e1) {
                 JOptionPane.showMessageDialog(panel, "Некорректный ввод!");
