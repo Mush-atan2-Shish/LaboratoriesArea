@@ -26,6 +26,7 @@ public class SecondWindow extends JFrame {
     }
 
     private void createGUI() {
+
         setLayout(new BorderLayout());
         JScrollPane pane = new JScrollPane();
         table = new JTable();

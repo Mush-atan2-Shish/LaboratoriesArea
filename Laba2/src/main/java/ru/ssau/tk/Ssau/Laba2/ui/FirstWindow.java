@@ -6,27 +6,39 @@ import java.awt.*;
 public class FirstWindow extends JFrame {
 
     public FirstWindow() {
-        super("First Window"); // название окна
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // при нажатии на X программа завершается
-        setSize(600, 600); // размеры окна
-        setLocationRelativeTo(null); // центрируем окно относительно экрана с учётом заданных выше размеров
-        setLayout(new FlowLayout()); // самый простой менеджер компоновки
-        JTextArea textArea = new JTextArea("   Введите количество точек функции"); // текст в текстовом поле
-        JButton button = new JButton("ОК"); // текст кнопки
-        button.addActionListener(event -> { // слушатель, заданный с помощью лямбда-выражения
-            // создаём экземпляр второго окна, передавая туда callback-функцию
-            // задача callback-функции заключается в том, чтобы в текстовое поле этого окна записалась дата,
-            // созданная во втором окне; функция будет брать дату, которое ей передаёт второе окно
-            SecondWindow secondWindow = new SecondWindow();
-            secondWindow.setVisible(true); // показываем второе окно
+        super("First Window");
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setSize(600, 600);
+        setLocationRelativeTo(null);
+        setLayout(new FlowLayout());
+
+        JPanel northPanel = new JPanel();
+        JTextField txtField1 = new JTextField();
+        JLabel lblField1 = new JLabel("Введите количество точек функции:  ");
+        northPanel.add(lblField1);
+        northPanel.add(txtField1);
+        txtField1.setPreferredSize(lblField1.getPreferredSize());
+
+        JPanel panel = new JPanel(new FlowLayout());
+
+        JButton button = new JButton("ОК");
+        button.addActionListener(event -> {
+            int count = 0;
+            try {
+                count = Integer.parseInt(txtField1.getText());
+                SecondWindow secondWindow = new SecondWindow();
+                secondWindow.setVisible(true);
+            } catch (NumberFormatException e1) {
+                JOptionPane.showMessageDialog(panel, "Некорректный ввод!");
+            }
         });
-        getContentPane().add(textArea); // добавлеем текстовое поле
-        getContentPane().add(button); // добавляем кнопку
+        add(northPanel, BorderLayout.NORTH);
+        getContentPane().add(button);
     }
 
     public static void main(String[] args) {
-        FirstWindow firstWindow = new FirstWindow(); // создаём первое окно
-        firstWindow.setVisible(true); // показываем первое окно
+        FirstWindow firstWindow = new FirstWindow();
+        firstWindow.setVisible(true);
     }
 
 }
