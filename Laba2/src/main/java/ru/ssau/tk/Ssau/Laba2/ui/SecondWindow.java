@@ -5,21 +5,15 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
-import java.util.function.Consumer;
 
 public class SecondWindow extends JFrame {
     private JTable table;
     private JButton btnCreateTabulatedFunction;
     private DefaultTableModel tableModel;
 
-    SecondWindow() {
+    SecondWindow(Integer countSecond) {
         super("TabulatedFunction");
         setBounds(200, 200, 600, 600);
-        createGUI();
-    }
-
-    private void createGUI() {
 
         setLayout(new BorderLayout());
         JScrollPane pane = new JScrollPane();
@@ -31,7 +25,7 @@ public class SecondWindow extends JFrame {
         add(eastPanel, BorderLayout.EAST);
         add(pane, BorderLayout.CENTER);
 
-        tableModel = new DefaultTableModel(new Object[]{"X", "Y"}, 3);
+        tableModel = new DefaultTableModel(new Object[]{"X", "Y"}, countSecond);
         table.setModel(tableModel);
 
         btnCreateTabulatedFunction.addActionListener(new ActionListener() {
@@ -42,5 +36,6 @@ public class SecondWindow extends JFrame {
         setLocationByPlatform(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
+
     }
 }
