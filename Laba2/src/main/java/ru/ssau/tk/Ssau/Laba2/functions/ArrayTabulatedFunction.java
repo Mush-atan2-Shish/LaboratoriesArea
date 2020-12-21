@@ -40,6 +40,9 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         this.count = count;
     }
 
+    public ArrayTabulatedFunction() {
+    }
+
     public int getCount() {
         return count;
     }

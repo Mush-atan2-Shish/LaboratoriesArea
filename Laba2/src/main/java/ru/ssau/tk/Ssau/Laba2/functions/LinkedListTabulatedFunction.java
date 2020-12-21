@@ -39,6 +39,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
     }
 
+    public LinkedListTabulatedFunction() {
+    }
+
     @Override
     public void insert(double x, double y) {
         if (count == 0) {
