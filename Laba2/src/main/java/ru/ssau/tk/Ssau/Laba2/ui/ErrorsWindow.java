@@ -5,7 +5,6 @@ import ru.ssau.tk.Ssau.Laba2.exceptions.InconsistentFunctionsException;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class ErrorsWindow {
     ErrorsWindow(Component parent, Exception e) {
@@ -26,6 +25,9 @@ public class ErrorsWindow {
         }
         if (e instanceof InconsistentFunctionsException) {
             return "Длина массивов неодинакова";
+        }
+        if (e instanceof IllegalArgumentException) {
+            return "Задана некорректная функция";
         }
         {
             e.printStackTrace();
