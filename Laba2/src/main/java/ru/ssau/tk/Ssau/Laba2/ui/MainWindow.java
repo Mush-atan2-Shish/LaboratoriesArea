@@ -1,33 +1,35 @@
 package ru.ssau.tk.Ssau.Laba2.ui;
 
+import ru.ssau.tk.Ssau.Laba2.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.Ssau.Laba2.functions.factory.TabulatedFunctionFactory;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainWindow extends javax.swing.JFrame {
-    private JButton inputButtonTable = new JButton("Создать табулированную функцию");
-    private JButton inputButtonMath = new JButton("Создать простую функцию");
-    private JButton inputButtonFactory = new JButton("Выбрать тип фабрики");
-    private JButton openButton = new JButton("Открыть функцию");
-    private JButton saveButton = new JButton("Сохранить функцию");
+public class MainWindow extends JFrame {
+    private JButton inputButtonTable = new JButton();
+    private JButton inputButtonMath = new JButton();
+    private JButton inputButtonFactory = new JButton();
+    private JButton openButton = new JButton();
+    private JButton saveButton = new JButton();
     private List<Double> xValues = new ArrayList<>();
     private List<Double> yValues = new ArrayList<>();
     private TableModelMainWindow tableModel = new TableModelMainWindow();
     private JTable table = new JTable(tableModel);
     private TabulatedFunctionFactory factory;
 
-    private JButton jButtonArrayTabulated;
-    private JButton jButtonLinkedListTabulated;
-    private JLabel jLabel1;
-    private JPanel jPanel1;
-    private PicturePanel picturePanel1;
-
     public MainWindow() {
-        actionPerformed();
-        initComponents();
+        setTitle("Главное окно");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(0, 0, 720, 840);
+        setContentPane(new BgPanel());
+        compose();
+        this.factory = new ArrayTabulatedFunctionFactory();
     }
 
     public void wrapTable(int countOld, int countNew) {
@@ -42,7 +44,13 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-    public void actionPerformed() {
+    void compose() {
+        setLayout(new BorderLayout());
+        JScrollPane pane = new JScrollPane();
+        pane.setViewportView(table);
+        JPanel northPanel = new JPanel();
+        northPanel.setBackground(new Color(16, 16, 16));
+        designButton(inputButtonTable, "Массив");
         inputButtonTable.addActionListener(event -> {
                     try {
                         int countOld = xValues.size();
@@ -57,6 +65,8 @@ public class MainWindow extends javax.swing.JFrame {
                     }
                 }
         );
+        northPanel.add(inputButtonTable);
+        designButton(inputButtonMath, "Связный список");
         inputButtonMath.addActionListener(event -> {
             try {
                 int countOld = xValues.size();
@@ -70,6 +80,8 @@ public class MainWindow extends javax.swing.JFrame {
                     new ErrorsWindow(this, e);
             }
         });
+        northPanel.add(inputButtonMath);
+        designButton(inputButtonFactory, "Выбрать тип фабрики");
         inputButtonFactory.addActionListener(event -> {
             try {
                 SettingWindow.main(factory);
@@ -80,6 +92,8 @@ public class MainWindow extends javax.swing.JFrame {
                     new ErrorsWindow(this, e);
             }
         });
+        northPanel.add(inputButtonFactory);
+        designButton(openButton, "Открыть функцию");
         openButton.addActionListener(event -> {
             try {
                 int countOld = xValues.size();
@@ -93,6 +107,8 @@ public class MainWindow extends javax.swing.JFrame {
                     new ErrorsWindow(this, e);
             }
         });
+        northPanel.add(openButton);
+        designButton(saveButton, "Сохранить функцию");
         saveButton.addActionListener(event -> {
             try {
                 FileWriter.main(tableModel.getFunction());
@@ -103,78 +119,33 @@ public class MainWindow extends javax.swing.JFrame {
                     new ErrorsWindow(this, e);
             }
         });
+        northPanel.add(saveButton);
+        add(northPanel, BorderLayout.NORTH);
+        add(pane, BorderLayout.SOUTH);
+        setLocationByPlatform(true);
     }
 
-    private void initComponents() {
-        setTitle("Главное окно");
-        picturePanel1 = new PicturePanel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jButtonArrayTabulated = new javax.swing.JButton();
-        jButtonLinkedListTabulated = new javax.swing.JButton();
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setSize(896, 611);
-        picturePanel1.setLayout(new java.awt.BorderLayout());
-        picturePanel1.setImageFile(new java.io.File("C:\\Users\\Karina\\IdeaProjects\\LaboratoriesArea\\LaboratoriesArea\\Laba2\\src\\main\\java\\ru\\ssau\\tk\\Ssau\\Laba2\\ui\\photo\\2.jpg"));
-        jPanel1.setLayout(new java.awt.GridLayout());
-        jPanel1.setOpaque(false);
-        jPanel1.add(jLabel1);
-        designButton(jButtonArrayTabulated, 100, 100, "Массивы");
-        jPanel1.add(jButtonArrayTabulated);
-        jButtonArrayTabulated.addActionListener(event -> {
-            try {
-                ArrayTabulatedFunctionWindow.main(factory, data -> tableModel.setFunction(data));
-            } catch (Exception e) {
-                new ErrorsWindow(this, e);
-            }
-        });
-        picturePanel1.add(jPanel1, BorderLayout.SOUTH);
-        getContentPane().add(picturePanel1, java.awt.BorderLayout.CENTER);
-
-        designButton(jButtonLinkedListTabulated, 100, 100, "Связный список");
-        jPanel1.add(jButtonLinkedListTabulated);
-        jButtonLinkedListTabulated.addActionListener(event -> {
-            try {
-                LinkedListTabulatedFunctionWindow.main(factory, data -> tableModel.setFunction(data));
-            } catch (Exception e) {
-                new ErrorsWindow(this, e);
-            }
-        });
-        GroupLayout layout = new GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setAutoCreateGaps(true);
-        layout.setAutoCreateContainerGaps(true);
-        JScrollPane tableScrollPane = new JScrollPane(table);
-        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                .addGroup(layout.createSequentialGroup()
-                        .addComponent(inputButtonTable)
-                        .addComponent(inputButtonMath)
-                        .addComponent(inputButtonFactory)
-                        .addComponent(tableScrollPane))
-        );
-        layout.setVerticalGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(inputButtonTable)
-                        .addComponent(inputButtonMath)
-                        .addComponent(inputButtonFactory)
-                        .addComponent(tableScrollPane))
-        );
-    }
-
-    public void designButton(JButton button, int width, int height, String name) {
-        button.setFont(new Font("TimesRoman", Font.BOLD, 14));
+    public void designButton(JButton button, String name) {
         button.setText(name);
-        button.setPreferredSize(new Dimension(width, height));
         button.setBackground(Color.pink);
         button.setForeground(Color.DARK_GRAY);
         button.setFocusPainted(false);
     }
 
     public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainWindow().setVisible(true);
+        MainWindow window = new MainWindow();
+        window.setBackground(new Color(16, 16, 16));
+        window.setVisible(true);
+    }
+
+    class BgPanel extends JPanel {
+        public void paintComponent(Graphics g) {
+            Image im = null;
+            try {
+                im = ImageIO.read(new File("photo/5.jpg"));
+            } catch (IOException e) {
             }
-        });
+            g.drawImage(im, 80, -50, null);
+        }
     }
 }

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ArrayTabulatedFunctionWindow extends JFrame {
+public class ArrayTabulatedFunctionWindow extends JDialog {
     List<Double> xValues = new ArrayList<>();
     List<Double> yValues = new ArrayList<>();
     AbstractTableModel tableModel = new TableModel(xValues, yValues);
@@ -31,6 +31,7 @@ public class ArrayTabulatedFunctionWindow extends JFrame {
     }
 
     public ArrayTabulatedFunctionWindow(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
+        setModal(true);
         this.setBounds(300, 300, 500, 500);
         this.factory = factory;
         addButtonListeners(callback);

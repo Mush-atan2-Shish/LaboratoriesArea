@@ -33,7 +33,6 @@ public class LinkedListTabulatedFunctionWindow extends JDialog {
     }
 
     public void designButton(JButton button, int width, int height, String name) {
-        button.setFont(new Font("TimesRoman", Font.BOLD, 14));
         button.setText(name);
         button.setPreferredSize(new Dimension(width, height));
         button.setBackground(Color.pink);
@@ -47,12 +46,12 @@ public class LinkedListTabulatedFunctionWindow extends JDialog {
     }
 
     public void fillMap() {
+        nameFunctionMap.put("Гиперболический тангенс", new HyperbolicTan());
+        nameFunctionMap.put("Единичная функция", new UnitFunction());
         nameFunctionMap.put("Квадратичная функция", new SqrFunction());
         nameFunctionMap.put("Нулевая функция", new ZeroFunction());
-        nameFunctionMap.put("Единичная функция", new UnitFunction());
-        nameFunctionMap.put("Функция 1/(cos x)", new InverseCosFunction());
+        nameFunctionMap.put("Обратный косинус", new InverseCosFunction());
         nameFunctionMap.put("Тождественная функция", new IdentityFunction());
-        nameFunctionMap.put("Функция гиперболического тангенса", new HyperbolicTan());
         String[] functions = new String[6];
         int i = 0;
         for (String string : nameFunctionMap.keySet()) {
