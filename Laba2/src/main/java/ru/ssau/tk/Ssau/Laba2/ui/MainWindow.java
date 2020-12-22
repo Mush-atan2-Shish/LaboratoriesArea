@@ -5,6 +5,11 @@ import java.awt.*;
 
 public class MainWindow extends javax.swing.JFrame {
 
+    private JButton jButton1;
+    private JLabel jLabel1;
+    private JPanel jPanel1;
+    private PicturePanel picturePanel1;
+
     public MainWindow() {
         initComponents();
     }
@@ -16,19 +21,27 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setSize(582, 580);
+        setSize(596, 611);
         picturePanel1.setLayout(new java.awt.BorderLayout());
-        picturePanel1.setImageFile(new java.io.File("C:\\Users\\Пользователь\\IdeaProjects\\LaboratoriesAreaLaba2\\Laba2\\src\\main\\java\\ru\\ssau\\tk\\Ssau\\Laba2\\ui\\photo\\5.jpg"));
+        picturePanel1.setImageFile(new java.io.File("C:\\Users\\Karina\\IdeaProjects\\LaboratoriesArea\\LaboratoriesArea\\Laba2\\src\\main\\java\\ru\\ssau\\tk\\Ssau\\Laba2\\ui\\photo\\2.jpg"));
         jPanel1.setLayout(new java.awt.GridLayout());
         jPanel1.setOpaque(false);
         jPanel1.add(jLabel1);
         jButton1.setFont(new Font("TimesRoman", Font.BOLD, 14));
         jButton1.setText("Создать табулированную функцию");
         jButton1.setPreferredSize(new Dimension(100, 100));
-        jButton1.setBackground(Color.WHITE);
+        jButton1.setBackground(Color.pink);
+        jButton1.setForeground(Color.DARK_GRAY);
+        jButton1.setFocusPainted(false);
         jPanel1.add(jButton1);
-        jButton1.addActionListener(event -> ArrayTabulatedFunctionWindow.main());
-        picturePanel1.add(jPanel1, java.awt.BorderLayout.NORTH);
+        jButton1.addActionListener(event -> {
+            try {
+                ArrayTabulatedFunctionWindow.main();
+            } catch (Exception e) {
+                new ErrorsWindow(this, e);
+            }
+        });
+        picturePanel1.add(jPanel1, BorderLayout.SOUTH);
         getContentPane().add(picturePanel1, java.awt.BorderLayout.CENTER);
     }
 
@@ -39,9 +52,4 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
     }
-
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private PicturePanel picturePanel1;
 }

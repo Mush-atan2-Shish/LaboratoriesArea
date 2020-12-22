@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,10 @@ public class ArrayTabulatedFunctionWindow extends JFrame {
         compose();
         inputButton.setEnabled(false);
         createButton.setEnabled(false);
+        inputButton.setFocusPainted(false);
+        createButton.setFocusPainted(false);
+        inputButton.setBackground(Color.pink);
+        createButton.setBackground(Color.pink);
     }
 
     void compose() {
@@ -77,16 +82,20 @@ public class ArrayTabulatedFunctionWindow extends JFrame {
 
     public void addListenerForInputButton() {
         inputButton.addActionListener(event -> {
-            createButton.setEnabled(false);
-            int count = Integer.parseInt(countField.getText());
-            clearTable(tableModel.getRowCount());
-            for (int i = 0; i < count; i++) {
-                xValues.add(0.);
-                yValues.add(0.);
-                tableModel.fireTableDataChanged();
-            }
-            if (tableModel.getRowCount() > 1) {
-                createButton.setEnabled(true);
+            try {
+                createButton.setEnabled(false);
+                int count = Integer.parseInt(countField.getText());
+                clearTable(tableModel.getRowCount());
+                for (int i = 0; i < count; i++) {
+                    xValues.add(0.);
+                    yValues.add(0.);
+                    tableModel.fireTableDataChanged();
+                }
+                if (tableModel.getRowCount() > 1) {
+                    createButton.setEnabled(true);
+                }
+            } catch (Exception e) {
+                new ErrorsWindow(this, e);
             }
         });
 
@@ -94,19 +103,23 @@ public class ArrayTabulatedFunctionWindow extends JFrame {
 
     public void addListenerForCreateButton() {
         createButton.addActionListener(event -> {
-            double[] x = new double[xValues.size()];
-            double[] y = new double[xValues.size()];
-            x[0] = xValues.get(0);
-            y[0] = yValues.get(0);
-            for (int i = 1; i < xValues.size(); i++) {
-                if (xValues.get(i - 1) > xValues.get(i)) {
-                    throw new ArrayIsNotSortedException();
+            try {
+                double[] x = new double[xValues.size()];
+                double[] y = new double[xValues.size()];
+                x[0] = xValues.get(0);
+                y[0] = yValues.get(0);
+                for (int i = 1; i < xValues.size(); i++) {
+                    if (xValues.get(i - 1) > xValues.get(i)) {
+                        throw new ArrayIsNotSortedException();
+                    }
+                    x[i] = xValues.get(i);
+                    y[i] = yValues.get(i);
                 }
-                x[i] = xValues.get(i);
-                y[i] = yValues.get(i);
+                function = factory.create(x, y);
+                this.dispose();
+            } catch (Exception e) {
+                new ErrorsWindow(this, e);
             }
-            function = factory.create(x, y);
-            this.dispose();
         });
     }
 

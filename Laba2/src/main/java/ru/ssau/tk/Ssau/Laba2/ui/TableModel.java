@@ -38,9 +38,17 @@ public class TableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) throws NumberFormatException {
         if (columnIndex == X_COLUMN) {
-            xValues.set(rowIndex, Double.valueOf(aValue.toString()));
+            try {
+                xValues.set(rowIndex, Double.valueOf(aValue.toString()));
+            } catch (Exception e) {
+                xValues.set(rowIndex, 0.0);
+            }
         } else if (columnIndex == Y_COLUMN) {
-            yValues.set(rowIndex, Double.valueOf(aValue.toString()));
+            try {
+                yValues.set(rowIndex, Double.valueOf(aValue.toString()));
+            } catch (Exception e) {
+                yValues.set(rowIndex, 0.0);
+            }
         }
     }
 
