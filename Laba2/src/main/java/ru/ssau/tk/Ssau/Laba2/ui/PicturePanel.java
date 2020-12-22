@@ -6,12 +6,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+
 public class PicturePanel extends javax.swing.JPanel {
     // Храним 2 изображения: оригинальное и текущее.
     // Оригинальное используется для получения текущего в зависимости от размеров панели.
     // Текущее непосредственно прорисовывается на панели.
     private BufferedImage originalImage = null;
     private Image image = null;
+
     public PicturePanel() {
         initComponents();
     }
@@ -34,6 +36,7 @@ public class PicturePanel extends javax.swing.JPanel {
             this.repaint();
         }
     }
+
     // Берем прорисовку в свои руки.
     public void paint(Graphics g) {
         // Рисуем картинку
@@ -55,6 +58,7 @@ public class PicturePanel extends javax.swing.JPanel {
     public void setImage(BufferedImage image) {
         this.image = image;
     }
+
     public void setImageFile(File imageFile) {
         try {
             if (imageFile == null) {

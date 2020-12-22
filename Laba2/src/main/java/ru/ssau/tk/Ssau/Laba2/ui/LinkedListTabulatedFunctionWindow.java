@@ -4,52 +4,45 @@ import ru.ssau.tk.Ssau.Laba2.functions.*;
 import ru.ssau.tk.Ssau.Laba2.functions.factory.TabulatedFunctionFactory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.*;
+import java.util.function.Consumer;
 
 public class LinkedListTabulatedFunctionWindow extends JDialog {
-    private JButton inputButtonTable = new JButton("Создать табулированную функцию");
-    private JButton inputButtonMath = new JButton("Создать простую функцию");
-    private JButton inputButtonFactory = new JButton("Выбрать тип фабрики");
-    private List<Double> xValues = new ArrayList<>();
-    private List<Double> yValues = new ArrayList<>();
-    private JComboBox<String> functionComboBox = new JComboBox<>();
-    private JLabel fromLabel = new JLabel("От:");
-    private JLabel toLabel = new JLabel("До:");
-    private JLabel countLabel = new JLabel("Количество:");
-    private JTextField countField = new JTextField();
-    private JTextField fromField = new JTextField();
-    private JTextField toField = new JTextField();
-    private JButton okButton = new JButton("OK");
-    private TableModelMainWindow tableModel = new TableModelMainWindow();
-    private JTable table = new JTable(tableModel);
+    private final JComboBox<String> functionComboBox = new JComboBox<>();
+    private final JLabel fromLabel = new JLabel("От:");
+    private final JLabel toLabel = new JLabel("До:");
+    private final JLabel countLabel = new JLabel("Количество:");
+    private final JTextField countField = new JTextField();
+    private final JTextField fromField = new JTextField();
+    private final JTextField toField = new JTextField();
+    private final JButton okButton = new JButton();
     private TabulatedFunctionFactory factory;
-    private Map<String, MathFunction> nameFunctionMap = new HashMap<>();
+    private final Map<String, MathFunction> nameFunctionMap = new HashMap<>();
     TabulatedFunction function;
 
 
-    public LinkedListTabulatedFunctionWindow() {
+    public LinkedListTabulatedFunctionWindow(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
         setModal(true);
         this.factory = factory;
         this.setBounds(300, 200, 500, 150);
+        designButton(okButton, 20, 20, "OK");
         fillMap();
         compose();
-        addButtonListeners();
+        addButtonListeners(callback);
     }
 
-    public void wrapTable(int countOld, int countNew) {
-        tableModel.fireTableDataChanged();
-        for (int i = 0; i < countOld; i++) {
-            if (xValues.size() != 0) xValues.remove(countOld - i - 1);
-            if (yValues.size() != 0) yValues.remove(countOld - i - 1);
-        }
-        for (int i = 0; i < countNew; i++) {
-            xValues.add(tableModel.getFunction().getX(i));
-            yValues.add(tableModel.getFunction().getY(i));
-        }
+    public void designButton(JButton button, int width, int height, String name) {
+        button.setFont(new Font("TimesRoman", Font.BOLD, 14));
+        button.setText(name);
+        button.setPreferredSize(new Dimension(width, height));
+        button.setBackground(Color.pink);
+        button.setForeground(Color.DARK_GRAY);
+        button.setFocusPainted(false);
     }
 
-    public static void main() {
-        LinkedListTabulatedFunctionWindow app = new LinkedListTabulatedFunctionWindow();
+    public static void main(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
+        LinkedListTabulatedFunctionWindow app = new LinkedListTabulatedFunctionWindow(factory, callback);
         app.setVisible(true);
     }
 
@@ -57,9 +50,9 @@ public class LinkedListTabulatedFunctionWindow extends JDialog {
         nameFunctionMap.put("Квадратичная функция", new SqrFunction());
         nameFunctionMap.put("Нулевая функция", new ZeroFunction());
         nameFunctionMap.put("Единичная функция", new UnitFunction());
-        nameFunctionMap.put("функция 1/(cos x)", new InverseCosFunction());
+        nameFunctionMap.put("Функция 1/(cos x)", new InverseCosFunction());
         nameFunctionMap.put("Тождественная функция", new IdentityFunction());
-        nameFunctionMap.put("Функция квадрата", new SqrFunction());
+        nameFunctionMap.put("Функция гиперболического тангенса", new HyperbolicTan());
         String[] functions = new String[6];
         int i = 0;
         for (String string : nameFunctionMap.keySet()) {
@@ -101,44 +94,7 @@ public class LinkedListTabulatedFunctionWindow extends JDialog {
     }
 
 
-    public void addButtonListeners() {
-        inputButtonTable.addActionListener(event -> {
-                    try {
-                        int countOld = xValues.size();
-                        ArrayTabulatedFunctionWindow.main();
-                        int countNew = tableModel.getFunction().getCount();
-                        wrapTable(countOld, countNew);
-                    } catch (Exception e) {
-                        if (e instanceof NullPointerException) {
-                            e.printStackTrace();
-                        } else
-                            new ErrorsWindow(this, e);
-                    }
-                }
-        );
-        inputButtonMath.addActionListener(event -> {
-            try {
-                int countOld = xValues.size();
-                LinkedListTabulatedFunctionWindow.main();
-                int countNew = tableModel.getFunction().getCount();
-                wrapTable(countOld, countNew);
-            } catch (Exception e) {
-                if (e instanceof NullPointerException) {
-                    e.printStackTrace();
-                } else
-                    new ErrorsWindow(this, e);
-            }
-        });
-        inputButtonFactory.addActionListener(event -> {
-            try {
-                SettingWindow.main(factory);
-            } catch (Exception e) {
-                if (e instanceof NullPointerException) {
-                    e.printStackTrace();
-                } else
-                    new ErrorsWindow(this, e);
-            }
-        });
+    public void addButtonListeners(Consumer<? super TabulatedFunction> callback) {
         okButton.addActionListener(event -> {
             try {
                 String func = (String) functionComboBox.getSelectedItem();
@@ -147,6 +103,7 @@ public class LinkedListTabulatedFunctionWindow extends JDialog {
                 double to = Double.parseDouble(toField.getText());
                 int count = Integer.parseInt(countField.getText());
                 function = factory.create(selectedFunction, from, to, count);
+                callback.accept(function);
                 this.dispose();
             } catch (Exception e) {
                 ErrorsWindow errorWindow = new ErrorsWindow(this, e);

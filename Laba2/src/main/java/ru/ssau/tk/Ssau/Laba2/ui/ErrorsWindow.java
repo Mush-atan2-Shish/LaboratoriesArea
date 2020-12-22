@@ -1,7 +1,7 @@
 package ru.ssau.tk.Ssau.Laba2.ui;
 
 import ru.ssau.tk.Ssau.Laba2.exceptions.ArrayIsNotSortedException;
-import ru.ssau.tk.Ssau.Laba2.exceptions.InconsistentFunctionsException;
+import ru.ssau.tk.Ssau.Laba2.exceptions.DifferentLengthOfArraysException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +23,7 @@ public class ErrorsWindow {
         if (e instanceof ArrayIsNotSortedException) {
             return "Массив точек неотсортирован";
         }
-        if (e instanceof InconsistentFunctionsException) {
+        if (e instanceof DifferentLengthOfArraysException) {
             return "Длина массивов неодинакова";
         }
         if (e instanceof IllegalArgumentException) {
