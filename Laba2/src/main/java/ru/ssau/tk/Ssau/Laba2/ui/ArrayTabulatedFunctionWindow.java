@@ -2,7 +2,6 @@ package ru.ssau.tk.Ssau.Laba2.ui;
 
 import ru.ssau.tk.Ssau.Laba2.exceptions.ArrayIsNotSortedException;
 import ru.ssau.tk.Ssau.Laba2.functions.TabulatedFunction;
-import ru.ssau.tk.Ssau.Laba2.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.Ssau.Laba2.functions.factory.TabulatedFunctionFactory;
 
 import javax.swing.*;
@@ -12,6 +11,7 @@ import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ArrayTabulatedFunctionWindow extends JFrame {
     List<Double> xValues = new ArrayList<>();
@@ -22,17 +22,18 @@ public class ArrayTabulatedFunctionWindow extends JFrame {
     private JTextField countField = new JTextField();
     private JButton inputButton = new JButton("Ок");
     private JButton createButton = new JButton("Создать табулированную функцию");
-    TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
+    TabulatedFunctionFactory factory;
     TabulatedFunction function;
 
-    public static void main() {
-        ArrayTabulatedFunctionWindow app = new ArrayTabulatedFunctionWindow();
+    public static void main(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
+        ArrayTabulatedFunctionWindow app = new ArrayTabulatedFunctionWindow(factory, callback);
         app.setVisible(true);
     }
 
-    public ArrayTabulatedFunctionWindow() {
+    public ArrayTabulatedFunctionWindow(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
         this.setBounds(300, 300, 500, 500);
-        addButtonListeners();
+        this.factory = factory;
+        addButtonListeners(callback);
         compose();
         inputButton.setEnabled(false);
         createButton.setEnabled(false);
@@ -66,9 +67,9 @@ public class ArrayTabulatedFunctionWindow extends JFrame {
         );
     }
 
-    public void addButtonListeners() {
+    public void addButtonListeners(Consumer<? super TabulatedFunction> callback) {
         addListenerForInputButton();
-        addListenerForCreateButton();
+        addListenerForCreateButton(callback);
         addListenerForCountButton();
     }
 
@@ -101,7 +102,7 @@ public class ArrayTabulatedFunctionWindow extends JFrame {
 
     }
 
-    public void addListenerForCreateButton() {
+    public void addListenerForCreateButton(Consumer<? super TabulatedFunction> callback) {
         createButton.addActionListener(event -> {
             try {
                 double[] x = new double[xValues.size()];
@@ -116,6 +117,7 @@ public class ArrayTabulatedFunctionWindow extends JFrame {
                     y[i] = yValues.get(i);
                 }
                 function = factory.create(x, y);
+                callback.accept(function);
                 this.dispose();
             } catch (Exception e) {
                 new ErrorsWindow(this, e);

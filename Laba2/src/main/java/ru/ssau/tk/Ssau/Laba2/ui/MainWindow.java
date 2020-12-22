@@ -11,6 +11,8 @@ public class MainWindow extends javax.swing.JFrame {
     private JButton inputButtonTable = new JButton("Создать табулированную функцию");
     private JButton inputButtonMath = new JButton("Создать простую функцию");
     private JButton inputButtonFactory = new JButton("Выбрать тип фабрики");
+    private JButton openButton = new JButton("Открыть функцию");
+    private JButton saveButton = new JButton("Сохранить функцию");
     private List<Double> xValues = new ArrayList<>();
     private List<Double> yValues = new ArrayList<>();
     private TableModelMainWindow tableModel = new TableModelMainWindow();
@@ -44,7 +46,7 @@ public class MainWindow extends javax.swing.JFrame {
         inputButtonTable.addActionListener(event -> {
                     try {
                         int countOld = xValues.size();
-                        ArrayTabulatedFunctionWindow.main();
+                        ArrayTabulatedFunctionWindow.main(factory, data -> tableModel.setFunction(data));
                         int countNew = tableModel.getFunction().getCount();
                         wrapTable(countOld, countNew);
                     } catch (Exception e) {
@@ -78,6 +80,29 @@ public class MainWindow extends javax.swing.JFrame {
                     new ErrorsWindow(this, e);
             }
         });
+        openButton.addActionListener(event -> {
+            try {
+                int countOld = xValues.size();
+                FileReader.main(data -> tableModel.setFunction(data));
+                int countNew = tableModel.getFunction().getCount();
+                wrapTable(countOld, countNew);
+            } catch (Exception e) {
+                if (e instanceof NullPointerException) {
+                    e.printStackTrace();
+                } else
+                    new ErrorsWindow(this, e);
+            }
+        });
+        saveButton.addActionListener(event -> {
+            try {
+                FileWriter.main(tableModel.getFunction());
+            } catch (Exception e) {
+                if (e instanceof NullPointerException) {
+                    e.printStackTrace();
+                } else
+                    new ErrorsWindow(this, e);
+            }
+        });
     }
 
     private void initComponents() {
@@ -88,9 +113,9 @@ public class MainWindow extends javax.swing.JFrame {
         jButtonArrayTabulated = new javax.swing.JButton();
         jButtonLinkedListTabulated = new javax.swing.JButton();
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setSize(596, 611);
+        setSize(896, 611);
         picturePanel1.setLayout(new java.awt.BorderLayout());
-        picturePanel1.setImageFile(new java.io.File("C:\\Users\\Пользователь\\IdeaProjects\\LaboratoriesAreaLaba2\\Laba2\\src\\main\\java\\ru\\ssau\\tk\\Ssau\\Laba2\\ui\\photo\\2.jpg"));
+        picturePanel1.setImageFile(new java.io.File("C:\\Users\\Karina\\IdeaProjects\\LaboratoriesArea\\LaboratoriesArea\\Laba2\\src\\main\\java\\ru\\ssau\\tk\\Ssau\\Laba2\\ui\\photo\\2.jpg"));
         jPanel1.setLayout(new java.awt.GridLayout());
         jPanel1.setOpaque(false);
         jPanel1.add(jLabel1);
@@ -98,7 +123,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel1.add(jButtonArrayTabulated);
         jButtonArrayTabulated.addActionListener(event -> {
             try {
-                ArrayTabulatedFunctionWindow.main();
+                ArrayTabulatedFunctionWindow.main(factory, data -> tableModel.setFunction(data));
             } catch (Exception e) {
                 new ErrorsWindow(this, e);
             }
