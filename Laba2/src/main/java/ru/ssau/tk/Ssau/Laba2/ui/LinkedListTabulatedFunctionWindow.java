@@ -21,7 +21,6 @@ public class LinkedListTabulatedFunctionWindow extends JDialog {
     private final Map<String, MathFunction> nameFunctionMap = new HashMap<>();
     TabulatedFunction function;
 
-
     public LinkedListTabulatedFunctionWindow(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
         setModal(true);
         this.factory = factory;
@@ -91,7 +90,6 @@ public class LinkedListTabulatedFunctionWindow extends JDialog {
                 .addComponent(okButton)
         );
     }
-
 
     public void addButtonListeners(Consumer<? super TabulatedFunction> callback) {
         okButton.addActionListener(event -> {

@@ -100,7 +100,6 @@ public class ArrayTabulatedFunctionWindow extends JDialog {
                 new ErrorsWindow(this, e);
             }
         });
-
     }
 
     public void addListenerForCreateButton(Consumer<? super TabulatedFunction> callback) {

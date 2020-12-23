@@ -1,10 +1,13 @@
 package ru.ssau.tk.Ssau.Laba2.ui;
 
+import com.sun.deploy.panel.JreTableModel;
 import ru.ssau.tk.Ssau.Laba2.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.Ssau.Laba2.functions.factory.TabulatedFunctionFactory;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -47,6 +50,10 @@ public class MainWindow extends JFrame {
     void compose() {
         setLayout(new BorderLayout());
         JScrollPane pane = new JScrollPane();
+        //pane.getViewport().setBackground(Color.yellow);
+        //TableColumn col = table.getColumnModel().getColumn(2);
+        //table.setBackground(Color.yellow);
+        //col.setCellRenderer(new CustomRenderer());
         pane.setViewportView(table);
         JPanel northPanel = new JPanel();
         northPanel.setBackground(new Color(16, 16, 16));
@@ -142,10 +149,11 @@ public class MainWindow extends JFrame {
         public void paintComponent(Graphics g) {
             Image im = null;
             try {
-                im = ImageIO.read(new File("photo/5.jpg"));
+                im = ImageIO.read(new File("photo/2.jpg"));
             } catch (IOException e) {
             }
-            g.drawImage(im, 80, -50, null);
+
+            g.drawImage(im, 5, 0, null);
         }
     }
 }
