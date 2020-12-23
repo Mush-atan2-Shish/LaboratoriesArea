@@ -1,12 +1,13 @@
 package ru.ssau.tk.Ssau.Laba2.ui;
 
-import com.sun.deploy.panel.JreTableModel;
 import ru.ssau.tk.Ssau.Laba2.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.Ssau.Laba2.functions.factory.TabulatedFunctionFactory;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.plaf.ColorUIResource;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+import javax.swing.plaf.basic.BasicScrollPaneUI;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.io.File;
@@ -29,7 +30,7 @@ public class MainWindow extends JFrame {
     public MainWindow() {
         setTitle("Главное окно");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(0, 0, 720, 840);
+        setBounds(0, 0, 830, 840);
         setContentPane(new BgPanel());
         compose();
         this.factory = new ArrayTabulatedFunctionFactory();
@@ -50,13 +51,23 @@ public class MainWindow extends JFrame {
     void compose() {
         setLayout(new BorderLayout());
         JScrollPane pane = new JScrollPane();
-        //pane.getViewport().setBackground(Color.yellow);
-        //TableColumn col = table.getColumnModel().getColumn(2);
-        //table.setBackground(Color.yellow);
-        //col.setCellRenderer(new CustomRenderer());
+        UIManager.put("ScrollPane.thumb",new ColorUIResource(Color.BLACK));
+        pane.setUI(new BasicScrollPaneUI());
+        UIManager.put("ScrollBar.thumb", new ColorUIResource(new Color(186, 177, 173, 225)));
+        pane.getVerticalScrollBar().setUI(new BasicScrollBarUI() );
+        pane.getHorizontalScrollBar().setUI(new BasicScrollBarUI());
+        pane.getViewport().setBackground(new Color (255, 248, 224));  //фон панели
+        TableColumn col = table.getColumnModel().getColumn(2);
+        table.setBackground(new Color (255, 248, 224)); //фон полей таблицы
+        table.getTableHeader().setBackground(Color.pink);
+        table.getTableHeader().setForeground(Color.DARK_GRAY);
+        table.setSelectionBackground(new Color(220, 194, 184));
+        table.getTableHeader().setFont(new Font("VVV", Font.BOLD,14));
+        pane.setBackground(new Color (235, 205, 193));
+        pane.setForeground(Color.DARK_GRAY);
         pane.setViewportView(table);
         JPanel northPanel = new JPanel();
-        northPanel.setBackground(new Color(16, 16, 16));
+        northPanel.setBackground(new Color(31, 21, 12));
         designButton(inputButtonTable, "Массив");
         inputButtonTable.addActionListener(event -> {
                     try {
@@ -136,12 +147,13 @@ public class MainWindow extends JFrame {
         button.setText(name);
         button.setBackground(Color.pink);
         button.setForeground(Color.DARK_GRAY);
+        button.setFont(new Font("VVV", Font.BOLD,14));
         button.setFocusPainted(false);
     }
 
     public static void main(String[] args) {
         MainWindow window = new MainWindow();
-        window.setBackground(new Color(16, 16, 16));
+        window.setBackground(new Color(31, 21, 12)); //фон под кнопками
         window.setVisible(true);
     }
 
@@ -153,7 +165,7 @@ public class MainWindow extends JFrame {
             } catch (IOException e) {
             }
 
-            g.drawImage(im, 5, 0, null);
+            g.drawImage(im, 56, -50, null);
         }
     }
 }
