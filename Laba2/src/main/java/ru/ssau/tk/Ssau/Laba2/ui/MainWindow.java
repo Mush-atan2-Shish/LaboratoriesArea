@@ -155,6 +155,7 @@ public class MainWindow extends JFrame {
         MainWindow window = new MainWindow();
         window.setBackground(new Color(31, 21, 12)); //фон под кнопками
         window.setVisible(true);
+        window.setResizable(false);
     }
 
     class BgPanel extends JPanel {

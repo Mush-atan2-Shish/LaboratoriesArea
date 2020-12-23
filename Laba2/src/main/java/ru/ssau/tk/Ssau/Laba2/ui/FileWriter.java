@@ -13,14 +13,17 @@ import java.io.FileOutputStream;
 public class FileWriter extends JDialog {
     private JTextField filename = new JTextField();
     private JTextField dir = new JTextField();
-    private JButton save = new JButton("Сохранить");
+    private JButton save = new JButton("Сохранить функцию");
     private TabulatedFunction func;
 
     public FileWriter(TabulatedFunction func) {
+        setTitle("Сохранить функцию");
         setModal(true);
         this.func = func;
         JPanel p = new JPanel();
         addListenerForSaveButton();
+        save.setFocusPainted(false);
+        save.setBackground(Color.pink);
         p.add(save);
         Container cp = getContentPane();
         cp.add(p, BorderLayout.SOUTH);

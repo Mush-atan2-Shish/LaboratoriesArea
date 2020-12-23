@@ -5,6 +5,7 @@ import ru.ssau.tk.Ssau.Laba2.exceptions.DifferentLengthOfArraysException;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class ErrorsWindow {
     ErrorsWindow(Component parent, Exception e) {
@@ -28,6 +29,9 @@ public class ErrorsWindow {
         }
         if (e instanceof IllegalArgumentException) {
             return "Задана некорректная функция";
+        }
+        if (e instanceof IOException) {
+            return "Файл не найден или повреждён";
         }
         {
             e.printStackTrace();

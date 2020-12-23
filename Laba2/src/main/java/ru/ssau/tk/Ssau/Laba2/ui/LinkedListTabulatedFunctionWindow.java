@@ -22,6 +22,7 @@ public class LinkedListTabulatedFunctionWindow extends JDialog {
     TabulatedFunction function;
 
     public LinkedListTabulatedFunctionWindow(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
+        setTitle("Связный список");
         setModal(true);
         this.factory = factory;
         this.setBounds(300, 200, 500, 150);

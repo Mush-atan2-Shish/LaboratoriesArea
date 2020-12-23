@@ -5,6 +5,7 @@ import ru.ssau.tk.Ssau.Laba2.functions.factory.LinkedListTabulatedFunctionFactor
 import ru.ssau.tk.Ssau.Laba2.functions.factory.TabulatedFunctionFactory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class SettingWindow extends JDialog {
     public SettingWindow(TabulatedFunctionFactory factory) {
         setModal(true);
         this.factory = factory;
-        setTitle("Настройка");
+        setTitle("Выбрать тип фабрики");
         setSize(300, 100);
         fillMap();
         compose();
@@ -48,6 +49,8 @@ public class SettingWindow extends JDialog {
                         .addComponent(functionComboBox)
                         .addComponent(okButton)
                 ));
+        okButton.setBackground(Color.pink);
+        okButton.setFocusPainted(false);
     }
 
     public void fillMap() {

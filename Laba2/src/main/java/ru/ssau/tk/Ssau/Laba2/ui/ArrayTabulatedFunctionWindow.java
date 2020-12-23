@@ -31,6 +31,7 @@ public class ArrayTabulatedFunctionWindow extends JDialog {
     }
 
     public ArrayTabulatedFunctionWindow(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
+        setTitle("Массив");
         setModal(true);
         this.setBounds(300, 300, 500, 500);
         this.factory = factory;

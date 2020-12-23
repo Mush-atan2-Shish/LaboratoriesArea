@@ -16,14 +16,17 @@ import java.util.function.Consumer;
 public class FileReader extends JDialog {
     private JTextField filename = new JTextField();
     private JTextField dir = new JTextField();
-    private JButton open = new JButton("Открыть");
+    private JButton open = new JButton("Выбрать файл");
     private TabulatedFunction func;
     private TabulatedFunctionFactory factory;
 
     public FileReader(Consumer<? super TabulatedFunction> callback) {
+        setTitle("Открыть функцию");
         setModal(true);
         JPanel p = new JPanel();
         addListenerForOpenButton(callback);
+        open.setBackground(Color.pink);
+        open.setFocusPainted(false);
         p.add(open);
         Container cp = getContentPane();
         cp.add(p, BorderLayout.SOUTH);
