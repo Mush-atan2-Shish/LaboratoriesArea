@@ -53,9 +53,8 @@ public class TableModelMainWindow extends AbstractTableModel {
         switch (columnIndex) {
             case INDEX_COLUMN_NUMBER:
             case X_COLUMN:
-                return false;
             case Y_COLUMN:
-                return true;
+                return false;
         }
         return false;
     }

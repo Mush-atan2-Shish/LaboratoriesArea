@@ -30,13 +30,13 @@ public class ElementaryOperationsWindow extends JFrame {
     JButton multiplication = new JButton();
     JButton division = new JButton();
 
-    JButton createArrayOne = new JButton();
-    JButton createListOne = new JButton();
+    JButton createTableOne = new JButton();
+    JButton createMathOne = new JButton();
     JButton saveOne = new JButton();
     JButton downloadOne = new JButton();
 
-    JButton createArrayTwo = new JButton();
-    JButton createListTwo = new JButton();
+    JButton createTableTwo = new JButton();
+    JButton createMathTwo = new JButton();
     JButton saveTwo = new JButton();
     JButton downloadTwo = new JButton();
 
@@ -55,21 +55,21 @@ public class ElementaryOperationsWindow extends JFrame {
         getContentPane().add(multiplication);
         getContentPane().add(subtraction);
 
-        designButton(createArrayOne, "Создать через массивы");
-        designButton(createListOne, "Создать через функцию");
+        designButton(createTableOne, "Создать через массивы");
+        designButton(createMathOne, "Создать через функцию");
         designButton(saveOne, "Сохранить");
         designButton(downloadOne, "Загрузить");
-        getContentPane().add(createArrayOne);
-        getContentPane().add(createListOne);
+        getContentPane().add(createTableOne);
+        getContentPane().add(createMathOne);
         getContentPane().add(saveOne);
         getContentPane().add(downloadOne);
 
-        designButton(createArrayTwo, "Создать через массивы");
-        designButton(createListTwo, "Создать через функцию");
+        designButton(createTableTwo, "Создать через массивы");
+        designButton(createMathTwo, "Создать через функцию");
         designButton(saveTwo, "Сохранить");
         designButton(downloadTwo, "Загрузить");
-        getContentPane().add(createArrayTwo);
-        getContentPane().add(createListTwo);
+        getContentPane().add(createTableTwo);
+        getContentPane().add(createMathTwo);
         getContentPane().add(saveTwo);
         getContentPane().add(downloadTwo);
         designButton(saveThree, "Сохранить");
@@ -78,7 +78,7 @@ public class ElementaryOperationsWindow extends JFrame {
         setLocationRelativeTo(null);
         this.factory = new ArrayTabulatedFunctionFactory();
 
-        createArrayOne.addActionListener(event -> {
+        createTableOne.addActionListener(event -> {
                     try {
                         int countOld = xValues.size();
                         TabulatedFunctionWindow.main(factory, data -> tableModel1.setFunction(data));
@@ -93,7 +93,7 @@ public class ElementaryOperationsWindow extends JFrame {
                 }
         );
 
-        createArrayTwo.addActionListener(event -> {
+        createTableTwo.addActionListener(event -> {
                     try {
                         int countOld = xValues.size();
                         TabulatedFunctionWindow.main(factory, data -> tableModel2.setFunction(data));
@@ -108,7 +108,7 @@ public class ElementaryOperationsWindow extends JFrame {
                 }
         );
 
-        createListOne.addActionListener(event -> {
+        createMathOne.addActionListener(event -> {
             try {
                 int countOld = xValues.size();
                 MathFunctionWindow.main(factory, data -> tableModel1.setFunction(data));
@@ -122,7 +122,7 @@ public class ElementaryOperationsWindow extends JFrame {
             }
         });
 
-        createListTwo.addActionListener(event -> {
+        createMathTwo.addActionListener(event -> {
             try {
                 int countOld = xValues.size();
                 MathFunctionWindow.main(factory, data -> tableModel2.setFunction(data));
@@ -287,11 +287,11 @@ public class ElementaryOperationsWindow extends JFrame {
                         .addComponent(resultTableScrollPane))
 
                 .addGroup(layout.createSequentialGroup()
-                        .addComponent(createArrayOne)
-                        .addComponent(createListOne)
+                        .addComponent(createTableOne)
+                        .addComponent(createMathOne)
                         .addGap(67)
-                        .addComponent(createArrayTwo)
-                        .addComponent(createListTwo))
+                        .addComponent(createTableTwo)
+                        .addComponent(createMathTwo))
                 .addGroup(layout.createSequentialGroup()
                         .addComponent(saveOne)
                         .addComponent(downloadOne)
@@ -316,11 +316,11 @@ public class ElementaryOperationsWindow extends JFrame {
                         .addComponent(secondTableScrollPane)
                         .addComponent(resultTableScrollPane))
                 .addGroup(layout.createParallelGroup()
-                        .addComponent(createArrayOne)
-                        .addComponent(createListOne)
+                        .addComponent(createTableOne)
+                        .addComponent(createMathOne)
                         .addGap(60)
-                        .addComponent(createArrayTwo)
-                        .addComponent(createListTwo))
+                        .addComponent(createTableTwo)
+                        .addComponent(createMathTwo))
                 .addGroup(layout.createParallelGroup()
                         .addComponent(saveOne)
                         .addComponent(downloadOne)
