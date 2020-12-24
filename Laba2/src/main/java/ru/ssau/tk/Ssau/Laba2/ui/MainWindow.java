@@ -21,6 +21,8 @@ public class MainWindow extends JFrame {
     private JButton inputButtonFactory = new JButton();
     private JButton openButton = new JButton();
     private JButton saveButton = new JButton();
+    private JButton operation = new JButton();
+    private JButton differential = new JButton();
     private List<Double> xValues = new ArrayList<>();
     private List<Double> yValues = new ArrayList<>();
     private TableModelMainWindow tableModel = new TableModelMainWindow();
@@ -30,7 +32,7 @@ public class MainWindow extends JFrame {
     public MainWindow() {
         setTitle("Главное окно");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(0, 0, 830, 840);
+        setBounds(0, 0, 1130, 840);
         setContentPane(new BgPanel());
         compose();
         this.factory = new ArrayTabulatedFunctionFactory();
@@ -124,6 +126,30 @@ public class MainWindow extends JFrame {
             }
         });
         northPanel.add(saveButton);
+        designButton(operation, "Операции");
+        operation.addActionListener(event -> {
+            try {
+                ElementaryOperationsWindow.main();
+            } catch (Exception e) {
+                if (e instanceof NullPointerException) {
+                    e.printStackTrace();
+                } else
+                    new ErrorsWindow(this, e);
+            }
+        });
+        northPanel.add(operation);
+        designButton(differential, "Дифференциал");
+        differential.addActionListener(event -> {
+            try {
+                //ElementaryOperationsWindow.main();
+            } catch (Exception e) {
+                if (e instanceof NullPointerException) {
+                    e.printStackTrace();
+                } else
+                    new ErrorsWindow(this, e);
+            }
+        });
+        northPanel.add(differential);
         add(northPanel, BorderLayout.NORTH);
         add(pane, BorderLayout.SOUTH);
         setLocationByPlatform(true);
@@ -169,7 +195,7 @@ public class MainWindow extends JFrame {
             } catch (IOException e) {
             }
 
-            g.drawImage(im, 56, -50, null);
+            g.drawImage(im, 190, -50, null);
         }
     }
 }

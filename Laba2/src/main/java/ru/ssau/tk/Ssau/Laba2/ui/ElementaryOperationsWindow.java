@@ -353,7 +353,7 @@ public class ElementaryOperationsWindow extends JFrame {
         designedPane.setViewportView(designedTable);
     }
 
-    public static void main(String[] args) {
+    public static void main() {
         ElementaryOperationsWindow window = new ElementaryOperationsWindow();
         window.setVisible(true);
         window.setResizable(false);
