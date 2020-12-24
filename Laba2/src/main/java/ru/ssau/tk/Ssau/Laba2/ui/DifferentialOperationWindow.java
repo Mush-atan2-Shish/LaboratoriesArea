@@ -180,7 +180,7 @@ public class DifferentialOperationWindow extends JFrame {
                 .addGroup(layout.createSequentialGroup()
                         .addComponent(saveOne)
                         .addComponent(downloadOne)
-                        .addGap(420)
+                        .addGap(438)
                         .addComponent(saveThree)));
 
 
