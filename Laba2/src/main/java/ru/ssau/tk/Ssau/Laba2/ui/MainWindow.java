@@ -8,7 +8,6 @@ import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.plaf.basic.BasicScrollPaneUI;
-import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -141,7 +140,7 @@ public class MainWindow extends JFrame {
         designButton(differential, "Дифференциал");
         differential.addActionListener(event -> {
             try {
-                //ElementaryOperationsWindow.main();
+                DifferentialOperationWindow.main();
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
                     e.printStackTrace();

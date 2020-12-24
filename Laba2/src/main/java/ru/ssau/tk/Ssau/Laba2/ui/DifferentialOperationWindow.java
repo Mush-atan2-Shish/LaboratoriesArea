@@ -2,6 +2,7 @@ package ru.ssau.tk.Ssau.Laba2.ui;
 
 import ru.ssau.tk.Ssau.Laba2.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.Ssau.Laba2.functions.factory.TabulatedFunctionFactory;
+import ru.ssau.tk.Ssau.Laba2.operations.TabulatedDifferentialOperator;
 import ru.ssau.tk.Ssau.Laba2.operations.TabulatedFunctionOperationService;
 
 import javax.swing.*;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DifferentialOperationWindow extends JFrame {
-    private final TabulatedFunctionOperationService tabulatedFunctionOperationService = new TabulatedFunctionOperationService();
+    private TabulatedDifferentialOperator diffOperator = new TabulatedDifferentialOperator();
     private TableModelMainWindow tableModel1 = new TableModelMainWindow();
     private TableModelMainWindow tableModel3 = new TableModelMainWindow();
     private JTable table1 = new JTable(tableModel1);
@@ -119,19 +120,19 @@ public class DifferentialOperationWindow extends JFrame {
             }
         });
 
-//        diff.addActionListener(event -> {
-//            try {
-//                int countOld = tableModel1.getFunction().getCount();
-//                tableModel3.setFunction(tabulatedFunctionOperationService.sum(tableModel1.getFunction(), tableModel2.getFunction()));
-//                int countNew = tableModel3.getFunction().getCount();
-//                wrapTable(tableModel3, countOld, countNew);
-//            } catch (Exception e) {
-//                if (e instanceof NullPointerException) {
-//                    e.printStackTrace();
-//                } else
-//                    new ErrorsWindow(this, e);
-//            }
-//        });
+        diff.addActionListener(event -> {
+            try {
+                int countOld = tableModel1.getFunction().getCount();
+                tableModel3.setFunction(diffOperator.derive(tableModel1.getFunction()));
+                int countNew = tableModel3.getFunction().getCount();
+                wrapTable(tableModel3, countOld, countNew);
+            } catch (Exception e) {
+                if (e instanceof NullPointerException) {
+                    e.printStackTrace();
+                } else
+                    new ErrorsWindow(this, e);
+            }
+        });
     }
 
     public void wrapTable(TableModelMainWindow tableModel, int countOld, int countNew) {
@@ -213,7 +214,7 @@ public class DifferentialOperationWindow extends JFrame {
         designedPane.setViewportView(designedTable);
     }
 
-    public static void main(String[] args) {
+    public static void main() {
         DifferentialOperationWindow window = new DifferentialOperationWindow();
         window.setVisible(true);
         window.setResizable(false);
