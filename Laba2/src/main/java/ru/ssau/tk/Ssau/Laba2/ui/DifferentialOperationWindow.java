@@ -34,7 +34,7 @@ public class DifferentialOperationWindow extends JFrame {
 
     public DifferentialOperationWindow() {
         setTitle("Нахождение производной");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(0, 0, 1200, 700);
         designButton(diff, "Результат");
         getContentPane().add(diff);

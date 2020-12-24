@@ -42,7 +42,7 @@ public class ElementaryOperationsWindow extends JFrame {
 
     public ElementaryOperationsWindow() {
         setTitle("Поэлементные операции");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(0, 0, 1200, 700);
         designButton(plus, "+");
         designButton(subtraction, "-");
