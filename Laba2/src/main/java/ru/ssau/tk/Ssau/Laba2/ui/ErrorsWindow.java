@@ -2,6 +2,7 @@ package ru.ssau.tk.Ssau.Laba2.ui;
 
 import ru.ssau.tk.Ssau.Laba2.exceptions.ArrayIsNotSortedException;
 import ru.ssau.tk.Ssau.Laba2.exceptions.DifferentLengthOfArraysException;
+import ru.ssau.tk.Ssau.Laba2.exceptions.InconsistentFunctionsException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,24 +19,26 @@ public class ErrorsWindow {
     }
 
     private String generateMessageForException(Exception e) {
-        if (e instanceof NumberFormatException) {
+        if (e instanceof NumberFormatException)
             return "Неверный формат числа";
-        }
-        if (e instanceof ArrayIsNotSortedException) {
+
+        if (e instanceof ArrayIsNotSortedException)
             return "Массив точек неотсортирован";
-        }
-        if (e instanceof DifferentLengthOfArraysException) {
+
+        if (e instanceof DifferentLengthOfArraysException)
             return "Длина массивов неодинакова";
-        }
-        if (e instanceof IllegalArgumentException) {
+
+        if (e instanceof InconsistentFunctionsException)
+            return "Несовместимые функции";
+
+        if (e instanceof IllegalArgumentException)
             return "Задана некорректная функция";
-        }
-        if (e instanceof IOException) {
+
+        if (e instanceof IOException)
             return "Файл не найден или повреждён";
-        }
-        {
-            e.printStackTrace();
-            return "Неизвестная ошибка";
-        }
+
+        e.printStackTrace();
+        return "Неизвестная ошибка";
+
     }
 }

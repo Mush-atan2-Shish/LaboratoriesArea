@@ -197,19 +197,58 @@ public class ElementaryOperationsWindow extends JFrame {
                     new ErrorsWindow(this, e);
             }
         });
-//        plus.addActionListener(event -> {
-//            try {
-//                int countOld = tableModel1.getFunction().getCount();
-//                tableModel3.setFunction(tabulatedFunctionOperationService.sum(tableModel1.getFunction(), tableModel2.getFunction()));
-//                int countNew = tableModel3.getFunction().getCount();
-//                wrapTable(tableModel3, countOld, countNew);
-//            } catch (Exception e) {
-//                if (e instanceof NullPointerException) {
-//                    e.printStackTrace();
-//                } else
-//                    new ErrorsWindow(this, e);
-//            }
-//        });
+        plus.addActionListener(event -> {
+            try {
+                int countOld = tableModel1.getFunction().getCount();
+                tableModel3.setFunction(tabulatedFunctionOperationService.sum(tableModel1.getFunction(), tableModel2.getFunction()));
+                int countNew = tableModel3.getFunction().getCount();
+                wrapTable(tableModel3, countOld, countNew);
+            } catch (Exception e) {
+                if (e instanceof NullPointerException) {
+                    e.printStackTrace();
+                } else
+                    new ErrorsWindow(this, e);
+            }
+        });
+        subtraction.addActionListener(event -> {
+            try {
+                int countOld = tableModel1.getFunction().getCount();
+                tableModel3.setFunction(tabulatedFunctionOperationService.subtract(tableModel1.getFunction(), tableModel2.getFunction()));
+                int countNew = tableModel3.getFunction().getCount();
+                wrapTable(tableModel3, countOld, countNew);
+            } catch (Exception e) {
+                if (e instanceof NullPointerException) {
+                    e.printStackTrace();
+                } else
+                    new ErrorsWindow(this, e);
+            }
+        });
+        multiplication.addActionListener(event -> {
+            try {
+                int countOld = tableModel1.getFunction().getCount();
+                tableModel3.setFunction(tabulatedFunctionOperationService.multiply(tableModel1.getFunction(), tableModel2.getFunction()));
+                int countNew = tableModel3.getFunction().getCount();
+                wrapTable(tableModel3, countOld, countNew);
+            } catch (Exception e) {
+                if (e instanceof NullPointerException) {
+                    e.printStackTrace();
+                } else
+                    new ErrorsWindow(this, e);
+            }
+        });
+        division.addActionListener(event -> {
+            try {
+                int countOld = tableModel1.getFunction().getCount();
+                tableModel3.setFunction(tabulatedFunctionOperationService.divide(tableModel1.getFunction(), tableModel2.getFunction()));
+                int countNew = tableModel3.getFunction().getCount();
+                wrapTable(tableModel3, countOld, countNew);
+            } catch (Exception e) {
+                if (e instanceof NullPointerException) {
+                    e.printStackTrace();
+                } else
+                    new ErrorsWindow(this, e);
+            }
+        });
     }
 
     public void wrapTable(TableModelMainWindow tableModel, int countOld, int countNew) {
