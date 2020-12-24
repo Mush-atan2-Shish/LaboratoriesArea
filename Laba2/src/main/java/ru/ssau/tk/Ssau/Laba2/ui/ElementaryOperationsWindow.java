@@ -1,18 +1,27 @@
 package ru.ssau.tk.Ssau.Laba2.ui;
 
+import ru.ssau.tk.Ssau.Laba2.exceptions.InconsistentFunctionsException;
+import ru.ssau.tk.Ssau.Laba2.functions.TabulatedFunction;
 import ru.ssau.tk.Ssau.Laba2.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.Ssau.Laba2.functions.factory.TabulatedFunctionFactory;
+import ru.ssau.tk.Ssau.Laba2.operations.TabulatedFunctionOperationService;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+import javax.swing.plaf.basic.BasicScrollPaneUI;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ElementwiseOperationsWindow extends JFrame {
-    private TableModelMainWindow tableModel = new TableModelMainWindow();
-    private JTable table1 = new JTable(tableModel);
-    private JTable table2 = new JTable(tableModel);
-    private JTable table3 = new JTable(tableModel);
+public class ElementaryOperationsWindow extends JFrame {
+    private final TabulatedFunctionOperationService tabulatedFunctionOperationService = new TabulatedFunctionOperationService();
+    private TableModelMainWindow tableModel1 = new TableModelMainWindow();
+    private TableModelMainWindow tableModel2 = new TableModelMainWindow();
+    private TableModelMainWindow tableModel3 = new TableModelMainWindow();
+    private JTable table1 = new JTable(tableModel1);
+    private JTable table2 = new JTable(tableModel2);
+    private JTable table3 = new JTable(tableModel3);
     private List<Double> xValues = new ArrayList<>();
     private List<Double> yValues = new ArrayList<>();
     private TabulatedFunctionFactory factory;
@@ -33,7 +42,7 @@ public class ElementwiseOperationsWindow extends JFrame {
 
     JButton saveThree = new JButton();
 
-    public ElementwiseOperationsWindow() {
+    public ElementaryOperationsWindow() {
         setTitle("Поэлементные операции");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(0, 0, 1200, 700);
@@ -72,9 +81,9 @@ public class ElementwiseOperationsWindow extends JFrame {
         createArrayOne.addActionListener(event -> {
                     try {
                         int countOld = xValues.size();
-                        ArrayTabulatedFunctionWindow.main(factory, data -> tableModel.setFunction(data));
-                        int countNew = tableModel.getFunction().getCount();
-                        // wrapTable(countOld, countNew);
+                        TabulatedFunctionWindow.main(factory, data -> tableModel1.setFunction(data));
+                        int countNew = tableModel1.getFunction().getCount();
+                        wrapTable(tableModel1, countOld, countNew);
                     } catch (Exception e) {
                         if (e instanceof NullPointerException) {
                             e.printStackTrace();
@@ -87,9 +96,9 @@ public class ElementwiseOperationsWindow extends JFrame {
         createArrayTwo.addActionListener(event -> {
                     try {
                         int countOld = xValues.size();
-                        ArrayTabulatedFunctionWindow.main(factory, data -> tableModel.setFunction(data));
-                        int countNew = tableModel.getFunction().getCount();
-                        // wrapTable(countOld, countNew);
+                        TabulatedFunctionWindow.main(factory, data -> tableModel2.setFunction(data));
+                        int countNew = tableModel2.getFunction().getCount();
+                        wrapTable(tableModel2, countOld, countNew);
                     } catch (Exception e) {
                         if (e instanceof NullPointerException) {
                             e.printStackTrace();
@@ -102,9 +111,9 @@ public class ElementwiseOperationsWindow extends JFrame {
         createListOne.addActionListener(event -> {
             try {
                 int countOld = xValues.size();
-                LinkedListTabulatedFunctionWindow.main(factory, data -> tableModel.setFunction(data));
-                int countNew = tableModel.getFunction().getCount();
-                //wrapTable(countOld, countNew);
+                MathFunctionWindow.main(factory, data -> tableModel1.setFunction(data));
+                int countNew = tableModel1.getFunction().getCount();
+                wrapTable(tableModel1, countOld, countNew);
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
                     e.printStackTrace();
@@ -116,9 +125,9 @@ public class ElementwiseOperationsWindow extends JFrame {
         createListTwo.addActionListener(event -> {
             try {
                 int countOld = xValues.size();
-                LinkedListTabulatedFunctionWindow.main(factory, data -> tableModel.setFunction(data));
-                int countNew = tableModel.getFunction().getCount();
-                //wrapTable(countOld, countNew);
+                MathFunctionWindow.main(factory, data -> tableModel2.setFunction(data));
+                int countNew = tableModel2.getFunction().getCount();
+                wrapTable(tableModel2, countOld, countNew);
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
                     e.printStackTrace();
@@ -129,7 +138,7 @@ public class ElementwiseOperationsWindow extends JFrame {
 
         saveOne.addActionListener(event -> {
             try {
-                FileWriter.main(tableModel.getFunction());
+                FileWriter.main(tableModel1.getFunction());
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
                     e.printStackTrace();
@@ -141,7 +150,7 @@ public class ElementwiseOperationsWindow extends JFrame {
 
         saveTwo.addActionListener(event -> {
             try {
-                FileWriter.main(tableModel.getFunction());
+                FileWriter.main(tableModel2.getFunction());
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
                     e.printStackTrace();
@@ -152,7 +161,7 @@ public class ElementwiseOperationsWindow extends JFrame {
 
         saveThree.addActionListener(event -> {
             try {
-                FileWriter.main(tableModel.getFunction());
+                FileWriter.main(tableModel3.getFunction());
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
                     e.printStackTrace();
@@ -164,9 +173,9 @@ public class ElementwiseOperationsWindow extends JFrame {
         downloadOne.addActionListener(event -> {
             try {
                 int countOld = xValues.size();
-                FileReader.main(data -> tableModel.setFunction(data));
-                int countNew = tableModel.getFunction().getCount();
-                //  wrapTable(countOld, countNew);
+                FileReader.main(data -> tableModel1.setFunction(data));
+                int countNew = tableModel1.getFunction().getCount();
+                wrapTable(tableModel1, countOld, countNew);
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
                     e.printStackTrace();
@@ -178,9 +187,9 @@ public class ElementwiseOperationsWindow extends JFrame {
         downloadTwo.addActionListener(event -> {
             try {
                 int countOld = xValues.size();
-                FileReader.main(data -> tableModel.setFunction(data));
-                int countNew = tableModel.getFunction().getCount();
-                // wrapTable(countOld, countNew);
+                FileReader.main(data -> tableModel2.setFunction(data));
+                int countNew = tableModel2.getFunction().getCount();
+                wrapTable(tableModel2, countOld, countNew);
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
                     e.printStackTrace();
@@ -188,6 +197,31 @@ public class ElementwiseOperationsWindow extends JFrame {
                     new ErrorsWindow(this, e);
             }
         });
+//        plus.addActionListener(event -> {
+//            try {
+//                int countOld = tableModel1.getFunction().getCount();
+//                tableModel3.setFunction(tabulatedFunctionOperationService.sum(tableModel1.getFunction(), tableModel2.getFunction()));
+//                int countNew = tableModel3.getFunction().getCount();
+//                wrapTable(tableModel3, countOld, countNew);
+//            } catch (Exception e) {
+//                if (e instanceof NullPointerException) {
+//                    e.printStackTrace();
+//                } else
+//                    new ErrorsWindow(this, e);
+//            }
+//        });
+    }
+
+    public void wrapTable(TableModelMainWindow tableModel, int countOld, int countNew) {
+        tableModel.fireTableDataChanged();
+        for (int i = 0; i < countOld; i++) {
+            if (xValues.size() != 0) xValues.remove(countOld - i - 1);
+            if (yValues.size() != 0) yValues.remove(countOld - i - 1);
+        }
+        for (int i = 0; i < countNew; i++) {
+            xValues.add(tableModel.getFunction().getX(i));
+            yValues.add(tableModel.getFunction().getY(i));
+        }
     }
 
     void compose() {
@@ -198,6 +232,9 @@ public class ElementwiseOperationsWindow extends JFrame {
         JScrollPane firstTableScrollPane = new JScrollPane(table1);
         JScrollPane secondTableScrollPane = new JScrollPane(table2);
         JScrollPane resultTableScrollPane = new JScrollPane(table3);
+        designTable(table1, firstTableScrollPane);
+        designTable(table2, secondTableScrollPane);
+        designTable(table3, resultTableScrollPane);
 
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -251,6 +288,7 @@ public class ElementwiseOperationsWindow extends JFrame {
                         .addComponent(saveTwo)
                         .addComponent(downloadTwo)
                         .addComponent(saveThree)));
+        setLocationByPlatform(true);
     }
 
     public void designButton(JButton button, String name) {
@@ -259,8 +297,26 @@ public class ElementwiseOperationsWindow extends JFrame {
         button.setFocusPainted(false);
     }
 
+    public void designTable(JTable designedTable, JScrollPane designedPane) {
+        UIManager.put("ScrollPane.thumb", new ColorUIResource(Color.BLACK));
+        designedPane.setUI(new BasicScrollPaneUI());
+        UIManager.put("ScrollBar.thumb", new ColorUIResource(new Color(186, 177, 173, 225)));
+        designedPane.getVerticalScrollBar().setUI(new BasicScrollBarUI());
+        designedPane.getHorizontalScrollBar().setUI(new BasicScrollBarUI());
+        designedPane.getViewport().setBackground(new Color(255, 248, 224));  //фон панели
+        designedTable.setBackground(new Color(255, 248, 224)); //фон полей таблицы
+        designedTable.getTableHeader().setBackground(Color.pink);
+        designedTable.getTableHeader().setForeground(Color.DARK_GRAY);
+        designedTable.setSelectionBackground(new Color(220, 194, 184));
+        designedTable.getTableHeader().setFont(new Font("VVV", Font.BOLD, 14));
+        designedPane.setBackground(new Color(235, 205, 193));
+        designedPane.setForeground(Color.DARK_GRAY);
+        designedPane.setViewportView(designedTable);
+    }
+
     public static void main(String[] args) {
-        ElementwiseOperationsWindow window = new ElementwiseOperationsWindow();
+        ElementaryOperationsWindow window = new ElementaryOperationsWindow();
         window.setVisible(true);
+        window.setResizable(false);
     }
 }

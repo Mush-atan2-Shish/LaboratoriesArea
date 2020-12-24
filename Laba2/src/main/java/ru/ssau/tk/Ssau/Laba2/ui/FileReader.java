@@ -15,55 +15,55 @@ import java.util.function.Consumer;
 
 public class FileReader extends JDialog {
     private JTextField filename = new JTextField();
-    private JTextField dir = new JTextField();
-    private JButton open = new JButton("Выбрать файл");
-    private TabulatedFunction func;
+    private JTextField directory = new JTextField();
+    private JButton download = new JButton("Выбрать файл");
+    private TabulatedFunction function;
     private TabulatedFunctionFactory factory;
 
     public FileReader(Consumer<? super TabulatedFunction> callback) {
         setTitle("Открыть функцию");
         setModal(true);
-        JPanel p = new JPanel();
+        JPanel panel = new JPanel();
         addListenerForOpenButton(callback);
-        open.setBackground(Color.pink);
-        open.setFocusPainted(false);
-        p.add(open);
-        Container cp = getContentPane();
-        cp.add(p, BorderLayout.SOUTH);
-        dir.setEditable(false);
+        download.setBackground(Color.pink);
+        download.setFocusPainted(false);
+        panel.add(download);
+        Container pane = getContentPane();
+        pane.add(panel, BorderLayout.SOUTH);
+        directory.setEditable(false);
         filename.setEditable(false);
-        p = new JPanel();
-        p.setLayout(new GridLayout(2, 1));
-        p.add(filename);
-        p.add(dir);
-        cp.add(p, BorderLayout.NORTH);
+        panel = new JPanel();
+        panel.setLayout(new GridLayout(2, 1));
+        panel.add(filename);
+        panel.add(directory);
+        pane.add(panel, BorderLayout.NORTH);
     }
 
     public void addListenerForOpenButton(Consumer<? super TabulatedFunction> callback) {
-        open.addActionListener(event -> {
-            JFileChooser c = new JFileChooser();
-            c.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            c.addChoosableFileFilter(
+        download.addActionListener(event -> {
+            JFileChooser chooser = new JFileChooser();
+            chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            chooser.addChoosableFileFilter(
                     new FileNameExtensionFilter("Text files", "txt"));
-            c.setAcceptAllFileFilterUsed(false);
-            int rVal = c.showOpenDialog(FileReader.this);
+            chooser.setAcceptAllFileFilterUsed(false);
+            int rVal = chooser.showOpenDialog(FileReader.this);
             if (rVal == JFileChooser.APPROVE_OPTION) {
-                filename.setText(c.getSelectedFile().getName());
-                dir.setText(c.getCurrentDirectory().toString());
-                File file = c.getSelectedFile();
+                filename.setText(chooser.getSelectedFile().getName());
+                directory.setText(chooser.getCurrentDirectory().toString());
+                File file = chooser.getSelectedFile();
                 factory = new ArrayTabulatedFunctionFactory();
                 if (file != null) {
                     try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
-                        func = FunctionsIO.readTabulatedFunction(inputStream, factory);
-                        callback.accept(func);
+                        function = FunctionsIO.readTabulatedFunction(inputStream, factory);
+                        callback.accept(function);
                     } catch (Exception e) {
                         new ErrorsWindow(this, e);
                     }
                 }
             }
             if (rVal == JFileChooser.CANCEL_OPTION) {
-                filename.setText("Вы отменили операцию");
-                dir.setText("");
+                filename.setText("Отмена");
+                directory.setText("");
             }
         });
     }

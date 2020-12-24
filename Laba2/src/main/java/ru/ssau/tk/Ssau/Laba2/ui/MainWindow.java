@@ -51,28 +51,14 @@ public class MainWindow extends JFrame {
     void compose() {
         setLayout(new BorderLayout());
         JScrollPane pane = new JScrollPane();
-        UIManager.put("ScrollPane.thumb",new ColorUIResource(Color.BLACK));
-        pane.setUI(new BasicScrollPaneUI());
-        UIManager.put("ScrollBar.thumb", new ColorUIResource(new Color(186, 177, 173, 225)));
-        pane.getVerticalScrollBar().setUI(new BasicScrollBarUI() );
-        pane.getHorizontalScrollBar().setUI(new BasicScrollBarUI());
-        pane.getViewport().setBackground(new Color (255, 248, 224));  //фон панели
-        TableColumn col = table.getColumnModel().getColumn(2);
-        table.setBackground(new Color (255, 248, 224)); //фон полей таблицы
-        table.getTableHeader().setBackground(Color.pink);
-        table.getTableHeader().setForeground(Color.DARK_GRAY);
-        table.setSelectionBackground(new Color(220, 194, 184));
-        table.getTableHeader().setFont(new Font("VVV", Font.BOLD,14));
-        pane.setBackground(new Color (235, 205, 193));
-        pane.setForeground(Color.DARK_GRAY);
-        pane.setViewportView(table);
+        designTable(table, pane);
         JPanel northPanel = new JPanel();
         northPanel.setBackground(new Color(31, 21, 12));
-        designButton(inputButtonTable, "Массив");
+        designButton(inputButtonTable, "Таблица");
         inputButtonTable.addActionListener(event -> {
                     try {
                         int countOld = xValues.size();
-                        ArrayTabulatedFunctionWindow.main(factory, data -> tableModel.setFunction(data));
+                        TabulatedFunctionWindow.main(factory, data -> tableModel.setFunction(data));
                         int countNew = tableModel.getFunction().getCount();
                         wrapTable(countOld, countNew);
                     } catch (Exception e) {
@@ -84,11 +70,11 @@ public class MainWindow extends JFrame {
                 }
         );
         northPanel.add(inputButtonTable);
-        designButton(inputButtonMath, "Связный список");
+        designButton(inputButtonMath, "Матем. функция");
         inputButtonMath.addActionListener(event -> {
             try {
                 int countOld = xValues.size();
-                LinkedListTabulatedFunctionWindow.main(factory, data -> tableModel.setFunction(data));
+                MathFunctionWindow.main(factory, data -> tableModel.setFunction(data));
                 int countNew = tableModel.getFunction().getCount();
                 wrapTable(countOld, countNew);
             } catch (Exception e) {
@@ -147,8 +133,25 @@ public class MainWindow extends JFrame {
         button.setText(name);
         button.setBackground(Color.pink);
         button.setForeground(Color.DARK_GRAY);
-        button.setFont(new Font("VVV", Font.BOLD,14));
+        button.setFont(new Font("VVV", Font.BOLD, 14));
         button.setFocusPainted(false);
+    }
+
+    public void designTable(JTable designedTable, JScrollPane designedPane) {
+        UIManager.put("ScrollPane.thumb", new ColorUIResource(Color.BLACK));
+        designedPane.setUI(new BasicScrollPaneUI());
+        UIManager.put("ScrollBar.thumb", new ColorUIResource(new Color(186, 177, 173, 225)));
+        designedPane.getVerticalScrollBar().setUI(new BasicScrollBarUI());
+        designedPane.getHorizontalScrollBar().setUI(new BasicScrollBarUI());
+        designedPane.getViewport().setBackground(new Color(255, 248, 224));  //фон панели
+        designedTable.setBackground(new Color(255, 248, 224)); //фон полей таблицы
+        designedTable.getTableHeader().setBackground(Color.pink);
+        designedTable.getTableHeader().setForeground(Color.DARK_GRAY);
+        designedTable.setSelectionBackground(new Color(220, 194, 184));
+        designedTable.getTableHeader().setFont(new Font("VVV", Font.BOLD, 14));
+        designedPane.setBackground(new Color(235, 205, 193));
+        designedPane.setForeground(Color.DARK_GRAY);
+        designedPane.setViewportView(designedTable);
     }
 
     public static void main(String[] args) {

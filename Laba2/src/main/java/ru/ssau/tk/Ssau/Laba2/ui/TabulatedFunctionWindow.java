@@ -7,13 +7,17 @@ import ru.ssau.tk.Ssau.Laba2.functions.factory.TabulatedFunctionFactory;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.plaf.ColorUIResource;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+import javax.swing.plaf.basic.BasicScrollPaneUI;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ArrayTabulatedFunctionWindow extends JDialog {
+public class TabulatedFunctionWindow extends JDialog {
     List<Double> xValues = new ArrayList<>();
     List<Double> yValues = new ArrayList<>();
     AbstractTableModel tableModel = new TableModel(xValues, yValues);
@@ -26,11 +30,11 @@ public class ArrayTabulatedFunctionWindow extends JDialog {
     TabulatedFunction function;
 
     public static void main(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
-        ArrayTabulatedFunctionWindow app = new ArrayTabulatedFunctionWindow(factory, callback);
+        TabulatedFunctionWindow app = new TabulatedFunctionWindow(factory, callback);
         app.setVisible(true);
     }
 
-    public ArrayTabulatedFunctionWindow(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
+    public TabulatedFunctionWindow(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
         setTitle("Массив");
         setModal(true);
         this.setBounds(300, 300, 500, 500);
@@ -51,6 +55,7 @@ public class ArrayTabulatedFunctionWindow extends JDialog {
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
         JScrollPane tableScrollPane = new JScrollPane(table);
+        designTable(table, tableScrollPane);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                 .addGroup(layout.createSequentialGroup()
                         .addComponent(label)
@@ -147,5 +152,22 @@ public class ArrayTabulatedFunctionWindow extends JDialog {
                 inputButton.setEnabled(!countField.getText().isEmpty());
             }
         });
+    }
+
+    public void designTable(JTable designedTable, JScrollPane designedPane) {
+        UIManager.put("ScrollPane.thumb", new ColorUIResource(Color.BLACK));
+        designedPane.setUI(new BasicScrollPaneUI());
+        UIManager.put("ScrollBar.thumb", new ColorUIResource(new Color(186, 177, 173, 225)));
+        designedPane.getVerticalScrollBar().setUI(new BasicScrollBarUI());
+        designedPane.getHorizontalScrollBar().setUI(new BasicScrollBarUI());
+        designedPane.getViewport().setBackground(new Color(255, 248, 224));  //фон панели
+        designedTable.setBackground(new Color(255, 248, 224)); //фон полей таблицы
+        designedTable.getTableHeader().setBackground(Color.pink);
+        designedTable.getTableHeader().setForeground(Color.DARK_GRAY);
+        designedTable.setSelectionBackground(new Color(220, 194, 184));
+        designedTable.getTableHeader().setFont(new Font("VVV", Font.BOLD, 14));
+        designedPane.setBackground(new Color(235, 205, 193));
+        designedPane.setForeground(Color.DARK_GRAY);
+        designedPane.setViewportView(designedTable);
     }
 }

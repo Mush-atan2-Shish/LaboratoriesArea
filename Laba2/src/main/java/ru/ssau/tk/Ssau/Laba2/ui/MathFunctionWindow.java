@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class LinkedListTabulatedFunctionWindow extends JDialog {
+public class MathFunctionWindow extends JDialog {
     private final JComboBox<String> functionComboBox = new JComboBox<>();
     private final JLabel fromLabel = new JLabel("От:");
     private final JLabel toLabel = new JLabel("До:");
@@ -21,7 +21,7 @@ public class LinkedListTabulatedFunctionWindow extends JDialog {
     private final Map<String, MathFunction> nameFunctionMap = new HashMap<>();
     TabulatedFunction function;
 
-    public LinkedListTabulatedFunctionWindow(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
+    public MathFunctionWindow(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
         setTitle("Связный список");
         setModal(true);
         this.factory = factory;
@@ -41,7 +41,7 @@ public class LinkedListTabulatedFunctionWindow extends JDialog {
     }
 
     public static void main(TabulatedFunctionFactory factory, Consumer<? super TabulatedFunction> callback) {
-        LinkedListTabulatedFunctionWindow app = new LinkedListTabulatedFunctionWindow(factory, callback);
+        MathFunctionWindow app = new MathFunctionWindow(factory, callback);
         app.setVisible(true);
     }
 
