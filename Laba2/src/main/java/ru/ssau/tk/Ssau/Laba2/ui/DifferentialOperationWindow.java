@@ -3,7 +3,6 @@ package ru.ssau.tk.Ssau.Laba2.ui;
 import ru.ssau.tk.Ssau.Laba2.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.Ssau.Laba2.functions.factory.TabulatedFunctionFactory;
 import ru.ssau.tk.Ssau.Laba2.operations.TabulatedDifferentialOperator;
-import ru.ssau.tk.Ssau.Laba2.operations.TabulatedFunctionOperationService;
 
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
@@ -16,17 +15,17 @@ import java.util.List;
 public class DifferentialOperationWindow extends JFrame {
     private TabulatedDifferentialOperator diffOperator = new TabulatedDifferentialOperator();
     private TableModelMainWindow tableModel1 = new TableModelMainWindow();
-    private TableModelMainWindow tableModel3 = new TableModelMainWindow();
+    private TableModelWindowForResult tableModel2 = new TableModelWindowForResult();
     private JTable table1 = new JTable(tableModel1);
-    private JTable table3 = new JTable(tableModel3);
+    private JTable table2 = new JTable(tableModel2);
     private List<Double> xValues = new ArrayList<>();
     private List<Double> yValues = new ArrayList<>();
     private TabulatedFunctionFactory factory;
     JButton diff = new JButton();
 
 
-    JButton createArrayOne = new JButton();
-    JButton createListOne = new JButton();
+    JButton createTubFuncOne = new JButton();
+    JButton createMathFuncOne = new JButton();
     JButton saveOne = new JButton();
     JButton downloadOne = new JButton();
 
@@ -34,18 +33,18 @@ public class DifferentialOperationWindow extends JFrame {
     JButton saveThree = new JButton();
 
     public DifferentialOperationWindow() {
-        setTitle("Поэлементные операции");
+        setTitle("Нахождение производной");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(0, 0, 1200, 700);
-        designButton(diff, "diff");
+        designButton(diff, "Результат");
         getContentPane().add(diff);
 
-        designButton(createArrayOne, "Создать через массивы");
-        designButton(createListOne, "Создать через функцию");
+        designButton(createTubFuncOne, "Создать через массивы");
+        designButton(createMathFuncOne, "Создать через функцию");
         designButton(saveOne, "Сохранить");
         designButton(downloadOne, "Загрузить");
-        getContentPane().add(createArrayOne);
-        getContentPane().add(createListOne);
+        getContentPane().add(createTubFuncOne);
+        getContentPane().add(createMathFuncOne);
         getContentPane().add(saveOne);
         getContentPane().add(downloadOne);
 
@@ -55,7 +54,7 @@ public class DifferentialOperationWindow extends JFrame {
         setLocationRelativeTo(null);
         this.factory = new ArrayTabulatedFunctionFactory();
 
-        createArrayOne.addActionListener(event -> {
+        createTubFuncOne.addActionListener(event -> {
                     try {
                         int countOld = xValues.size();
                         TabulatedFunctionWindow.main(factory, data -> tableModel1.setFunction(data));
@@ -70,7 +69,7 @@ public class DifferentialOperationWindow extends JFrame {
                 }
         );
 
-        createListOne.addActionListener(event -> {
+        createMathFuncOne.addActionListener(event -> {
             try {
                 int countOld = xValues.size();
                 MathFunctionWindow.main(factory, data -> tableModel1.setFunction(data));
@@ -97,7 +96,7 @@ public class DifferentialOperationWindow extends JFrame {
 
         saveThree.addActionListener(event -> {
             try {
-                FileWriter.main(tableModel3.getFunction());
+                FileWriter.main(tableModel2.getFunction());
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
                     e.printStackTrace();
@@ -123,9 +122,9 @@ public class DifferentialOperationWindow extends JFrame {
         diff.addActionListener(event -> {
             try {
                 int countOld = tableModel1.getFunction().getCount();
-                tableModel3.setFunction(diffOperator.derive(tableModel1.getFunction()));
-                int countNew = tableModel3.getFunction().getCount();
-                wrapTable(tableModel3, countOld, countNew);
+                tableModel2.setFunction(diffOperator.derive(tableModel1.getFunction()));
+                int countNew = tableModel2.getFunction().getCount();
+                wrapTableForResult(tableModel2, countOld, countNew);
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
                     e.printStackTrace();
@@ -147,15 +146,27 @@ public class DifferentialOperationWindow extends JFrame {
         }
     }
 
+    public void wrapTableForResult(TableModelWindowForResult tableModel, int countOld, int countNew) {
+        tableModel.fireTableDataChanged();
+        for (int i = 0; i < countOld; i++) {
+            if (xValues.size() != 0) xValues.remove(countOld - i - 1);
+            if (yValues.size() != 0) yValues.remove(countOld - i - 1);
+        }
+        for (int i = 0; i < countNew; i++) {
+            xValues.add(tableModel.getFunction().getX(i));
+            yValues.add(tableModel.getFunction().getY(i));
+        }
+    }
+
     void compose() {
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
         JScrollPane firstTableScrollPane = new JScrollPane(table1);
-        JScrollPane resultTableScrollPane = new JScrollPane(table3);
+        JScrollPane resultTableScrollPane = new JScrollPane(table2);
         designTable(table1, firstTableScrollPane);
-        designTable(table3, resultTableScrollPane);
+        designTable(table2, resultTableScrollPane);
 
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -164,8 +175,8 @@ public class DifferentialOperationWindow extends JFrame {
                         .addComponent(resultTableScrollPane))
 
                 .addGroup(layout.createSequentialGroup()
-                        .addComponent(createArrayOne)
-                        .addComponent(createListOne))
+                        .addComponent(createTubFuncOne)
+                        .addComponent(createMathFuncOne))
                 .addGroup(layout.createSequentialGroup()
                         .addComponent(saveOne)
                         .addComponent(downloadOne)
@@ -182,8 +193,8 @@ public class DifferentialOperationWindow extends JFrame {
                         )
                         .addComponent(resultTableScrollPane))
                 .addGroup(layout.createParallelGroup()
-                        .addComponent(createArrayOne)
-                        .addComponent(createListOne))
+                        .addComponent(createTubFuncOne)
+                        .addComponent(createMathFuncOne))
                 .addGroup(layout.createParallelGroup()
                         .addComponent(saveOne)
                         .addComponent(downloadOne)

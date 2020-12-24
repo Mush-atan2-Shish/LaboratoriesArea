@@ -41,7 +41,7 @@ public class FileWriter extends JDialog {
             JFileChooser chooser = new JFileChooser();
             chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             chooser.addChoosableFileFilter(
-                    new FileNameExtensionFilter("Text files", "txt"));
+                    new FileNameExtensionFilter("Bin files", "bin"));
             chooser.setAcceptAllFileFilterUsed(false);
             int rVal = chooser.showSaveDialog(FileWriter.this);
             if (rVal == JFileChooser.APPROVE_OPTION) {

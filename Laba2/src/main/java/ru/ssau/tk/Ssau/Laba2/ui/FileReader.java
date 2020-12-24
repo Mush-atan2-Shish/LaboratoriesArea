@@ -44,7 +44,7 @@ public class FileReader extends JDialog {
             JFileChooser chooser = new JFileChooser();
             chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             chooser.addChoosableFileFilter(
-                    new FileNameExtensionFilter("Text files", "txt"));
+                    new FileNameExtensionFilter("Bin files", "bin"));
             chooser.setAcceptAllFileFilterUsed(false);
             int rVal = chooser.showOpenDialog(FileReader.this);
             if (rVal == JFileChooser.APPROVE_OPTION) {

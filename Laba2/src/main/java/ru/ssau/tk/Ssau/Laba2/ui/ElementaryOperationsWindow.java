@@ -1,7 +1,5 @@
 package ru.ssau.tk.Ssau.Laba2.ui;
 
-import ru.ssau.tk.Ssau.Laba2.exceptions.InconsistentFunctionsException;
-import ru.ssau.tk.Ssau.Laba2.functions.TabulatedFunction;
 import ru.ssau.tk.Ssau.Laba2.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.Ssau.Laba2.functions.factory.TabulatedFunctionFactory;
 import ru.ssau.tk.Ssau.Laba2.operations.TabulatedFunctionOperationService;
@@ -18,7 +16,7 @@ public class ElementaryOperationsWindow extends JFrame {
     private final TabulatedFunctionOperationService tabulatedFunctionOperationService = new TabulatedFunctionOperationService();
     private TableModelMainWindow tableModel1 = new TableModelMainWindow();
     private TableModelMainWindow tableModel2 = new TableModelMainWindow();
-    private TableModelMainWindow tableModel3 = new TableModelMainWindow();
+    private TableModelWindowForResult tableModel3 = new TableModelWindowForResult();
     private JTable table1 = new JTable(tableModel1);
     private JTable table2 = new JTable(tableModel2);
     private JTable table3 = new JTable(tableModel3);
@@ -30,12 +28,12 @@ public class ElementaryOperationsWindow extends JFrame {
     JButton multiplication = new JButton();
     JButton division = new JButton();
 
-    JButton createTableOne = new JButton();
+    JButton createTubFuncOne = new JButton();
     JButton createMathOne = new JButton();
     JButton saveOne = new JButton();
     JButton downloadOne = new JButton();
 
-    JButton createTableTwo = new JButton();
+    JButton createTubFuncTwo = new JButton();
     JButton createMathTwo = new JButton();
     JButton saveTwo = new JButton();
     JButton downloadTwo = new JButton();
@@ -55,20 +53,20 @@ public class ElementaryOperationsWindow extends JFrame {
         getContentPane().add(multiplication);
         getContentPane().add(subtraction);
 
-        designButton(createTableOne, "Создать через массивы");
+        designButton(createTubFuncOne, "Создать через массивы");
         designButton(createMathOne, "Создать через функцию");
         designButton(saveOne, "Сохранить");
         designButton(downloadOne, "Загрузить");
-        getContentPane().add(createTableOne);
+        getContentPane().add(createTubFuncOne);
         getContentPane().add(createMathOne);
         getContentPane().add(saveOne);
         getContentPane().add(downloadOne);
 
-        designButton(createTableTwo, "Создать через массивы");
+        designButton(createTubFuncTwo, "Создать через массивы");
         designButton(createMathTwo, "Создать через функцию");
         designButton(saveTwo, "Сохранить");
         designButton(downloadTwo, "Загрузить");
-        getContentPane().add(createTableTwo);
+        getContentPane().add(createTubFuncTwo);
         getContentPane().add(createMathTwo);
         getContentPane().add(saveTwo);
         getContentPane().add(downloadTwo);
@@ -78,7 +76,7 @@ public class ElementaryOperationsWindow extends JFrame {
         setLocationRelativeTo(null);
         this.factory = new ArrayTabulatedFunctionFactory();
 
-        createTableOne.addActionListener(event -> {
+        createTubFuncOne.addActionListener(event -> {
                     try {
                         int countOld = xValues.size();
                         TabulatedFunctionWindow.main(factory, data -> tableModel1.setFunction(data));
@@ -93,7 +91,7 @@ public class ElementaryOperationsWindow extends JFrame {
                 }
         );
 
-        createTableTwo.addActionListener(event -> {
+        createTubFuncTwo.addActionListener(event -> {
                     try {
                         int countOld = xValues.size();
                         TabulatedFunctionWindow.main(factory, data -> tableModel2.setFunction(data));
@@ -202,7 +200,7 @@ public class ElementaryOperationsWindow extends JFrame {
                 int countOld = tableModel1.getFunction().getCount();
                 tableModel3.setFunction(tabulatedFunctionOperationService.sum(tableModel1.getFunction(), tableModel2.getFunction()));
                 int countNew = tableModel3.getFunction().getCount();
-                wrapTable(tableModel3, countOld, countNew);
+                wrapTableForResult(tableModel3, countOld, countNew);
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
                     e.printStackTrace();
@@ -215,7 +213,7 @@ public class ElementaryOperationsWindow extends JFrame {
                 int countOld = tableModel1.getFunction().getCount();
                 tableModel3.setFunction(tabulatedFunctionOperationService.subtract(tableModel1.getFunction(), tableModel2.getFunction()));
                 int countNew = tableModel3.getFunction().getCount();
-                wrapTable(tableModel3, countOld, countNew);
+                wrapTableForResult(tableModel3, countOld, countNew);
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
                     e.printStackTrace();
@@ -228,7 +226,7 @@ public class ElementaryOperationsWindow extends JFrame {
                 int countOld = tableModel1.getFunction().getCount();
                 tableModel3.setFunction(tabulatedFunctionOperationService.multiply(tableModel1.getFunction(), tableModel2.getFunction()));
                 int countNew = tableModel3.getFunction().getCount();
-                wrapTable(tableModel3, countOld, countNew);
+                wrapTableForResult(tableModel3, countOld, countNew);
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
                     e.printStackTrace();
@@ -241,7 +239,7 @@ public class ElementaryOperationsWindow extends JFrame {
                 int countOld = tableModel1.getFunction().getCount();
                 tableModel3.setFunction(tabulatedFunctionOperationService.divide(tableModel1.getFunction(), tableModel2.getFunction()));
                 int countNew = tableModel3.getFunction().getCount();
-                wrapTable(tableModel3, countOld, countNew);
+                wrapTableForResult(tableModel3, countOld, countNew);
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
                     e.printStackTrace();
@@ -252,6 +250,18 @@ public class ElementaryOperationsWindow extends JFrame {
     }
 
     public void wrapTable(TableModelMainWindow tableModel, int countOld, int countNew) {
+        tableModel.fireTableDataChanged();
+        for (int i = 0; i < countOld; i++) {
+            if (xValues.size() != 0) xValues.remove(countOld - i - 1);
+            if (yValues.size() != 0) yValues.remove(countOld - i - 1);
+        }
+        for (int i = 0; i < countNew; i++) {
+            xValues.add(tableModel.getFunction().getX(i));
+            yValues.add(tableModel.getFunction().getY(i));
+        }
+    }
+
+    public void wrapTableForResult(TableModelWindowForResult tableModel, int countOld, int countNew) {
         tableModel.fireTableDataChanged();
         for (int i = 0; i < countOld; i++) {
             if (xValues.size() != 0) xValues.remove(countOld - i - 1);
@@ -287,10 +297,10 @@ public class ElementaryOperationsWindow extends JFrame {
                         .addComponent(resultTableScrollPane))
 
                 .addGroup(layout.createSequentialGroup()
-                        .addComponent(createTableOne)
+                        .addComponent(createTubFuncOne)
                         .addComponent(createMathOne)
                         .addGap(67)
-                        .addComponent(createTableTwo)
+                        .addComponent(createTubFuncTwo)
                         .addComponent(createMathTwo))
                 .addGroup(layout.createSequentialGroup()
                         .addComponent(saveOne)
@@ -316,10 +326,10 @@ public class ElementaryOperationsWindow extends JFrame {
                         .addComponent(secondTableScrollPane)
                         .addComponent(resultTableScrollPane))
                 .addGroup(layout.createParallelGroup()
-                        .addComponent(createTableOne)
+                        .addComponent(createTubFuncOne)
                         .addComponent(createMathOne)
                         .addGap(60)
-                        .addComponent(createTableTwo)
+                        .addComponent(createTubFuncTwo)
                         .addComponent(createMathTwo))
                 .addGroup(layout.createParallelGroup()
                         .addComponent(saveOne)

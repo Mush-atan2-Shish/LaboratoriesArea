@@ -4,13 +4,13 @@ import ru.ssau.tk.Ssau.Laba2.functions.TabulatedFunction;
 
 import javax.swing.table.AbstractTableModel;
 
-public class TableModelMainWindow extends AbstractTableModel {
+public class TableModelWindowForResult extends AbstractTableModel {
     private static final int INDEX_COLUMN_NUMBER = 0;
     private static final int X_COLUMN = 1;
     private static final int Y_COLUMN = 2;
     private TabulatedFunction function;
 
-    public TableModelMainWindow() {
+    public TableModelWindowForResult() {
     }
 
     @Override
@@ -53,9 +53,8 @@ public class TableModelMainWindow extends AbstractTableModel {
         switch (columnIndex) {
             case INDEX_COLUMN_NUMBER:
             case X_COLUMN:
-                return false;
             case Y_COLUMN:
-                return true;
+                return false;
         }
         return false;
     }

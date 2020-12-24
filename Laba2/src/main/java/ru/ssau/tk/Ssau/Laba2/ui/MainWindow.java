@@ -137,7 +137,7 @@ public class MainWindow extends JFrame {
             }
         });
         northPanel.add(operation);
-        designButton(differential, "Дифференциал");
+        designButton(differential, "Производная");
         differential.addActionListener(event -> {
             try {
                 DifferentialOperationWindow.main();
